@@ -1,0 +1,260 @@
+/* Import from styled-components */
+/* You would likely have this import in your main app component */
+/* import styled from 'styled-components'; */
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+}
+
+.header img {
+  width: 206px;
+  height: auto;
+}
+
+@media (max-width: 991px) {
+  .header {
+    padding: 20px;
+  }
+}
+
+/* Navigation */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  font-family: Rubik, sans-serif;
+  font-size: 19px;
+  color: #000;
+  text-decoration: none;
+}
+
+.button {
+  font-family: Rubik, sans-serif;
+  font-size: 19px;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid rgba(137, 137, 137, 1);
+  border-radius: 50px;
+  padding: 19px 36px;
+  cursor: pointer;
+}
+
+@media (max-width: 991px) {
+  .button {
+    padding: 15px 20px;
+  }
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 60px;
+  background: linear-gradient(180deg, #fff 15.5%, #c6f5ff 41%, #38b6de 90.5%, #13a2cf 100%);
+}
+
+.hero-content {
+  width: 50%;
+}
+
+.hero-title {
+  font-family: Rubik, sans-serif;
+  font-size: 75px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.hero-description {
+  font-family: Rubik, sans-serif;
+  font-size: 19px;
+  color: #fff;
+  margin-top: 36px;
+}
+
+.cta-button {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+  font-size: 30px;
+  margin-top: 36px;
+}
+
+.hero-image {
+  width: 45%;
+  height: auto;
+}
+
+@media (max-width: 991px) {
+  .hero-section {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .hero-content {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 40px;
+  }
+
+  .hero-image {
+    width: 100%;
+    margin-top: 40px;
+  }
+}
+
+/* Services Section */
+.services-section {
+  padding: 80px 60px;
+  background-color: #fff;
+}
+
+.section-title {
+  font-family: Rubik, sans-serif;
+  font-size: 75px;
+  font-weight: 600;
+  color: #043caa;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 991px) {
+  .services-section {
+    padding: 40px 20px;
+  }
+
+  .section-title {
+    font-size: 40px;
+  }
+}
+
+/* Service Card */
+.service-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 80px;
+}
+/* Service Card (continued) */
+@media (max-width: 991px) {
+  .service-card {
+    flex-direction: column;
+  }
+
+  .service-content {
+    width: 100%;
+    order: 2;
+  }
+
+  .service-image {
+    width: 100%;
+    order: 1;
+    margin-bottom: 40px;
+  }
+}
+
+.service-content {
+  width: 45%;
+}
+
+.service-title {
+  font-family: Rubik, sans-serif;
+  font-size: 35px;
+  color: #043caa;
+  margin-bottom: 20px;
+}
+
+.service-feature {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.feature-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+}
+
+.feature-text {
+  font-family: Rubik, sans-serif;
+  font-size: 25px;
+  color: #333;
+}
+
+.service-image {
+  width: 50%;
+  height: auto;
+}
+
+/* Appointment Section */
+.appointment-section {
+  background: linear-gradient(180deg, #0d3a90 0%, #093181 48.16%, #04276a 96.32%);
+  padding: 60px;
+  color: #fff;
+}
+
+.appointment-title {
+  font-family: Rubik, sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.appointment-button {
+  background-color: #ed5050;
+  color: #000;
+  font-weight: 500;
+  padding: 14px 24px;
+}
+
+@media (max-width: 991px) {
+  .appointment-section {
+    padding: 40px 20px;
+  }
+
+  .appointment-title {
+    font-size: 40px;
+  }
+}
+
+/* Footer */
+.footer {
+  background-color: #04276a;
+  padding: 40px 60px;
+  color: #ccc;
+}
+
+.footer-logo {
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.social-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.footer-text {
+  font-family: Rubik, sans-serif;
+  font-size: 18px;
+}
+
+@media (max-width: 991px) {
+  .footer {
+    padding: 40px 20px;
+  }
+}
