@@ -285,7 +285,7 @@ const App = () => {
       <Header>
         <Logo src="https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" />
         <NavLinks>
-          <NavLink href="#">Schedule an appointment</NavLink>
+          <NavLink href="/bookschedule">Schedule an appointment</NavLink>
           <Button>Log in</Button>
           <Button>Sign Up</Button>
         </NavLinks>
@@ -321,7 +321,7 @@ const App = () => {
 
         <AppointmentSection>
           <AppointmentTitle>Not a common ailment?<br />Book a doctor's appointment!</AppointmentTitle>
-          <AppointmentButton>BOOK</AppointmentButton>
+          <a href="/bookschedule"><AppointmentButton>BOOK</AppointmentButton></a>
         </AppointmentSection>
       </main>
 
