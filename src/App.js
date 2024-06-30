@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { BrowserRouter, Routes, Router } from "react-router-dom";
 
 const Header = styled.header`
   display: flex;
@@ -295,7 +296,7 @@ const App = () => {
           <HeroContent>
             <HeroTitle>Your Personal Guide to Self-Care for Common Ailments</HeroTitle>
             <HeroDescription>Take control of your health, save time, and find relief at home with BSDOC.</HeroDescription>
-            <CtaButton>FIND A CURE</CtaButton>
+            <a href = "/cure"><CtaButton>FIND A CURE</CtaButton></a>
           </HeroContent>
           <HeroImage src="https://cdn.builder.io/api/v1/image/assets/TEMP/9468847953b0a85498a7e4923ce907b1b96635871ec8b8cb0ce26f0ea148ca47?apiKey=d22a939618da4e96809232126d1f951c&" alt="Self-care illustration" />
         </HeroSection>
