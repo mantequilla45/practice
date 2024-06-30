@@ -6,13 +6,17 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 20px 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 95%;
   @media (max-width: 991px) {
     padding: 20px;
   }
 `;
 
 const Logo = styled.img`
-  width: 206px;
+  width: 180px;
   height: auto;
 `;
 
@@ -23,23 +27,28 @@ const NavLinks = styled.nav`
 
 const NavLink = styled.a`
   font-family: Rubik, sans-serif;
-  font-size: 19px;
-  color: #000;
-  text-decoration: none;
+  font-size: 15px;
+  color: #000;a
+  text-decoration: none; 
+  display: flex;  /* Make the element a flex container */
+  align-items: center;  /* Align content vertically in the center */
+  justify-content: center;
 `;
 
 const Button = styled.button`
   font-family: Rubik, sans-serif;
-  font-size: 19px;
+  font-size: 15px;
   color: #000;
+  font-weight: bold;
   background-color: #fff;
   border: 1px solid rgba(137, 137, 137, 1);
   border-radius: 50px;
-  padding: 19px 36px;
+  padding: 15px 30px;
   cursor: pointer;
   @media (max-width: 991px) {
     padding: 15px 20px;
   }
+    
 `;
 
 const HeroSection = styled.section`
@@ -47,8 +56,11 @@ const HeroSection = styled.section`
   justify-content: space-between;
   align-items: center;
   padding: 80px 60px;
-  background: linear-gradient(180deg, #fff 15.5%, #c6f5ff 41%, #38b6de 90.5%, #13a2cf 100%);
-  @media (max-width: 991px) {
+  background-image: url('https://cdn.builder.io/api/v1/image/assets/TEMP/b8264c956da39a9e61a99d5a500ed437bde969081f7c185f4a9c5608ea82968c?apiKey=d22a939618da4e96809232126d1f951c&');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media (max-width: 1080px) {
     flex-direction: column;
     padding: 40px 20px;
   }
@@ -56,18 +68,22 @@ const HeroSection = styled.section`
 
 const HeroContent = styled.div`
   width: 50%;
-  @media (max-width: 991px) {
+  @media (max-width: 1080px) {
     width: 100%;
     text-align: center;
+    padding-left: 0;
   }
 `;
 
 const HeroTitle = styled.h1`
   font-family: Rubik, sans-serif;
-  font-size: 75px;
-  font-weight: 700;
+  font-size: 60px;
+  font-weight: bold;
   color: #fff;
-  @media (max-width: 991px) {
+  width: 900px;
+  margin-top: -200px;
+  margin-left: 195px;
+  @media (max-width: 1080px) {
     font-size: 40px;
   }
 `;
@@ -75,21 +91,30 @@ const HeroTitle = styled.h1`
 const HeroDescription = styled.p`
   font-family: Rubik, sans-serif;
   font-size: 19px;
+  font-weight: regular;
   color: #fff;
-  margin-top: 36px;
+  margin-left: 200px;
+  margin-top: -30px;
 `;
 
 const CtaButton = styled(Button)`
   background-color: rgba(255, 255, 255, 0.8);
+  width: 790px; 
+  height: 80px; 
   color: #000;
-  font-size: 30px;
-  margin-top: 36px;
+  border-radius: 10px;
+  margin-left: 200px;
+  font-size: 20px;
+  font-weight: normal;
+  margin-top: 50px;
 `;
 
 const HeroImage = styled.img`
-  width: 45%;
+  width: 40%;
   height: auto;
-  @media (max-width: 991px) {
+  margin-top: 100px;
+  margin-bottom: -80px;
+  @media (max-width: 1080px) {
     width: 100%;
     margin-top: 40px;
   }
