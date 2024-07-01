@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
+  display: flex;  
   align-items: center;
   padding: 20px 60px;
   position: fixed;
@@ -16,22 +15,23 @@ const Header = styled.header`
 `;
 
 const Logo = styled.img`
-  width: 180px;
+  width: 150px;
   height: auto;
 `;
 
-const NavLinks = styled.nav`
+const Nav = styled.nav`
   display: flex;
+  margin-left: 1177px;
   gap: 20px;
 `;
 
 const NavLink = styled.a`
   font-family: Rubik, sans-serif;
   font-size: 15px;
-  color: #000;a
-  text-decoration: none; 
-  display: flex;  /* Make the element a flex container */
-  align-items: center;  /* Align content vertically in the center */
+  color: #000;
+    text-decoration: underline;
+  display: flex;
+  align-items: center; 
   justify-content: center;
 `;
 
@@ -283,11 +283,11 @@ const App = () => {
     <>
       <Header>
         <Logo src="https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" />
-        <NavLinks>
+        <Nav>
           <NavLink href="/bookschedule">Schedule an appointment</NavLink>
           <Button>Log in</Button>
           <Button>Sign Up</Button>
-        </NavLinks>
+        </Nav>
       </Header>
 
       <main>
