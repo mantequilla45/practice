@@ -1,9 +1,9 @@
+// Login.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { Form } from 'react-bootstrap';
-import { Row, Col } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Buttonn = styled.button`
@@ -20,54 +20,56 @@ const Buttonn = styled.button`
     padding: 15px 20px;
   }
 `;
-const Login = ()=> {
-  const [ show, setShow ] = useState(false);
-  const handleShow = ()=> {
+
+const Login = () => {
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => {
     setShow(true);
-  }
-  const handleHide = ()=> {
+  };
+
+  const handleHide = () => {
     setShow(false);
-  }
-  
+  };
+
   return (
     <>
-    <Buttonn onClick={handleShow}> Log in </Buttonn>
+      <Buttonn onClick={handleShow}> Log in </Buttonn>
 
-    <Modal
+      <Modal
         show={show}
         onHide={handleHide}
         backdrop="static"
         keyboard={false}
         centered
+        scrollable
       >
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
           <Form>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
               <Form.Label column sm="2"> Email </Form.Label>
               <Col sm="10">
-                <Form.Control type="email" placeholder="Email address"/>
+                <Form.Control type="email" placeholder="Email address" />
               </Col>
             </Form.Group>
             
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
               <Form.Label column sm="2"> Password </Form.Label>
               <Col sm="10">
-                <Form.Control type="password" placeholder="Password"/>
+                <Form.Control type="password" placeholder="Password" />
               </Col>
             </Form.Group>
 
-            <Buttonn type="submit"> Login </Buttonn> 
-
+            <Button type="submit"> Login </Button> 
           </Form>
-
         </Modal.Body>
       </Modal>
     </>
   );
 };
 
-export default Login;
+export default Login; // Ensure default export here
+
