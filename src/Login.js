@@ -15,6 +15,7 @@ const Buttonn = styled.button`
   border: 1px solid rgba(137, 137, 137, 1);
   border-radius: 50px;
   padding: 15px 30px;
+  
   cursor: pointer;
   @media (max-width: 991px) {
     padding: 15px 20px;
@@ -26,10 +27,12 @@ const Login = () => {
 
   const handleShow = () => {
     setShow(true);
+    document.body.style.overflowY = 'auto'; // Disable scrolling on body
   };
 
   const handleHide = () => {
     setShow(false);
+    document.body.style.overflowY = 'hidden'; // Enable scrolling on body
   };
 
   return (
@@ -71,5 +74,4 @@ const Login = () => {
   );
 };
 
-export default Login; // Ensure default export here
-
+export default Login;
