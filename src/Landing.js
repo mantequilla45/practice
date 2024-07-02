@@ -4,13 +4,14 @@ import styled from 'styled-components';
 const Header = styled.header`
   display: flex;
   align-items: center;
-  padding: 20px 60px;
+  padding: 1.05% 3.15%;
   position: fixed;
   top: 0;
   left: 0;
-  padding-right: 100px;
+  margin-right: 50%;
+  padding-right: 20%;
   width: 100%;
-  z-index: 1000; /* Ensure the header is above other content */
+  z-index: 1000; 
   transition: background-color 0.3s ease;
   @media (max-width: 991px) {
     padding: 20px;
