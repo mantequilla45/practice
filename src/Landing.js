@@ -316,7 +316,7 @@ const App = () => {
         <Logo src={logoSrc} alt="BSDOC Logo" />
         <Nav>
           <NavLink href="/bookschedule">Schedule an appointment</NavLink>
-          <Button>Log in</Button>
+          <Login></Login>
           <Button>Sign Up</Button>
         </Nav>
       </Header>
