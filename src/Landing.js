@@ -1,5 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import styled from 'styled-components';
+import Login from "./Login";
 
 const Header = styled.header`
   display: flex;
@@ -316,7 +317,7 @@ const App = () => {
         <Logo src={logoSrc} alt="BSDOC Logo" />
         <Nav>
           <NavLink href="/bookschedule">Schedule an appointment</NavLink>
-          <Button>Log in</Button>
+          <Login></Login>
           <Button>Sign Up</Button>
         </Nav>
       </Header>
