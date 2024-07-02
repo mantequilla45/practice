@@ -1,37 +1,45 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useEffect,useState } from 'react';
+import styled from 'styled-components';
 
 const Header = styled.header`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 20px 60px;
   position: fixed;
   top: 0;
   left: 0;
-  width: 95%;
+  padding-right: 100px;
+  width: 100%;
+  z-index: 1000; /* Ensure the header is above other content */
+  transition: background-color 0.3s ease;
   @media (max-width: 991px) {
     padding: 20px;
+  }
+  &.scrolled {
+    background-color: #B9F2FF; 
   }
 `;
 
 const Logo = styled.img`
-  width: 180px;
+  width: 150px;
+  margin-top: -10px;
   height: auto;
+  transition: opacity 0.3s ease;
 `;
 
-const NavLinks = styled.nav`
+const Nav = styled.nav`
   display: flex;
+  margin-left: 62.75%; /* This ensures the Nav is pushed to the right */
   gap: 20px;
 `;
 
 const NavLink = styled.a`
   font-family: Rubik, sans-serif;
   font-size: 15px;
-  color: #000;a
-  text-decoration: none; 
-  display: flex;  /* Make the element a flex container */
-  align-items: center;  /* Align content vertically in the center */
+  color: #000;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
   justify-content: center;
 `;
 
@@ -48,8 +56,8 @@ const Button = styled.button`
   @media (max-width: 991px) {
     padding: 15px 20px;
   }
-    
 `;
+
 
 const HeroSection = styled.section`
   display: flex;
@@ -278,16 +286,39 @@ const App = () => {
       image: "https://cdn.builder.io/api/v1/image/assets/TEMP/87b0ca09f0388b96aef8a339564bcf3e73b6be4efcc568a134cff5304330f183?apiKey=d22a939618da4e96809232126d1f951c&"
     }
   ];
+  const [logoSrc, setLogoSrc] = useState('https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&'); // Default logo
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const header = document.querySelector('header');
+      const heroSection = document.querySelector('.hero-section');
+      const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+  
+      if (window.scrollY > heroHeight) {
+        header.classList.add('scrolled');
+        setLogoSrc('https://cdn.builder.io/api/v1/image/assets/TEMP/16d9e73da749028535b483d8ace7f27155660c5f575d746c967a83d4b5ac0d87?apiKey=d22a939618da4e96809232126d1f951c&'); // Logo when scrolled
+      } else {
+        header.classList.remove('scrolled');
+        setLogoSrc('https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&'); // Default logo
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+  
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
     <>
       <Header>
-        <Logo src="https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" />
-        <NavLinks>
+        <Logo src={logoSrc} alt="BSDOC Logo" />
+        <Nav>
           <NavLink href="/bookschedule">Schedule an appointment</NavLink>
           <Button>Log in</Button>
           <Button>Sign Up</Button>
-        </NavLinks>
+        </Nav>
       </Header>
 
       <main>
