@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+const Button = styled.button`
+  font-family: Rubik, sans-serif;
+  font-size: 15px;
+  color: #000;
+  font-weight: bold;
+  background-color: #fff;
+  border: 1px solid rgba(137, 137, 137, 1);
+  border-radius: 50px;
+  padding: 15px 30px;
+  cursor: pointer;
+  @media (max-width: 991px) {
+    padding: 15px 20px;
+  }
+`;
 const Login = () => {
   const [show, setShow] = useState(false); // Modal visibility state
   const [formData, setFormData] = useState({
