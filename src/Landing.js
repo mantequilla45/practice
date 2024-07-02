@@ -1,17 +1,16 @@
 import React, { useEffect,useState } from 'react';
 import styled from 'styled-components';
+import Login from "./Login";
 
 const Header = styled.header`
   display: flex;
   align-items: center;
-  padding: 1.05% 3.15%;
+  padding: 20px 60px;
   position: fixed;
   top: 0;
   left: 0;
-  margin-right: 50%;
-  padding-right: 20%;
-  width: 100%;
-  z-index: 1000; 
+  width: 110%;
+  z-index: 1000; /* Ensure the header is above other content */
   transition: background-color 0.3s ease;
   @media (max-width: 991px) {
     padding: 20px;
@@ -30,7 +29,7 @@ const Logo = styled.img`
 
 const Nav = styled.nav`
   display: flex;
-  margin-left: 62.75%; /* This ensures the Nav is pushed to the right */
+  margin-left: 59.66%; /* This ensures the Nav is pushed to the right */
   gap: 20px;
 `;
 
@@ -103,7 +102,7 @@ const HeroDescription = styled.p`
   font-weight: regular;
   color: #fff;
   margin-left: 200px;
-  margin-top: -30px;
+  margin-top: 0;
 `;
 
 const CtaButton = styled(Button)`
@@ -317,7 +316,7 @@ const App = () => {
         <Logo src={logoSrc} alt="BSDOC Logo" />
         <Nav>
           <NavLink href="/bookschedule">Schedule an appointment</NavLink>
-          <Button>Log in</Button>
+          <Login></Login>
           <Button>Sign Up</Button>
         </Nav>
       </Header>
