@@ -9,8 +9,7 @@ const Header = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  padding-right: 100px;
-  width: 100%;
+  width: 110%;
   z-index: 1000; /* Ensure the header is above other content */
   transition: background-color 0.3s ease;
   @media (max-width: 991px) {
@@ -30,7 +29,7 @@ const Logo = styled.img`
 
 const Nav = styled.nav`
   display: flex;
-  margin-left: 62.75%; /* This ensures the Nav is pushed to the right */
+  margin-left: 59.66%; /* This ensures the Nav is pushed to the right */
   gap: 20px;
 `;
 
@@ -103,7 +102,7 @@ const HeroDescription = styled.p`
   font-weight: regular;
   color: #fff;
   margin-left: 200px;
-  margin-top: -30px;
+  margin-top: 0;
 `;
 
 const CtaButton = styled(Button)`
