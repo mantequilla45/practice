@@ -1,6 +1,7 @@
 import React from "react"; 
 import styled from "styled-components";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import Login from "./Login.js";
 
 const Header = styled.header`
   display: flex;
@@ -179,13 +180,13 @@ function App() {
   return (
     <>
       <Header>
-        <NavLink href="#" className="underline">About</NavLink>
+        <NavLink href="/about" className="underline">About</NavLink>
         <Link to="/"> {/* Use Link component to make the logo clickable */}
           <Logo src="https://cdn.builder.io/api/v1/image/assets/TEMP/16d9e73da749028535b483d8ace7f27155660c5f575d746c967a83d4b5ac0d87?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" />
         </Link>
         <Nav>
-          <NavSchedLink href="#">Schedule an appointment</NavSchedLink>
-          <Button>Log in</Button>
+          <NavSchedLink href="/bookschedule">Schedule an appointment</NavSchedLink>
+          <Login></Login>
           <Button>Sign Up</Button>
         </Nav>
       </Header>
