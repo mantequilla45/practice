@@ -1,5 +1,6 @@
 import React from "react"; 
 import styled from "styled-components";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Header = styled.header`
   display: flex;
@@ -9,7 +10,7 @@ const Header = styled.header`
   background-color: #F1F1F3;
   width: auto;
   @media (max-width: 991px) {
-  padding: 20px;
+    padding: 20px;
     flex-wrap: wrap;
   }
 `;
@@ -17,7 +18,7 @@ const Header = styled.header`
 const Logo = styled.img`
   width: 151px;
   height: auto;
-  margin-right:-390px;
+  margin-right: -390px;
 `;
 
 const Nav = styled.nav`
@@ -53,20 +54,21 @@ const Button = styled.button`
   padding: 15px 30px;
   cursor: pointer;
   @media (max-width: 991px) {
-      padding: 15px 20px;
+    padding: 15px 20px;
   }
 `;
+
 const BackgroundImage = styled.img`
   margin-left: 50%;
   width: 50%;
   height: 858px;
   object-fit: cover;
 `;
+
 const MainContent = styled.main`
   display: flex;
   gap: 20px;
-  
-  margin-top:-950px;
+  margin-top: -950px;
   padding: 200px 200px 410px 200px;
   background-color: #F1F1F3;
   @media (max-width: 991px) {
@@ -106,6 +108,7 @@ const HeroDescription = styled.p`
     margin-top: 40px;
   }
 `;
+
 const SearchSection = styled.section`
   display: flex;
   width: 143%;
@@ -119,8 +122,6 @@ const SearchSection = styled.section`
     margin-top: 40px;
   }
 `;
-
-
 
 const SearchForm = styled.form`
   display: flex;
@@ -137,13 +138,11 @@ const SearchInput = styled.input`
   background-color: #fff;
   width: 64.5%;
   height: 75px;
-  
   border: none;
   padding: 0 20px;
   font-size: 19px;
   font-family: Rubik, sans-serif;
   color: #545252;
-
   &::placeholder {
     color: #A5A5A5;
   }
@@ -176,13 +175,14 @@ const SearchIcon = styled.img`
   height: 15px;
 `;
 
-
 function App() {
   return (
     <>
       <Header>
         <NavLink href="#" className="underline">About</NavLink>
-        <Logo src="https://cdn.builder.io/api/v1/image/assets/TEMP/16d9e73da749028535b483d8ace7f27155660c5f575d746c967a83d4b5ac0d87?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" />
+        <Link to="/"> {/* Use Link component to make the logo clickable */}
+          <Logo src="https://cdn.builder.io/api/v1/image/assets/TEMP/16d9e73da749028535b483d8ace7f27155660c5f575d746c967a83d4b5ac0d87?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" />
+        </Link>
         <Nav>
           <NavSchedLink href="#">Schedule an appointment</NavSchedLink>
           <Button>Log in</Button>
@@ -193,9 +193,9 @@ function App() {
       <MainContent>
         <HeroSection>
           <HeroTitle>Welcome to BSDOC</HeroTitle>
-            <SearchSection>
+          <SearchSection>
             <SearchForm>
-            <SearchInput
+              <SearchInput
                 type="text"
                 id="symptomSearch"
                 placeholder="Type symptom here."
@@ -209,8 +209,7 @@ function App() {
           </SearchSection>
           <HeroDescription>Introducing a new way to diagnose your sickness.</HeroDescription>
         </HeroSection>
-        </MainContent>
-        
+      </MainContent>
     </>
   );
 }
