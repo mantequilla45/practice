@@ -1,14 +1,14 @@
-import React from "react"; 
+import React from "react";
 import './Cure.css';
 
-function Cure() {
+function App() {
   return (
     <>
       <header className="header">
-        <a href="/" className="nav-link">About</a>
-        <div className="logo-container">
+        <span className="nav-link">About</span>
+        <a href="/" className="logo-container">
           <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/16d9e73da749028535b483d8ace7f27155660c5f575d746c967a83d4b5ac0d87?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" className="logo" />
-        </div>
+        </a>
         <nav className="nav">
           <a href="/" className="nav-sched-link">Schedule an appointment</a>
           <button className="button">Log in</button>
@@ -19,9 +19,9 @@ function Cure() {
       <main className="main-content">
         <section className="hero-section">
           <h1 className="hero-title">Welcome to BSDOC</h1>
-            <section className="search-section">
+          <section className="search-section">
             <form className="search-form">
-            <input
+              <input
                 type="text"
                 id="symptomSearch"
                 className="search-input"
@@ -40,4 +40,5 @@ function Cure() {
     </>
   );
 }
-export default Cure;
+
+export default App;
