@@ -45,7 +45,7 @@ body, html {
 .nav-link {
   color: #333;
   font-family: Rubik, sans-serif;
-  font-size: 19px;
+  font-size: 15px;
   text-decoration: none;
 }
 
@@ -191,8 +191,8 @@ body, html {
   
   .search-button {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* This centers the content horizontally */
+    align-items: center; /* This centers the content vertically */
     background-color: #B4DE71;
     border: none;
     border-radius: 0 10px 10px 0;
@@ -200,11 +200,11 @@ body, html {
     height: 75px;
     cursor: pointer;
   }
-  
   .search-button-text {
     font-family: Rubik, sans-serif;
     color: #545252;
     font-size: 15px;
+    margin-top: 6px;
     margin-left: -20px;
     padding-right: 30px;
     font-weight: normal;
