@@ -36,9 +36,8 @@ function App() {
           </section>
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
         </section>
-      </main>
-    </>
+        </main>
+      </>
   );
 }
-
 export default App;
