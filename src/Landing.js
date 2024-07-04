@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import styled from 'styled-components';
 import Login from "./Login";
+import Signup from "./Signup";
 
 const Header = styled.header`
   display: flex;
@@ -317,7 +318,7 @@ const App = () => {
         <Nav>
           <NavLink href="/bookschedule">Schedule an appointment</NavLink>
           <Login></Login>
-          <Button>Sign Up</Button>
+          <Signup></Signup>
         </Nav>
       </Header>
 

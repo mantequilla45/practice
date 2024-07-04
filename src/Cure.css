@@ -3,7 +3,6 @@ body, html {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   font-family: Rubik, sans-serif;
   background-color: rgba(241, 241, 243); /* Apply the background color to the whole page */
 }
