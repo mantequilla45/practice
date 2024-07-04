@@ -9,8 +9,8 @@ const Header = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  width: 110%;
-  z-index: 1000; /* Ensure the header is above other content */
+  width: 100%; /* Adjusted to 100% */
+  z-index: 1000;
   transition: background-color 0.3s ease;
   @media (max-width: 991px) {
     padding: 20px;
@@ -19,6 +19,7 @@ const Header = styled.header`
     background-color: #B9F2FF; 
   }
 `;
+
 
 const Logo = styled.img`
   width: 150px;
