@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { auth, googleProvider, signInWithPopup } from './firebase'; // Ensure this path is correct
 
 const Buttonn = styled.button`
   font-family: Rubik, sans-serif;
@@ -34,6 +35,7 @@ const Login = ({ className }) => {
   const handleClose = () => {
     setShow(false);
   };
+
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.keyCode === 27) {
@@ -60,7 +62,7 @@ const Login = ({ className }) => {
           <Modal.Title>Log in with</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SocialLoginOptions />
+          <SocialLoginOptions handleClose={handleClose}/>
           <Divider />
           <LoginForm />
           <SignupPrompt />
@@ -70,23 +72,35 @@ const Login = ({ className }) => {
   );
 };
 
-const SocialLoginOptions = () => {
+const SocialLoginOptions = ({ handleClose }) => {
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      // Handle successful login (e.g., store user info, redirect, etc.)
+      console.log('Google login successful:', result.user);
+      handleClose();
+    } catch (error) {
+      // Handle errors here
+      console.error('Error during Google login:', error);
+    }
+  };
+
   const socialOptions = [
-    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/93acce7c007ce7b98cb4a5b8d1e1625bb33c91bc26117f850de213e6e46d258b?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Social Login Option 1" },
-    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/e239ff8292f58f9257cb678422e0cc58bf9166003ba475d96e3ce355b1ddab70?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Social Login Option 2" },
+    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/93acce7c007ce7b98cb4a5b8d1e1625bb33c91bc26117f850de213e6e46d258b?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Google Login", onClick: handleGoogleLogin },
+    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/e239ff8292f58f9257cb678422e0cc58bf9166003ba475d96e3ce355b1ddab70?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Facebook Login" },
   ];
 
   return (
     <div className="social-login-options">
       {socialOptions.map((option, index) => (
-        <button key={index} className="social-login-button">
+        <button key={index} className="social-login-button" onClick={option.onClick}>
           <img loading="lazy" src={option.src} alt={option.alt} />
         </button>
       ))}
     </div>
   );
 };
-  
+
 const Divider = () => (
   <div className="divider">
     <span className="divider-line"></span>
@@ -133,7 +147,6 @@ const StyledLoginPage = styled(Login)`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-
   }
 
   .modal-title {
