@@ -17,7 +17,7 @@ const Header = styled.header`
     padding: 20px;
   }
   &.scrolled {
-    background-color: #B9F2FF; 
+    background-color: #298194; 
   }
 `;
 
@@ -298,8 +298,7 @@ const App = () => {
   
       if (window.scrollY > heroHeight) {
         header.classList.add('scrolled');
-        setLogoSrc('https://cdn.builder.io/api/v1/image/assets/TEMP/16d9e73da749028535b483d8ace7f27155660c5f575d746c967a83d4b5ac0d87?apiKey=d22a939618da4e96809232126d1f951c&'); // Logo when scrolled
-      } else {
+        } else {
         header.classList.remove('scrolled');
         setLogoSrc('https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&'); // Default logo
       }
