@@ -31,7 +31,8 @@ const Logo = styled.img`
 
 const Nav = styled.nav`
   display: flex;
-  margin-left: 59.66%; /* This ensures the Nav is pushed to the right */
+  margin-left: auto; /* This ensures the Nav is pushed to the right */
+  margin-right: 3px;
   gap: 20px;
 `;
 

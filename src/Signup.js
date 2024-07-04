@@ -48,7 +48,7 @@ const Signup = ({ className }) => {
 
   return (
     <>
-      <Button onClick={handleShow}>Signup</Button>
+      <Button onClick={handleShow}>Sign Up</Button>
       <Modal
         show={show}
         onHide={handleHide}
