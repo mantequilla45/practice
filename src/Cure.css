@@ -1,0 +1,218 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Rubik, sans-serif;
+  background-color: rgba(241, 241, 243); 
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  background-color: #F1F1F3;
+  width: auto;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 991px) {
+  .header {
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+}
+
+.logo-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo {
+  width: 151px;
+  height: auto;
+}
+
+.nav {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  color: #333;
+  font-family: Rubik, sans-serif;
+  font-size: 19px;
+  text-decoration: none;
+}
+
+.nav-sched-link {
+  font-family: Rubik, sans-serif;
+  font-size: 15px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  text-decoration: underline;
+}
+
+.button {
+  font-family: Rubik, sans-serif;
+  font-size: 15px;
+  color: #000;
+  font-weight: bold;
+  background-color: #fff;
+  border: 1px solid rgba(137, 137, 137, 1);
+  border-radius: 50px;
+  padding: 15px 30px;
+  cursor: pointer;
+}
+  
+  @media (max-width: 991px) {
+    .button {
+      padding: 15px 20px;
+    }
+  }
+  
+  .background-image {
+    position: fixed; /* Position the background image fixed */
+    top: 0;
+    right: 0; /* Position the background image from the left */
+    width: 50vw; /* Make the width half of the viewport width */
+    height: 100vh; /* Make the height fit the full viewport height */
+    object-fit: cover;
+    background-size: cover; /* Ensure the image covers the whole element */
+    background-position: left; /* Align the background image to the left */
+  }
+
+.main-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 21vh 25vw;
+}
+  
+  @media (max-width: 991px) {
+    .main-content {
+      flex-direction: column;
+      padding: 0 20px;
+    }
+  }
+  
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 150%;
+    padding-right: 30%;
+  }
+  
+  @media (max-width: 991px) {
+    .hero-section {
+      width: 100%;
+      margin-top: 40px;
+    }
+  }
+  
+  .hero-title {
+    color: #333;
+    margin-left: 100px;
+    margin-right: 100px;
+    font: 60px Rubik, sans-serif;
+  }
+  
+  @media (max-width: 991px) {
+    .hero-title {
+      font-size: 40px;
+    }
+  }
+  
+  .hero-description {
+    color: #786d6d;
+    margin-top: 40px;
+    margin-left: 100px;
+    font: 18px Rubik, sans-serif;
+  }
+  
+  @media (max-width: 991px) {
+    .hero-description {
+      margin-top: 40px;
+    }
+  }
+  
+  .search-section {
+    display: flex;
+    width: 120%;
+    justify-content: center;
+    align-items: center;
+    margin-top: -2.5%;
+    margin-left: 100px;
+    align-items: center;
+    border-radius: 10px;
+  }
+  
+  @media (max-width: 991px) {
+    .search-section {
+      margin-top: 40px;
+    }
+  }
+  
+  .search-form {
+    display: flex;
+    width: 100%;
+    margin-top: 40px;
+  }
+  
+  @media (max-width: 991px) {
+    .search-form {
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+  }
+  
+  .search-input {
+    border-radius: 10px 0 0 10px;
+    background-color: #fff;
+    width: 68%;
+    height: 75px;
+    border: none;
+    padding: 0 20px;
+    font-size: 19px;
+    font-family: Rubik, sans-serif;
+    color: #545252;
+  }
+  
+  .search-input::placeholder {
+    color: #A5A5A5;
+  }
+  
+  .search-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #B4DE71;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    width: 300px;
+    height: 75px;
+    cursor: pointer;
+  }
+  
+  .search-button-text {
+    font-family: Rubik, sans-serif;
+    color: #545252;
+    font-size: 15px;
+    margin-left: -20px;
+    padding-right: 30px;
+    font-weight: normal;
+  }
+  
+  .search-icon {
+    margin-right: -80px;
+    width: 75px;
+    height: 15px;
+  }
+  

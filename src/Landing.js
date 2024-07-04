@@ -1,5 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import styled from 'styled-components';
+import Login from "./Login";
+import Signup from "./Signup";
 
 const Header = styled.header`
   display: flex;
@@ -8,17 +10,17 @@ const Header = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  padding-right: 100px;
-  width: 100%;
-  z-index: 1000; /* Ensure the header is above other content */
+  width: 100%; /* Adjusted to 100% */
+  z-index: 1000;
   transition: background-color 0.3s ease;
   @media (max-width: 991px) {
     padding: 20px;
   }
   &.scrolled {
-    background-color: #B9F2FF; 
+    background-color: #298194; 
   }
 `;
+
 
 const Logo = styled.img`
   width: 150px;
@@ -29,7 +31,7 @@ const Logo = styled.img`
 
 const Nav = styled.nav`
   display: flex;
-  margin-left: 62.75%; /* This ensures the Nav is pushed to the right */
+  margin-left: 59.66%; /* This ensures the Nav is pushed to the right */
   gap: 20px;
 `;
 
@@ -102,7 +104,7 @@ const HeroDescription = styled.p`
   font-weight: regular;
   color: #fff;
   margin-left: 200px;
-  margin-top: -30px;
+  margin-top: 0;
 `;
 
 const CtaButton = styled(Button)`
@@ -296,8 +298,7 @@ const App = () => {
   
       if (window.scrollY > heroHeight) {
         header.classList.add('scrolled');
-        setLogoSrc('https://cdn.builder.io/api/v1/image/assets/TEMP/16d9e73da749028535b483d8ace7f27155660c5f575d746c967a83d4b5ac0d87?apiKey=d22a939618da4e96809232126d1f951c&'); // Logo when scrolled
-      } else {
+        } else {
         header.classList.remove('scrolled');
         setLogoSrc('https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&'); // Default logo
       }
@@ -316,8 +317,8 @@ const App = () => {
         <Logo src={logoSrc} alt="BSDOC Logo" />
         <Nav>
           <NavLink href="/bookschedule">Schedule an appointment</NavLink>
-          <Button>Log in</Button>
-          <Button>Sign Up</Button>
+          <Login></Login>
+          <Signup></Signup>
         </Nav>
       </Header>
 
