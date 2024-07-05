@@ -7,6 +7,17 @@ body, html {
   background-color: rgba(241, 241, 243); 
 }
 
+.no-underline {
+  text-decoration: none;
+}
+
+.no-underline:hover,
+.no-underline:active,
+.no-underline:focus {
+  text-decoration: none;
+  color: inherit;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
