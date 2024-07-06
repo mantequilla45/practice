@@ -1,8 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './Cure.css';
 import Login from "./Login";
+import { addCure, getCures } from "./cureService";
 
 function App() {
+  const [cures, setCures] = useState([]);
+  const [symptoms, setSymptom] = useState('');
+  const [description, setDescription] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  // These will show the cure list on the site
+  // useEffect(()=> {
+  //   const fetchCures = async ()=> {
+  //     const cureList = await getCures();
+  //     setCures(cureList);
+  //   };
+  //   fetchCures();
+  // }, []);
+
+  const handleAddCure = async (e) => {
+    e.preventDefault();
+    const newCure = { symptoms, description };
+    await addCure(newCure);
+    setSymptom('');
+    setDescription('');
+    //refresh the curelist once added
+    //const cureList = await getCures();
+    //setCures(cureList);
+  };
+
+  // const handleSearch = async (e) => {
+  //   e.preventDefault();
+  //   const results = cures.filter(cure => cure.symptoms.toLowerCase().includes(searchTerm.toLowerCase()));
+  //   setSearchResults(results);
+  // };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    const cureList = await getCures(symptoms);
+    setCures(cureList);
+  };
+
   return (
     <>
       <header className="header">
@@ -28,6 +67,8 @@ function App() {
                 className="search-input"
                 placeholder="Type symptom here."
                 aria-label="Type symptom here."
+                value={symptoms}
+                onChange={(e)=> setSymptom(e.target.value)}
               />
               <button type="submit" aria-label="Search" className="search-button">
                 <h1 className="search-button-text">Search Symptom</h1>
@@ -36,9 +77,47 @@ function App() {
             </form>
           </section>
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
+          <section className="cure-list">
+            {searchResults.length > 0 ? (
+              searchResults.map(cure => (
+                <div key={cure.id} className="cure-item">
+                  <h2>{cure.symptoms}</h2>
+                  <p>{cure.description}</p>
+                </div>
+              ))
+            ) : (
+              cures.map(cure => (
+                <div key={cure.id} className="cure-item">
+                  <h2>{cure.symptoms}</h2>
+                  <p>{cure.description}</p>
+                </div>
+              ))
+            )}
+          </section>
+        </section>
+        <section>
+          <h1>Add a Cure</h1>
+          <form onSubmit={handleAddCure}>
+            <input
+              type="text"
+              placeholder="Symptom"
+              value={symptoms}
+              onChange={(e) => setSymptom(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+            <button type="submit">Add Cure</button>
+          </form>
         </section>
         </main>
       </>
   );
-}
+};
+
 export default App;

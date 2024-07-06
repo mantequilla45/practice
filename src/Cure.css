@@ -227,3 +227,16 @@ body, html {
     height: 15px;
   }
   
+  .cure-list {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .cure-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
