@@ -9,15 +9,14 @@ function App() {
   const [description, setDescription] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-
-  // These will show the cure list on the site
-  // useEffect(()=> {
-  //   const fetchCures = async ()=> {
-  //     const cureList = await getCures();
-  //     setCures(cureList);
-  //   };
-  //   fetchCures();
-  // }, []);
+  
+  useEffect(() => {
+    const fetchCures = async () => {
+      const cureList = await getCures('');
+      setCures(cureList);
+    };
+    fetchCures();
+  }, []);
 
   const handleAddCure = async (e) => {
     e.preventDefault();
@@ -30,16 +29,11 @@ function App() {
     //setCures(cureList);
   };
 
-  // const handleSearch = async (e) => {
-  //   e.preventDefault();
-  //   const results = cures.filter(cure => cure.symptoms.toLowerCase().includes(searchTerm.toLowerCase()));
-  //   setSearchResults(results);
-  // };
-
   const handleSearch = async (e) => {
     e.preventDefault();
     const cureList = await getCures(symptoms);
     setCures(cureList);
+    //setSymptom('');
   };
 
   return (
@@ -60,7 +54,7 @@ function App() {
         <section className="hero-section">
           <h1 className="hero-title">Welcome to BSDOC</h1>
           <section className="search-section">
-            <form className="search-form">
+            <form className="search-form" onSubmit={handleSearch}>
               <input
                 type="text"
                 id="symptomSearch"
@@ -78,24 +72,17 @@ function App() {
           </section>
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <section className="cure-list">
-            {searchResults.length > 0 ? (
-              searchResults.map(cure => (
-                <div key={cure.id} className="cure-item">
-                  <h2>{cure.symptoms}</h2>
-                  <p>{cure.description}</p>
-                </div>
-              ))
-            ) : (
-              cures.map(cure => (
-                <div key={cure.id} className="cure-item">
-                  <h2>{cure.symptoms}</h2>
-                  <p>{cure.description}</p>
-                </div>
-              ))
-            )}
+            {cures.map(cure => (
+              <div key={cure.id} className="cure-item">
+                <h2> Possible Cures for {cure.symptoms} </h2>
+                {cure.description.split(';').map((desc, index) => (
+                  <p key={index}>{desc.trim()}</p>
+                ))}
+              </div>
+            ))}
           </section>
         </section>
-        <section>
+        {/* <section>
           <h1>Add a Cure</h1>
           <form onSubmit={handleAddCure}>
             <input
@@ -114,7 +101,7 @@ function App() {
             />
             <button type="submit">Add Cure</button>
           </form>
-        </section>
+        </section> */}
         </main>
       </>
   );
