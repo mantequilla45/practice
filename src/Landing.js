@@ -79,6 +79,7 @@ const HeroSection = styled.section`
 
 const HeroContent = styled.div`
   width: 50%;
+  margin-bottom: 200px;
   @media (max-width: 1080px) {
     width: 100%;
     text-align: center;
@@ -91,8 +92,7 @@ const HeroTitle = styled.h1`
   font-size: 60px;
   font-weight: bold;
   color: #fff;
-  width: 900px;
-  margin-top: -200px;
+  width: 100%;
   margin-left: 195px;
   @media (max-width: 1080px) {
     font-size: 40px;
@@ -103,6 +103,7 @@ const HeroDescription = styled.p`
   font-family: Rubik, sans-serif;
   font-size: 19px;
   font-weight: regular;
+  width: 80%;
   color: #fff;
   margin-left: 200px;
   margin-top: 0;
@@ -110,7 +111,7 @@ const HeroDescription = styled.p`
 
 const CtaButton = styled(Button)`
   background-color: rgba(255, 255, 255, 0.8);
-  width: 790px; 
+  width: 90%; 
   height: 80px; 
   color: #000;
   border-radius: 10px;
@@ -132,7 +133,7 @@ const HeroImage = styled.img`
 `;
 
 const ServicesSection = styled.section`
-  padding: 80px 60px;
+  padding: 100px 350px 100px 500px;
   background-color: #fff;
   @media (max-width: 991px) {
     padding: 40px 20px;
@@ -141,8 +142,9 @@ const ServicesSection = styled.section`
 
 const SectionTitle = styled.h2`
   font-family: Rubik, sans-serif;
-  font-size: 75px;
+  font-size: 60px;
   font-weight: 600;
+  margin-left: -100px;
   color: #043caa;
   text-align: center;
   margin-bottom: 40px;
@@ -162,7 +164,7 @@ const ServiceCard = styled.article`
 `;
 
 const ServiceContent = styled.div`
-  width: 45%;
+  width: 50%;
   @media (max-width: 991px) {
     width: 100%;
     order: 2;
@@ -171,7 +173,7 @@ const ServiceContent = styled.div`
 
 const ServiceTitle = styled.h3`
   font-family: Rubik, sans-serif;
-  font-size: 35px;
+  font-size: 25px;
   color: #043caa;
   margin-bottom: 20px;
 `;
@@ -186,12 +188,14 @@ const FeatureIcon = styled.img`
   width: 20px;
   height: 20px;
   margin-right: 20px;
+  margin-top: 3px;
 `;
 
 const FeatureText = styled.p`
   font-family: Rubik, sans-serif;
-  font-size: 25px;
+  font-size: 20px;
   color: #333;
+  margin-bottom: 5px;
 `;
 
 const ServiceImage = styled.img`
@@ -226,8 +230,11 @@ const AppointmentTitle = styled.h2`
 const AppointmentButton = styled(Button)`
   background-color: #ed5050;
   color: #000;
-  font-weight: 500;
+  font-weight: 600;
+  width: 15%;
+  border-radius: 10px;
   padding: 14px 24px;
+  border: none;
 `;
 
 const Footer = styled.footer`
@@ -256,7 +263,7 @@ const SocialIcon = styled.img`
 
 const FooterText = styled.p`
   font-family: Rubik, sans-serif;
-  font-size: 18px;
+  font-size: 15px;
 `;
 
 const App = () => {
@@ -341,7 +348,7 @@ const App = () => {
                 <ServiceTitle>{service.title}</ServiceTitle>
                 {service.features.map((feature, featureIndex) => (
                   <ServiceFeature key={featureIndex}>
-                    <FeatureIcon src={`http://b.io/ext_${featureIndex + 4}-`} alt="" />
+                    <FeatureIcon src="https://cdn.builder.io/api/v1/image/assets/TEMP/48d8ee2dc6769b0a06f1845c284f45e5ba63953e81a1e4928fe0cf213d03c6d3?apiKey=d22a939618da4e96809232126d1f951c&%27" alt="Service logo" />
                     <FeatureText>{feature}</FeatureText>
                   </ServiceFeature>
                 ))}
