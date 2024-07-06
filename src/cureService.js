@@ -5,6 +5,10 @@ const cureCollection = collection(data, 'cures');
 
 export const addCure = async (cure)=> {
     try {
+        const cureWithLowercase = {
+            ...cure,
+            symptoms_lowercase: cure.symptoms.toLowerCase()
+        };
         await addDoc(cureCollection, cure);
         console.log('Cure added successfully');
     } catch (error) {
@@ -12,20 +16,14 @@ export const addCure = async (cure)=> {
     }
 };
 
-// export const getCures = async ()=> {
-//     try {
-//         const cureSnapshot = await getDocs(cureCollection);
-//         const cureList = cureSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data }));
-//         return cureList;
-//     } catch (e) {
-//         console.error("Error getting cures: ", e);
-//     }
-// };
-
-export const getCures = async (symptom) => {
+export const getCures = async (symptoms) => {
     try {
-        const q = query(cureCollection, where('symptom', '==', symptom));
+        //const lowerCaseSymptom = symptoms.toLowerCase();
+        const q = query(cureCollection, where('symptoms', '==', symptoms));
         const cureSnapshot = await getDocs(q);
+        // const cureList = cureSnapshot.docs
+        //     .map(doc => ({ id: doc.id, ...doc.data() }))
+        //     .filter(cure => cure.symptoms.toLowerCase() === lowerCaseSymptom);
         const cureList = cureSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         return cureList;
     } catch (e) {
