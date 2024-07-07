@@ -17,85 +17,16 @@ body, html {
   text-decoration: none;
   color: inherit;
 }
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 80px;
-  background-color: #F1F1F3;
-  width: auto;
-  position: relative;
-  z-index: 2;
-}
-
-@media (max-width: 991px) {
-  .header {
-    padding: 20px;
-    flex-wrap: wrap;
-  }
-}
-
-.logo-container {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.logo {
-  width: 151px;
-  height: auto;
-}
-
-.nav {
-  margin-left: auto;
-  display: flex;
-  gap: 20px;
-}
-
-.nav-link {
-  color: #333;
-  font-family: Rubik, sans-serif;
-  font-size: 15px;
-  text-decoration: none;
-}
-
-.nav-sched-link {
-  font-family: Rubik, sans-serif;
-  font-size: 15px;
-  color: #000;
-  display: flex;
-  align-items: center;
-  text-decoration: underline;
-}
-
-.button {
-  font-family: Rubik, sans-serif;
-  font-size: 15px;
-  color: #000;
-  font-weight: bold;
-  background-color: #fff;
-  border: 1px solid rgba(137, 137, 137, 1);
-  border-radius: 50px;
-  padding: 15px 30px;
-  cursor: pointer;
-}
-  
-  @media (max-width: 991px) {
-    .button {
-      padding: 15px 20px;
-    }
-  }
   
   .background-image {
-    position: fixed; /* Position the background image fixed */
+    position: fixed; 
     top: 0;
-    right: 0; /* Position the background image from the left */
-    width: 50vw; /* Make the width half of the viewport width */
-    height: 100vh; /* Make the height fit the full viewport height */
+    right: 0; 
+    width: 50vw; 
+    height: 100vh;
     object-fit: cover;
-    background-size: cover; /* Ensure the image covers the whole element */
-    background-position: left; /* Align the background image to the left */
+    background-size: cover; 
+    background-position: left;
   }
 
 .main-content {
