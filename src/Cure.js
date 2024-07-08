@@ -25,14 +25,15 @@ function App() {
     setSymptom('');
     setDescription('');
     // Refresh the cure list once added
-    const cureList = await getCures('');
-    setCures(cureList);
+    //const cureList = await getCures('');
+    //setCures(cureList);
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
     const cureList = await getCures(symptoms);
-    setSearchResults(cureList);
+    setCures(cureList);
+    //setSymptom('');
   };
 
   return (
@@ -61,7 +62,7 @@ function App() {
           </section>
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <section className="cure-list">
-            {searchResults.map(cure => (
+            {cures.map(cure => (
               <div key={cure.id} className="cure-item">
                 <h2> Possible Cures for {cure.symptoms} </h2>
                 {cure.description.split(';').map((desc, index) => (
@@ -94,6 +95,6 @@ function App() {
         </main>
       </>
   );
-}
+};
 
 export default App;
