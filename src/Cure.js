@@ -9,7 +9,7 @@ function App() {
   const [description, setDescription] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  
+
   useEffect(() => {
     const fetchCures = async () => {
       const cureList = await getCures('');
@@ -24,16 +24,15 @@ function App() {
     await addCure(newCure);
     setSymptom('');
     setDescription('');
-    //refresh the curelist once added
-    //const cureList = await getCures();
-    //setCures(cureList);
+    // Refresh the cure list once added
+    const cureList = await getCures('');
+    setCures(cureList);
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
     const cureList = await getCures(symptoms);
-    setCures(cureList);
-    //setSymptom('');
+    setSearchResults(cureList);
   };
 
   return (
@@ -52,7 +51,7 @@ function App() {
                 placeholder="Type symptom here."
                 aria-label="Type symptom here."
                 value={symptoms}
-                onChange={(e)=> setSymptom(e.target.value)}
+                onChange={(e) => setSymptom(e.target.value)}
               />
               <button type="submit" aria-label="Search" className="search-button">
                 <h1 className="search-button-text">Search Symptom</h1>
@@ -62,7 +61,7 @@ function App() {
           </section>
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <section className="cure-list">
-            {cures.map(cure => (
+            {searchResults.map(cure => (
               <div key={cure.id} className="cure-item">
                 <h2> Possible Cures for {cure.symptoms} </h2>
                 {cure.description.split(';').map((desc, index) => (
@@ -95,6 +94,6 @@ function App() {
         </main>
       </>
   );
-};
+}
 
 export default App;
