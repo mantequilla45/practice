@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import './Cure.css';
 import { addCure, getCures } from "./cureService";
 import Header from './Header'
+import Fuse from "fuse.js";
 
 function App() {
   const [cures, setCures] = useState([]);
@@ -9,11 +10,12 @@ function App() {
   const [description, setDescription] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [allCures, setAllCures] = useState([]);
 
   useEffect(() => {
     const fetchCures = async () => {
       const cureList = await getCures('');
-      setCures(cureList);
+      setAllCures(cureList);
     };
     fetchCures();
   }, []);
@@ -32,7 +34,18 @@ function App() {
   const handleSearch = async (e) => {
     e.preventDefault();
     const cureList = await getCures(symptoms);
-    setCures(cureList);
+
+    const options = {
+      includeScore: true,
+      keys: ['symptoms']
+    };
+
+    const fuse = new Fuse(allCures, options);
+    const result = fuse.search(symptoms);
+
+    const filteredCures = result.map(cure => cure.item);
+
+    setCures(filteredCures);
     //setSymptom('');
   };
 
