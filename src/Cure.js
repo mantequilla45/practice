@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import './Cure.css';
 import { addCure, getCures } from "./cureService";
-import Header from './Header'
-import Fuse from "fuse.js";
+import Header from './Header';
 
 function App() {
   const [cures, setCures] = useState([]);
   const [symptoms, setSymptom] = useState('');
   const [description, setDescription] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
   const [allCures, setAllCures] = useState([]);
 
   useEffect(() => {
     const fetchCures = async () => {
       const cureList = await getCures('');
       setAllCures(cureList);
+      setCures(cureList); // Set initial cures list
     };
     fetchCures();
   }, []);
@@ -26,32 +25,22 @@ function App() {
     await addCure(newCure);
     setSymptom('');
     setDescription('');
-    // Refresh the cure list once added
-    //const cureList = await getCures('');
-    //setCures(cureList);
+    const updatedCureList = await getCures('');
+    setAllCures(updatedCureList);
+    setCures(updatedCureList); // Refresh the cure list once added
   };
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
-    const cureList = await getCures(symptoms);
-
-    const options = {
-      includeScore: true,
-      keys: ['symptoms']
-    };
-
-    const fuse = new Fuse(allCures, options);
-    const result = fuse.search(symptoms);
-
-    const filteredCures = result.map(cure => cure.item);
-
+    const filteredCures = allCures.filter(cure => 
+      cure.symptoms.toLowerCase() === searchTerm.toLowerCase()
+    );
     setCures(filteredCures);
-    //setSymptom('');
   };
 
   return (
     <>
-    <Header />
+      <Header />
       <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe2f0a109be8118d3d4f82e0383523128dd7d2ba1fecff3c0d628cd098876def?apiKey=d22a939618da4e96809232126d1f951c&" alt="Background" className="background-image" />
       <main className="main-content">
         <section className="hero-section">
@@ -64,8 +53,8 @@ function App() {
                 className="search-input"
                 placeholder="Type symptom here."
                 aria-label="Type symptom here."
-                value={symptoms}
-                onChange={(e) => setSymptom(e.target.value)}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button type="submit" aria-label="Search" className="search-button">
                 <h1 className="search-button-text">Search Symptom</h1>
@@ -85,6 +74,7 @@ function App() {
             ))}
           </section>
         </section>
+        {/* Uncomment this section if you want to add new cures */}
         {/* <section>
           <h1>Add a Cure</h1>
           <form onSubmit={handleAddCure}>
@@ -105,8 +95,8 @@ function App() {
             <button type="submit">Add Cure</button>
           </form>
         </section> */}
-        </main>
-      </>
+      </main>
+    </>
   );
 };
 
