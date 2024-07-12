@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import './Cure.css';
 import { addCure, getCures } from "./cureService";
 import Header from './Header';
+import Fuse from "fuse.js";
 
 function App() {
   const [cures, setCures] = useState([]);
@@ -14,7 +15,6 @@ function App() {
     const fetchCures = async () => {
       const cureList = await getCures('');
       setAllCures(cureList);
-      setCures(cureList); // Set initial cures list
     };
     fetchCures();
   }, []);
@@ -26,15 +26,29 @@ function App() {
     setSymptom('');
     setDescription('');
     const updatedCureList = await getCures('');
-    setAllCures(updatedCureList);
-    setCures(updatedCureList); // Refresh the cure list once added
+    setAllCures(updatedCureList); // Refresh the cure list once added
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const filteredCures = allCures.filter(cure => 
-      cure.symptoms.toLowerCase() === searchTerm.toLowerCase()
+
+    const options = {
+      includeScore: true,
+      keys: ['symptoms'],
+      threshold: 0.3,
+      distance: 100,
+    };
+
+    // Ensure case-insensitive search
+    const fuse = new Fuse(
+      allCures.map(cure => ({ ...cure, symptoms: cure.symptoms })),
+      options
     );
+
+    const result = fuse.search(searchTerm.toLowerCase());
+
+    const filteredCures = result.map(cure => cure.item);
+
     setCures(filteredCures);
   };
 
@@ -98,6 +112,6 @@ function App() {
       </main>
     </>
   );
-};
+}
 
 export default App;
