@@ -90,7 +90,6 @@ body, html {
     width: 120%;
     justify-content: center;
     align-items: center;
-    margin-top: -2.5%;
     margin-left: 100px;
     align-items: center;
     border-radius: 10px;
@@ -118,7 +117,7 @@ body, html {
   .search-input {
     border-radius: 10px 0 0 10px;
     background-color: #fff;
-    width: 68%;
+    width: 82%;
     height: 75px;
     border: none;
     padding: 0 20px;
@@ -133,31 +132,23 @@ body, html {
   
   .search-button {
     display: flex;
-    justify-content: center; /* This centers the content horizontally */
-    align-items: center; /* This centers the content vertically */
-    background-color: #B4DE71;
+    justify-content: center;
+    align-items: center; 
+    object-fit: contain;
+    background-color: #ffffff;
+    background-image: url('https://cdn.builder.io/api/v1/image/assets/TEMP/11cf22dc84005320270c29d337aad99dab33d84b7fffd35fd519a4f7eb7a8ca4?apiKey=d22a939618da4e96809232126d1f951c&');
+    background-size: 50px 50px;
+
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
     border: none;
     border-radius: 0 10px 10px 0;
-    width: 300px;
+    width: 7%;
     height: 75px;
     cursor: pointer;
-  }
-  .search-button-text {
-    font-family: Rubik, sans-serif;
-    color: #545252;
-    font-size: 15px;
-    margin-top: 6px;
-    margin-left: -20px;
-    padding-right: 30px;
-    font-weight: normal;
-  }
-  
-  .search-icon {
-    margin-right: -80px;
-    width: 75px;
-    height: 15px;
-  }
-  
+}
+
+
   .cure-list {
     margin-top: 20px;
     width: 100%;
@@ -170,4 +161,41 @@ body, html {
     border-radius: 5px;
     background-color: #fff;
   }
+
+  .background_box
+  {
+    color: #535353;
+    font-family: 'Rubik', sans-serif;
+    font-size: 18px;
+    display: flex;
+    margin-top: 10px;
+    margin-left: 130px;
+  }
   
+  .toggle_box
+  {
+    width: 50px;
+    height: 25px;
+    display: block;
+    background-color: #D9D9D9;
+    margin-left: 10px;
+    border-radius: 1000px;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid #535353;
+  }
+
+input[type="checkbox"]{
+   display:none; 
+}
+  .circle
+  {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: #777777;
+    border-radius: 1000px;
+    margin-left: 2px;
+    margin-top: 1.8px;
+    transition: 0.3s;
+  }
