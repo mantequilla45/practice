@@ -74,7 +74,7 @@ body, html {
   
   .hero-description {
     color: #786d6d;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-left: 100px;
     font: 18px Rubik, sans-serif;
   }
@@ -104,7 +104,7 @@ body, html {
   .search-form {
     display: flex;
     width: 100%;
-    margin-top: 40px;
+    margin-top: 10px;
   }
   
   @media (max-width: 991px) {

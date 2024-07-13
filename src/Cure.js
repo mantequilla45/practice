@@ -79,8 +79,17 @@ useEffect(() => {
       <Header />
       <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe2f0a109be8118d3d4f82e0383523128dd7d2ba1fecff3c0d628cd098876def?apiKey=d22a939618da4e96809232126d1f951c&" alt="Background" className="background-image" />
       <main className="main-content">
+        
+
+      
         <section className="hero-section">
           <h1 className="hero-title">Welcome to BSDOC</h1>
+          <div class="background_box">Advanced Search
+            <label class="toggle_box">
+              <input type="checkbox" id="checkbox" ref={checkboxRef} />
+              <div class="circle" ref={circleRef}></div>
+            </label>
+          </div>
           <section className="search-section">
             <form className="search-form" onSubmit={handleSearch}>
               <input
@@ -96,13 +105,6 @@ useEffect(() => {
               </button>
             </form>
           </section>
-
-          <div class="background_box">Advanced Search
-            <label class="toggle_box">
-              <input type="checkbox" id="checkbox" ref={checkboxRef} />
-              <div class="circle" ref={circleRef}></div>
-            </label>
-          </div>
 
 
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
