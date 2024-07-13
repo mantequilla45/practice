@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import './Cure.css';
 import { addCure, getCures } from "./cureService";
 import Header from './Header';
@@ -52,6 +52,28 @@ function App() {
     setCures(filteredCures);
   };
 
+//toggle button start 
+const circleRef = useRef(null);
+const checkboxRef = useRef(null);
+
+const handleToggle = () => {
+  if (checkboxRef.current) {
+    circleRef.current.style.left = checkboxRef.current.checked ? '24px' : '0px';
+  }
+};
+useEffect(() => {
+  if (checkboxRef.current) {
+    checkboxRef.current.addEventListener('click', handleToggle);
+  }
+
+  return () => {
+    if (checkboxRef.current) {
+      checkboxRef.current.removeEventListener('click', handleToggle); 
+    }
+  };
+}, []); 
+//toggle button end 
+
   return (
     <>
       <Header />
@@ -71,11 +93,18 @@ function App() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button type="submit" aria-label="Search" className="search-button">
-                <h1 className="search-button-text">Search Symptom</h1>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/b58ee50fb2d2388824c311d90e981de513f2169502c99f9030074d05ffd099b8?apiKey=d22a939618da4e96809232126d1f951c&" alt="Search Icon" className="search-icon" />
               </button>
             </form>
           </section>
+
+          <div class="background_box">Advanced Search
+            <label class="toggle_box">
+              <input type="checkbox" id="checkbox" ref={checkboxRef} />
+              <div class="circle" ref={circleRef}></div>
+            </label>
+          </div>
+
+
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <section className="cure-list">
             {cures.map(cure => (
