@@ -6,8 +6,8 @@ import Header from './Header'
 const SectionWrapper = styled.section`
   align-items: center;
   display: flex;
-  margin-top: 75px;
   width: 100%;
+  padding-top: 75px;
   flex-direction: column;
   padding: 80px;
   @media (max-width: 991px) {
@@ -18,6 +18,7 @@ const SectionWrapper = styled.section`
 `;
 
 const ContentContainer = styled.div`
+ 
   padding-left: 60px;
   display: flex;
   width: 100%;
@@ -53,7 +54,6 @@ const LeftColumn = styled.div`
   flex-direction: column;
   line-height: normal;
   width: 60%;
-  margin-left: 0px;
   @media (max-width: 991px) {
     width: 100%;
   }
@@ -143,7 +143,7 @@ const IllustrationImage = styled.img`
   background-color: rgba(255, 255, 255, 1);
   max-width: 796px;
   margin-left: 26px;
-  margin-top: -250px;
+  margin-top: -180px;
   @media (max-width: 991px) {
     max-width: 100%;
     margin-top: 40px;
@@ -240,7 +240,7 @@ const AboutSection = () => (
             </AboutContent>
           </LeftColumn>
           <RightColumn>
-            <AboutImage loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3b3fd8c73c89bda0436035ff9da11995de8b4513c0ca5e40958da619be65df54?apiKey=d22a939618da4e96809232126d1f951c&" alt="About Us Illustration" />
+            <AboutImage loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7032c94fcba7e096250c9ddbbb838720a063a873c6812c47f2b7f9551073e6fc?apiKey=d22a939618da4e96809232126d1f951c&" alt="About Us Illustration" />
           </RightColumn>
         </TwoColumnLayout>
       </FlexContainer>
@@ -314,14 +314,6 @@ const ContentWrapper = styled.div`
   z-index: 1; 
   background-color: #FFFFFF;
 `;
-const GlobalStyle = createGlobalStyle`
-  body {
-  
-    background-color: #FFFFFF; /* Set background color to white */
-    margin: 0; /* Remove default margin */
-    font-family: 'Rubik', sans-serif; /* Example font-family */
-  }
-`;
 const StyledBackground = styled.div`
   background-image: url('https://cdn.builder.io/api/v1/image/assets/TEMP/edd13ab24828baf3f98ccfa3c20227a156a3a382d266c2869478fa87940be426?apiKey=d22a939618da4e96809232126d1f951c&');
   background-size: cover;
@@ -335,7 +327,6 @@ const StyledBackground = styled.div`
 `;
 const App = () => (
   <div>
-    <GlobalStyle />
     <Header />
     <ContentWrapper>
       <AboutSection />

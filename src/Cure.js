@@ -10,6 +10,7 @@ function App() {
   const [description, setDescription] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [allCures, setAllCures] = useState([]);
+  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false); // State for advanced search toggle
 
   useEffect(() => {
     const fetchCures = async () => {
@@ -52,61 +53,64 @@ function App() {
     setCures(filteredCures);
   };
 
-//toggle button start 
-const circleRef = useRef(null);
-const checkboxRef = useRef(null);
+  // Toggle button functionality
+  const circleRef = useRef(null);
+  const checkboxRef = useRef(null);
 
-const handleToggle = () => {
-  if (checkboxRef.current) {
-    circleRef.current.style.left = checkboxRef.current.checked ? '24px' : '0px';
-  }
-};
-useEffect(() => {
-  if (checkboxRef.current) {
-    checkboxRef.current.addEventListener('click', handleToggle);
-  }
-
-  return () => {
+  const handleToggle = () => {
     if (checkboxRef.current) {
-      checkboxRef.current.removeEventListener('click', handleToggle); 
+      circleRef.current.style.left = checkboxRef.current.checked ? '24px' : '0px';
+      setIsAdvancedSearch(checkboxRef.current.checked);
     }
   };
-}, []); 
-//toggle button end 
+
+  useEffect(() => {
+    if (checkboxRef.current) {
+      checkboxRef.current.addEventListener('click', handleToggle);
+    }
+
+    return () => {
+      if (checkboxRef.current) {
+        checkboxRef.current.removeEventListener('click', handleToggle); 
+      }
+    };
+  }, []); 
 
   return (
-    <>
+    <div className={`cure-container ${isAdvancedSearch ? 'advanced-search-active' : ''}`}>
       <Header />
-      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe2f0a109be8118d3d4f82e0383523128dd7d2ba1fecff3c0d628cd098876def?apiKey=d22a939618da4e96809232126d1f951c&" alt="Background" className="background-image" />
       <main className="main-content">
-        
-
-      
         <section className="hero-section">
           <h1 className="hero-title">Welcome to BSDOC</h1>
-          <div class="background_box">Advanced Search
-            <label class="toggle_box">
+          <div className="background_box">Advanced Search
+            <label className="toggle_box">
               <input type="checkbox" id="checkbox" ref={checkboxRef} />
-              <div class="circle" ref={circleRef}></div>
+              <div className="circle" ref={circleRef}></div>
             </label>
           </div>
-          <section className="search-section">
-            <form className="search-form" onSubmit={handleSearch}>
-              <input
-                type="text"
-                id="symptomSearch"
-                className="search-input"
-                placeholder="Type symptom here."
-                aria-label="Type symptom here."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <button type="submit" aria-label="Search" className="search-button">
-              </button>
-            </form>
-          </section>
 
-
+          {isAdvancedSearch ? (
+            <div className="advanced-search-container active">
+              {/* Advanced search content goes here */}
+              <p>Advanced search options</p>
+            </div>
+          ) : (
+            <section className="search-section">
+              <form className="search-form" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  id="symptomSearch"
+                  className="search-input"
+                  placeholder="Type symptom here."
+                  aria-label="Type symptom here."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button type="submit" aria-label="Search" className="search-button">
+                </button>
+              </form>
+            </section>
+          )}
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <section className="cure-list">
             {cures.map(cure => (
@@ -118,30 +122,12 @@ useEffect(() => {
               </div>
             ))}
           </section>
+          
         </section>
-        {/* Uncomment this section if you want to add new cures */}
-        {/* <section>
-          <h1>Add a Cure</h1>
-          <form onSubmit={handleAddCure}>
-            <input
-              type="text"
-              placeholder="Symptom"
-              value={symptoms}
-              onChange={(e) => setSymptom(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-            <button type="submit">Add Cure</button>
-          </form>
-        </section> */}
+        
       </main>
-    </>
+      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe2f0a109be8118d3d4f82e0383523128dd7d2ba1fecff3c0d628cd098876def?apiKey=d22a939618da4e96809232126d1f951c&" alt="Background" className="background-image" />
+    </div>
   );
 }
 
