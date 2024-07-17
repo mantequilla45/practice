@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { auth, googleProvider, signInWithPopup } from './firebase'; // Ensure this path is correct
+import { auth, googleProvider, signInWithPopup, signInWithEmailAndPassword } from './firebase'; // Ensure this path is correct
 
 const Buttonn = styled.button`
   font-family: Rubik, sans-serif;
@@ -64,7 +64,7 @@ const Login = ({ className }) => {
         <Modal.Body>
           <SocialLoginOptions handleClose={handleClose}/>
           <Divider />
-          <LoginForm />
+          <LoginForm handleClose={handleClose}/>
           <SignupPrompt />
         </Modal.Body>
       </Modal>
@@ -109,15 +109,31 @@ const Divider = () => (
   </div>
 );
 
-const LoginForm = () => (
-  <form className="login-form">
-    <label htmlFor="username" className="visually-hidden">Username</label>
-    <input type="text" id="username" className="login-input" placeholder="username" />
-    <label htmlFor="password" className="visually-hidden">Password</label>
-    <input type="password" id="password" className="login-input" placeholder="password" />
-    <button type="submit" className="login-button">Login</button>
-  </form>
-);
+const LoginForm = ({ handleClose }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Login successful:', userCredential.user);
+      handleClose();
+    } catch (e) {
+      console.error('Error during login: ', e);
+    }
+  }
+
+  return (
+    <form className="login-form">
+      <label htmlFor="username" className="visually-hidden">Username</label>
+      <input type="text" id="username" className="login-input" placeholder="username" />
+      <label htmlFor="password" className="visually-hidden">Password</label>
+      <input type="password" id="password" className="login-input" placeholder="password" />
+      <button type="submit" className="login-button">Login</button>
+    </form>
+  );
+}
 
 const SignupPrompt = () => (
   <p className="signup-prompt">
