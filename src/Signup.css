@@ -144,4 +144,11 @@
         white-space: nowrap;
         border: 0;
     }
+
+    .error-text {
+        color: red;
+        font-size: 14px;
+        text-align: center;
+        margin-top: -15px; /* Adjust as needed */
+    }
     

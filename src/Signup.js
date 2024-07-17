@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Signup.css';
+import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
+import { auth } from './firebase';
 
 const Button = styled.button`
   font-family: Rubik, sans-serif;
@@ -21,6 +23,7 @@ const Button = styled.button`
 
 const Signup = ({ className }) => {
   const [show, setShow] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const handleShow = () => {
     setShow(true);
@@ -67,7 +70,7 @@ const Signup = ({ className }) => {
             <SocialSignupOptions />
             <Divider />
           
-          <SignupForm />
+          <SignupForm handleClose={handleClose}/>
           <LoginPrompt />
         </Modal.Body>
       </Modal>
@@ -100,19 +103,64 @@ const Divider = () => (
   </div>
 );
 
-const SignupForm = () => (
-  <form className="signup-form">
-    <label htmlFor="username" className="visually-hidden">Username</label>
-    <input type="text" id="username" className="signup-input" placeholder="username" />
-    <label htmlFor="email" className="visually-hidden">Email</label>
-    <input type="email" id="email" className="signup-input" placeholder="email" />
-    <label htmlFor="password" className="visually-hidden">Password</label>
-    <input type="password" id="password" className="signup-input" placeholder="password" />
-    <label htmlFor="confirm-password" className="visually-hidden">Confirm Password</label>
-    <input type="password" id="confirm-password" className="signup-input" placeholder="reenter password" />
-    <button className="signup-button">Sign Up</button>
-  </form>
-);
+const SignupForm = ({ handleClose }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSignup = async (event) => {
+    event.preventDefault();
+
+    if (password.length < 6) {
+      setError('Password must at least be six characters long.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    setError('');
+    try {
+      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+
+      if (signInMethods.length > 0) {
+        setError('Username is already in use.');
+        return;
+      }
+
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('Signup successful:', userCredential.user);
+      // You can also save the username to the database here if needed
+      handleClose();
+    } catch (e) {
+      console.error('Error during signup:', e);
+      if (e.code === 'auth/email-already-in-use'){
+        setError('Email is already in use.');
+      }
+      else {
+        setError('Failed to sign up. Please try again.');
+      }
+    }
+  };
+
+  return (
+    <form className="signup-form" onSubmit={handleSignup}>
+      <label htmlFor="username" className="visually-hidden">Username</label>
+      <input type="text" id="username" className="signup-input" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+      <label htmlFor="email" className="visually-hidden">Email</label>
+      <input type="email" id="email" className="signup-input" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <label htmlFor="password" className="visually-hidden">Password</label>
+      <input type="password" id="password" className="signup-input" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+      <label htmlFor="confirm-password" className="visually-hidden">Confirm Password</label>
+      <input type="password" id="confirm-password" className="signup-input" placeholder="reenter password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+      {error && <p className="error-text">{error}</p>}
+      <button type="submit" className="signup-button">Sign Up</button>
+    </form>
+  );
+};
 
 const LoginPrompt = () => (
   <p className="login-prompt">
