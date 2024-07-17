@@ -4,6 +4,102 @@ import { addCure, getCures } from "./cureService";
 import Header from './Header';
 import Fuse from "fuse.js";
 
+// Advanced Search Components
+const AdvancedSearchHeader = () => (
+  <div className="advanced-search-header">
+    <h1 className="advanced-search-header-title">BSDOC Advanced Symptoms Search</h1>
+    <p className="advanced-search-header-subtitle">
+      Please fill the following form with the symptoms you are feeling.
+    </p>
+  </div>
+);
+
+const PersonalInfoForm = () => (
+  <div className="advanced-search-form-field">
+    <label className="advanced-search-form-label" htmlFor="name">Name</label>
+    <input className="advanced-search-form-input" id="name" type="text" placeholder="Your answer" />
+    <label className="advanced-search-form-label" htmlFor="age">Age</label>
+    <input className="advanced-search-form-input" id="age" type="number" placeholder="Your answer" />
+    <label className="advanced-search-form-label">Gender</label>
+    <div className="advanced-search-radio-group">
+      <div className="advanced-search-radio-option">
+        <input className="advanced-search-radio-input" type="radio" id="female" name="gender" />
+        <label className="advanced-search-radio-label" htmlFor="female">Female</label>
+      </div>
+      <div className="advanced-search-radio-option">
+        <input className="advanced-search-radio-input" type="radio" id="male" name="gender" />
+        <label className="advanced-search-radio-label" htmlFor="male">Male</label>
+      </div>
+    </div>
+    <label className="advanced-search-form-label" htmlFor="weight">Weight</label>
+    <input className="advanced-search-form-input" id="weight" type="number" placeholder="Your answer" />
+  </div>
+);
+
+const SymptomCheckList = () => {
+  const symptoms = [
+    'Headache', 'Fever', 'Cold', 'Cold with phlegm',
+    'Dry cough', 'Loss of appetite', 'Diarrhea', 'Constipation',
+    'Nausea', 'Vomiting', 'Fatigue', 'Muscle pain'
+  ];
+
+  return (
+    <div className="advanced-search-checklist-section">
+      <h2 className="advanced-search-checklist-title">Symptoms</h2>
+      <div className="advanced-search-checklist-grid">
+        {symptoms.map((symptom, index) => (
+          <div key={index} className="advanced-search-checkbox-item">
+            <input className="advanced-search-checkbox" type="checkbox" id={`symptom-${index}`} />
+            <label className="advanced-search-checkbox-label" htmlFor={`symptom-${index}`}>{symptom}</label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const HealthConditionsList = () => {
+  const healthConditions = [
+    'High blood pressure', 'Diabetes', 'Tuberculosis', 'Kidney disease',
+    'Liver disease', 'Heart disease', 'Asthma', 'Cancer'
+  ];
+
+  return (
+    <div className="advanced-search-checklist-section">
+      <h2 className="advanced-search-checklist-title">Underlying health conditions</h2>
+      <div className="advanced-search-conditions-grid">
+        {healthConditions.map((condition, index) => (
+          <div key={index} className="advanced-search-checkbox-item">
+            <input className="advanced-search-checkbox" type="checkbox" id={`condition-${index}`} />
+            <label className="advanced-search-checkbox-label" htmlFor={`condition-${index}`}>{condition}</label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const AdvancedSearchForm = () => (
+  <form className=".advanced-search-container.active">
+    <AdvancedSearchHeader />
+    <div className="advanced-search-form-content">
+      <div className="advanced-search-symptom-section">
+        <PersonalInfoForm />
+      </div>
+      <div className="advanced-search-conditions-section">
+        <SymptomCheckList />
+        <HealthConditionsList />
+        <div className="advanced-search-button-container">
+          <button className="advanced-search-add-record-button" type="button">
+            <span className="advanced-search-plus-icon"></span> Add another symptom
+          </button>
+          <button className="advanced-search-assess-button" type="submit">Assess</button>
+        </div>
+      </div>
+    </div>
+  </form>
+);
+
 function App() {
   const [cures, setCures] = useState([]);
   const [symptoms, setSymptom] = useState('');
@@ -91,8 +187,7 @@ function App() {
 
           {isAdvancedSearch ? (
             <div className="advanced-search-container active">
-              {/* Advanced search content goes here */}
-              <p>Advanced search options</p>
+              <AdvancedSearchForm />
             </div>
           ) : (
             <section className="search-section">

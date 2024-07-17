@@ -22,7 +22,6 @@
   
   .nav {
     margin-left: auto;
-    display: flex;
     gap: 20px;
   }
   
@@ -42,6 +41,12 @@
     text-decoration: underline;
   }
   
+  @media (max-width: 991px) {
+    .nav-sched-link {
+      visibility: hidden;
+      
+    }
+  }
   .button {
     font-family: Rubik, sans-serif;
     font-size: 15px;
