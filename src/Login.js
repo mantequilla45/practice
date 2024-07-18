@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { auth, googleProvider, signInWithPopup, signInWithEmailAndPassword } from './firebase'; // Ensure this path is correct
+import { auth, googleProvider, signInWithPopup, signInWithEmailAndPassword, data } from './firebase'; // Ensure this path is correct
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 const Buttonn = styled.button`
   font-family: Rubik, sans-serif;
@@ -110,26 +111,60 @@ const Divider = () => (
 );
 
 const LoginForm = ({ handleClose }) => {
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
+      let email = usernameOrEmail;
+
+      if (!usernameOrEmail.includes('@')) {
+        const q = query(collection(data, 'users'), where('username', '==', usernameOrEmail));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          setError('Username not found');
+          return;
+        }
+        else {
+          const userDoc = querySnapshot.docs[0];
+          if (userDoc && userDoc.exists()) {
+            email = userDoc.data().email;
+          } else {
+            setError('Username not found');
+            return;
+          }
+        }
+      }
+
+
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('Login successful:', userCredential.user);
       handleClose();
     } catch (e) {
-      console.error('Error during login: ', e);
+      if (e.code === 'auth/wrong-password') {
+        setError('Incorrect password');
+      }
+      else if (e.code === 'auth/user-not-found') {
+        setError('User does not exist');
+      }
+      else {
+        console.error('Error during login: ', e);
+        setError('Failed to login, try again.');
+      }
+      //console.error('Error during login: ', e);
     }
   }
 
   return (
-    <form className="login-form">
-      <label htmlFor="username" className="visually-hidden">Username</label>
-      <input type="text" id="username" className="login-input" placeholder="username" />
+    <form className="login-form" onSubmit={handleLogin}>
+      <label htmlFor="usernameOrEmail" className="visually-hidden">Username or Email</label>
+      <input type="text" id="usernameOrEmail" className="login-input" placeholder="username or email" value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} required />
       <label htmlFor="password" className="visually-hidden">Password</label>
-      <input type="password" id="password" className="login-input" placeholder="password" />
+      <input type="password" id="password" className="login-input" placeholder="password" vale={password} onChange={(e) => setPassword(e.target.value)} required />
+      {error && <p className='error-text'>{error}</p>}
       <button type="submit" className="login-button">Login</button>
     </form>
   );
