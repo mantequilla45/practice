@@ -89,13 +89,12 @@ const AdvancedSearchForm = () => (
       <div className="advanced-search-conditions-section">
         <SymptomCheckList />
         <HealthConditionsList />
-        <div className="advanced-search-button-container">
-          <button className="advanced-search-add-record-button" type="button">
-            <span className="advanced-search-plus-icon"></span> Add another symptom
-          </button>
+          <div className="advanced-search-button-container">
+            <input type="checkbox" id="add-record-checkbox" />
+            <label className="add-record-label">Add record</label>
           <button className="advanced-search-assess-button" type="submit">Assess</button>
         </div>
-      </div>
+      </div>  
     </div>
   </form>
 );
@@ -157,7 +156,16 @@ function App() {
     if (checkboxRef.current) {
       circleRef.current.style.left = checkboxRef.current.checked ? '24px' : '0px';
       setIsAdvancedSearch(checkboxRef.current.checked);
+      
+      const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.style.marginTop = checkboxRef.current.checked ? '-120px' : '0';
     }
+
+    setIsAdvancedSearch(checkboxRef.current.checked);
+    }
+
+    
   };
 
   useEffect(() => {
@@ -180,7 +188,7 @@ function App() {
           <h1 className="hero-title">Welcome to BSDOC</h1>
           <div className="background_box">Advanced Search
             <label className="toggle_box">
-              <input type="checkbox" id="checkbox" ref={checkboxRef} />
+              <input type="checkbox" id="uniqueCheckbox" ref={checkboxRef} />
               <div className="circle" ref={circleRef}></div>
             </label>
           </div>
