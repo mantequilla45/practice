@@ -4,7 +4,8 @@ import {Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Signup.css';
 import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth, data } from './firebase';
+import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 
 const Button = styled.button`
   font-family: Rubik, sans-serif;
@@ -124,16 +125,31 @@ const SignupForm = ({ handleClose }) => {
     }
     setError('');
     try {
-      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      // const signInMethods = await fetchSignInMethodsForEmail(auth, email);
 
-      if (signInMethods.length > 0) {
-        setError('Username is already in use.');
+      // if (signInMethods.length > 0) {
+      //   setError('Username is already in use.');
+      //   return;
+      // }
+
+      const q = query(collection(data, 'users'), where('username', '==', username));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        setError('Username is already in use');
         return;
       }
 
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Signup successful:', userCredential.user);
-      // You can also save the username to the database here if needed
+      const user = userCredential.user;
+
+      // store user to database
+
+      await setDoc(doc(data, 'users', user.uid), {
+        username: username,
+        email: email
+      });
+
+      console.log('Signup successful:', user);
       handleClose();
     } catch (e) {
       console.error('Error during signup:', e);
