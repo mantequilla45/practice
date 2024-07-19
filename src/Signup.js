@@ -6,6 +6,7 @@ import './Signup.css';
 import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { auth, data } from './firebase';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import StyledLoginPage from './Login';
 
 const Button = styled.button`
   font-family: Rubik, sans-serif;
@@ -22,28 +23,39 @@ const Button = styled.button`
   }
 `;
 
-const Signup = ({ className }) => {
+const Signup = ({ className, handleHide }) => {
   const [show, setShow] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
   const handleShow = () => {
     setShow(true);
     document.body.style.overflowY = 'auto';
+    
   };
 
-  const handleHide = () => {
+  const handleShowSignUp = ()=> {
+    setShowSignup(true);
+    handleHide();
+  }
+
+  const handleCloseSignUp = ()=> {
+    setShowSignup(false);
+  }
+
+  const handleSignupHide = () => {
     setShow(false);
     document.body.style.overflowY = 'hidden'; 
   };
 
-  const handleClose = () => {
+  const handleSignupClose = () => {
     setShow(false);
   };
 
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.keyCode === 27) {
-        handleClose();
+        handleSignupClose();
       }
     };
     window.addEventListener('keydown', handleEscape);
@@ -52,10 +64,10 @@ const Signup = ({ className }) => {
 
   return (
     <>
-      <Button onClick={handleShow}>Sign Up</Button>
+      <Button onClick={handleShow || handleShowSignUp}>Sign Up</Button>
       <Modal
         show={show}
-        onHide={handleHide}
+        onHide={handleSignupClose}
         backdrop="static"
         keyboard={false}
         centered
@@ -71,8 +83,8 @@ const Signup = ({ className }) => {
             <SocialSignupOptions />
             <Divider />
           
-          <SignupForm handleClose={handleClose}/>
-          <LoginPrompt />
+          <SignupForm handleSignupClose={handleSignupClose}/>
+          <LoginPrompt handle/>
         </Modal.Body>
       </Modal>
     </>
@@ -104,7 +116,7 @@ const Divider = () => (
   </div>
 );
 
-const SignupForm = ({ handleClose }) => {
+const SignupForm = ({ handleSignupClose }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -150,7 +162,7 @@ const SignupForm = ({ handleClose }) => {
       });
 
       console.log('Signup successful:', user);
-      handleClose();
+      handleSignupClose();
     } catch (e) {
       console.error('Error during signup:', e);
       if (e.code === 'auth/email-already-in-use'){
@@ -178,9 +190,9 @@ const SignupForm = ({ handleClose }) => {
   );
 };
 
-const LoginPrompt = () => (
+const LoginPrompt = ({ handleSignupHide }) => (
   <p className="login-prompt">
-    Already have an account? <a href="#" className="login-link">Login.</a>
+    Already have an account? <StyledLoginPage handleSignupHide={handleSignupHide}/>
   </p>
 );
 

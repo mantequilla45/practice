@@ -2,6 +2,7 @@ import { data } from "./firebase";
 import { collection, addDoc, getDocs, query, where, getDoc } from "firebase/firestore";
 
 const cureCollection = collection(data, 'cures');
+const combinedSymptomsCollection = collection(data, 'combinedsymptoms');
 
 export const addCure = async (cure) => {
     try {
@@ -39,6 +40,17 @@ export const getCures = async ()=> {
         return cureList;
     } catch (e) {
         console.error('Error getting cures: ', e);
+        return [];
+    }
+};
+
+export const getCombinedSymptoms = async ()=> {
+    try {
+        const combinedsymptomsSnapshot = await getDocs(combinedSymptomsCollection);
+        const combinedSymptomsList = combinedsymptomsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        return combinedSymptomsList;
+    } catch (e) {
+        console.error('Error getting list:', e);
         return [];
     }
 };
