@@ -4,6 +4,7 @@ import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth, googleProvider, signInWithPopup, signInWithEmailAndPassword, data } from './firebase'; // Ensure this path is correct
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import Signup from './Signup';
 
 const Buttonn = styled.button`
   font-family: Rubik, sans-serif;
@@ -20,13 +21,23 @@ const Buttonn = styled.button`
   }
 `;
 
-const Login = ({ className }) => {
+const Login = ({ className, handleSignupHide }) => {
   const [show, setShow] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleShow = () => {
     setShow(true);
     document.body.style.overflowY = 'auto';
   };
+
+  const handleShowLogin = ()=> {
+    setShowLogin(true);
+    handleSignupHide();
+  }
+
+  const handleCloseLogin = ()=> {
+    setShowLogin(false);
+  }
 
   const handleHide = () => {
     setShow(false);
@@ -49,10 +60,10 @@ const Login = ({ className }) => {
 
   return (
     <>
-      <Buttonn onClick={handleShow}>Log in</Buttonn>
+      <Buttonn onClick={handleShow || handleShowLogin}>Log in</Buttonn>
       <Modal
         show={show}
-        onHide={handleHide}
+        onHide={handleSignupHide || handleHide}
         backdrop="static"
         keyboard={false}
         centered
@@ -65,8 +76,8 @@ const Login = ({ className }) => {
         <Modal.Body>
           <SocialLoginOptions handleClose={handleClose}/>
           <Divider />
-          <LoginForm handleClose={handleClose}/>
-          <SignupPrompt />
+          <LoginForm handleClose={handleClose} />
+          <SignupPrompt handleHide={handleHide} />
         </Modal.Body>
       </Modal>
     </>
@@ -170,9 +181,9 @@ const LoginForm = ({ handleClose }) => {
   );
 }
 
-const SignupPrompt = () => (
+const SignupPrompt = ({ handleHide }) => (
   <p className="signup-prompt">
-    Not a member yet? <a href="#" className="signup-link">Sign up.</a>
+    Not a member yet? <Signup handleHide={ handleHide }/>
   </p>
 );
 
