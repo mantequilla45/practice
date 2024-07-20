@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Header.css';
-import Login from "./Login";
-import Signup from "./Signup";
+import Login from './Login';
+import Signup from './Signup';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import UserLoggedIn from './UserLoggedIn';
@@ -15,8 +16,15 @@ const Header = () => {
       setUser(currentUser);
     });
 
-    return ()=> logout();
-  }, [])
+    return () => logout();
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleUserClick = () => {
+    console.log('User clicked');
+    navigate('/profile'); // Navigate to /profile
+  };
 
   return (
     <header className="header">
@@ -31,16 +39,18 @@ const Header = () => {
       <nav className="nav">
         <a href="/bookschedule" className="nav-sched-link">Schedule an appointment</a>
         {user ? (
-          <UserLoggedIn user={user} />
+          <div onClick={handleUserClick} style={{ cursor: 'pointer' }}>
+            <UserLoggedIn user={user} />
+          </div>
         ) : (
           <>
-            <Login/>
-            <Signup/>
+            <Login />
+            <Signup />
           </>
         )}
       </nav>
     </header>
   );
-}
+};
 
 export default Header;

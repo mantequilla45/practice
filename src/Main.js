@@ -5,6 +5,7 @@ import App from "./Landing";
 import Cure from "./Cure";
 import BookSchedule from "./BookSchedule";
 import About from "./About";
+import ProfilePage from './Profile';
 
 const Main = ()=>{
     return (
@@ -15,6 +16,7 @@ const Main = ()=>{
                     <Route path = "/cure" element = { <Cure/> }/>
                     <Route path = "/bookschedule" element = { <BookSchedule/> }/>
                     <Route path = "/about" element = { <About/> }/>
+                    <Route path = "/profile" element={<ProfilePage />} />
                 </Routes>
             </BrowserRouter>
         </>
