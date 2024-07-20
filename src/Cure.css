@@ -113,15 +113,13 @@ body {
   .search-input {
     border-radius: 10px 0 0 10px;
     background-color: #fff;
+    width: 82%;
+    height: 75px;
     border: none;
     padding: 0 20px;
     font-size: 19px;
     font-family: Rubik, sans-serif;
     color: #545252;
-    flex-grow: 1; /* Allow the input to grow */
-    min-width: 0; /* Ensure the input can shrink */
-    height: 75px;
-    box-sizing: border-box; /* Ensure padding is included in width/height calculations */
   }
   
   .search-input::placeholder {
