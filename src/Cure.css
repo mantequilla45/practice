@@ -138,13 +138,10 @@ body {
     background-repeat: no-repeat;
     border: none;
     border-radius: 0 10px 10px 0;
-    width: auto; /* Allow button to grow */
+    width: 7%;
     height: 75px;
     cursor: pointer;
-    flex-shrink: 0; /* Prevent button from shrinking */
-    padding: 0 20px; /* Ensure some padding inside the button */
-    box-sizing: border-box; /* Ensure padding is included in width/height calculations */
-  }
+}
   
   .search-button:hover {
     background-color: #8dd5e2;
