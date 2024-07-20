@@ -401,3 +401,8 @@ body {
   padding: 13px 38px;
   cursor: pointer;
 }
+
+.highlight {
+  background-color: cyan;
+  font-weight: bold;
+}
