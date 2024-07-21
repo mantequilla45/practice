@@ -11,7 +11,7 @@ body {
   color: inherit;
 }
   
-.background-image {
+.cure-background-image {
   position: fixed; 
   top: 0;
   right: 0; 
@@ -92,8 +92,9 @@ body {
     margin-left: 1%;
     border-radius: 10px;
     z-index: 1;
+    justify-content: center;
+    width: 100%;
   }
-  
   
   .search-form {
     display: flex;
@@ -128,7 +129,7 @@ body {
   .search-button {
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     object-fit: contain;
     background-color: #ffffff;
     background-image: url('https://cdn.builder.io/api/v1/image/assets/TEMP/11cf22dc84005320270c29d337aad99dab33d84b7fffd35fd519a4f7eb7a8ca4?apiKey=d22a939618da4e96809232126d1f951c&');
@@ -141,7 +142,13 @@ body {
     height: 75px;
     cursor: pointer;
 }
-
+  
+  .search-button:hover {
+    background-color: #8dd5e2;
+    transition: 0.3s;
+  }
+  
+  
 
   .cure-list {
     margin-top: 20px;
