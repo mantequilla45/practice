@@ -4,12 +4,10 @@ import Header from './Header';
 
 const AboutSection = () => (
   <section className="section-wrapper">
-    <div className="content-container">
-      <div className="flex-container">
         <div className="two-column-layout">
           <div className="left-column">
             <div className="about-content">
-              <h2 className="section-title">About Us</h2>
+              <h2 className="about-section-title">About Us</h2>
               <img className="divider" loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/e2071cbb069a47bfc8447d5d33ed3d6a6a4f8525ebc9c9899508d16965058755?apiKey=d22a939618da4e96809232126d1f951c&" alt="Divider" />
               <h3 className="sub-title">Where Your Health Meets</h3>
               <h1 className="main-title">Innovation</h1>
@@ -30,8 +28,6 @@ const AboutSection = () => (
             <img className="about-image" loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ee7badfced483aeb030d28a75ffdfa0b6cd0e1bd17d319ed9d7bef87a2fc07c8?apiKey=0cd5b3eb85e74a83a268d41d07a9c27f&" alt="About Us Illustration" />
           </div>
         </div>
-      </div>
-    </div>
   </section>
 );
 
@@ -42,7 +38,7 @@ const WhatWeDoSection = () => (
         <img className="illustration-image" loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/4108a0a91d2b36009df074dff92655bcb9c4de2e3ff2b355eafcbdb064f7589e?apiKey=d22a939618da4e96809232126d1f951c&" alt="What We Do Illustration" />
       </div>
       <div className="right-column">
-        <div className="content-wrapper">
+        <div className="description">
           <h1 className="main-title">What We Do</h1>
           <p className="description">
             <ul>
@@ -96,8 +92,15 @@ const Footer = () => (
 );
 
 const App = () => (
-  <div className="app-container">
-    <Header />
+  <div>
+    <div className="top-banner-container">
+      <img 
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/edd13ab24828baf3f98ccfa3c20227a156a3a382d266c2869478fa87940be426?apiKey=0cd5b3eb85e74a83a268d41d07a9c27f&" 
+        alt="Top Banner" 
+        className="top-banner" 
+      />
+    </div>
+    <Header isAboutPage={true} />
     <div className="content-wrapper">
       <AboutSection />
       <WhatWeDoSection />
@@ -106,4 +109,5 @@ const App = () => (
     </div>
   </div>
 );
+
 export default App;
