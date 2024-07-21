@@ -24,7 +24,7 @@ const ProfilePage = () => {
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/ee7badfced483aeb030d28a75ffdfa0b6cd0e1bd17d319ed9d7bef87a2fc07c8?apiKey=0cd5b3eb85e74a83a268d41d07a9c27f&"
         alt="Background"
       />
-      <div className="content-container">
+      <div className="profile-content-container">
         <ProfileHeader toggleEditMode={toggleEditMode} isEditing={isEditing} />
         <section className="info-container">
           <BasicInfo

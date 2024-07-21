@@ -206,7 +206,7 @@ body {
 .advanced-search-container.active {
   opacity: 1;
   visibility: visible;
-  max-height: 900px;
+  max-height: 950px;
   width: 88.05%;
   margin-top: 10px;
   margin-left: 6.5%;
@@ -263,6 +263,7 @@ body {
   color: #a3a3a3;
   font: 25px Rubik, sans-serif;
   border: none;
+  border-radius: 0px;;
   border-bottom: 1px solid #a3a3a3;
   padding: 10px 0px 5px 0px;
   margin-bottom: 40px;

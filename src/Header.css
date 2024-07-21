@@ -6,7 +6,7 @@
     background-color: #f1f1f3;
     width: auto;
     position: relative;
-    z-index: 2;
+    z-index: 1;
   }
   
   .logo-container {
@@ -30,6 +30,7 @@
     font-family: Rubik, sans-serif;
     font-size: 15px;
     text-decoration: none;
+    z-index: 4;
   }
   
   .nav-sched-link {
