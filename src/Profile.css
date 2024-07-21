@@ -1,0 +1,382 @@
+.profile-wrapper{
+  display: flex;
+  padding: 37px 60px 80px;
+}
+
+.page-wrapper {
+    background: linear-gradient(107deg, #2bc7f8 0%, #1d2e69 99.19%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 37px 60px 80px;
+  }
+  @media (max-width: 991px) {
+    .page-wrapper {
+      padding: 0 20px;
+    }
+  }
+  
+  .profile-container {
+    text-align: center; /* Center align text within the container */
+    margin-top: 20px; /* Space at the top */
+  }
+
+
+
+.profile-background-image {
+  position: fixed; /* Fixes the image position relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the image */
+  max-width: none; /* Prevent the image from shrinking */
+  width: auto; /* Auto width to maintain aspect ratio */
+  height: 100%; /* Fill the viewport height */
+  z-index: 0; /* Ensure it stays behind other content */
+  filter: blur(10px); /* Apply blur effect */
+}
+.button-container {
+  margin-top: 210px;
+  display: flex;
+  justify-content: flex-end;
+  height: auto; /* Set a fixed height */
+  width: 100%;
+  padding: 10px; /* Add padding if needed */
+  box-sizing: border-box; /* Ensure padding is included in the height/width */
+}
+
+.edit-profilebut,
+.save-profilebut {
+  background-color: #0fc7ff; /* Button background color */
+  color: rgb(255, 255, 255); /* Button text color */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding inside the button */
+  font-size: 16px; /* Font size */
+  font-weight: 500;
+  margin: 0; /* Ensure no margin is added to the button */
+  border-radius: 10px; /* Rounded corners *
+
+.edit-profilebut {
+  background-color: #0fc7ff; /* Button background color */
+  color: rgb(255, 255, 255); /* Button text color */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding inside the button */
+  font-size: 16px; /* Font size */
+  font-weight: 500;
+  margin: 10px;    
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+  
+  .edit-profilebut:hover {
+    background-color: #1aafdd; /* Background color on hover */
+  }
+  
+  .edit-profilebut:focus {
+    outline: none; /* Remove default focus outline */
+  }
+  
+  .edit-profilebut:active {
+    background-color: #1aafdd; /* Background color when active */
+  }
+  
+  .save-profilebut {
+    background-color: #ff6b6b; /* Save button background color */
+    color: white; /* Save button text color */
+  }
+  
+  .save-profilebut:hover {
+    background-color: #e55e5e; /* Save button background color on hover */
+  }
+  
+  
+  .profile-content-container {
+    display: grid;
+    width: 100%;
+    max-width: 1679px;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    justify-items: center;
+    z-index: 1;
+    align-content: center;
+    justify-content: center;
+  }
+  
+  
+  
+  @media (max-width: 991px) {
+    .content-container {
+      max-width: 100%;
+    }
+  }
+  
+  .info-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+  }
+  
+  @media (max-width: 991px) {
+    .info-container {
+      max-width: 100%;
+      margin-top: 40px;
+    }
+  }
+  
+  .profile-section {
+    align-items: center;
+    border-radius: 20px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-size: 36px;
+    color: #505050;
+    font-weight: 500;
+    text-align: center;
+    width: 500px;
+    height: 680px;
+    padding: 20px;
+  }
+  
+  @media (max-width: 991px) {
+    .header-wrapper {
+      max-width: 100%;
+      margin-top: 40px;
+      padding: 40px 20px;
+    }
+  }
+  
+  .profile-image {
+    background-color: #d9d9d9;
+    border-radius: 50%;
+    margin-top: 18px;
+    width: 240px;
+    height: 240px;
+  }
+  @media (max-width: 991px) {
+    .profile-image {
+      max-width: 100%;
+      margin-top: -400px;
+      padding: 40px 20px;
+    }
+  }
+  .profile-name {
+    font-family: 36px, Rubik, sans-serif;
+    margin-top: 16px;
+  }
+  
+  .info-section {
+    align-items: start;
+    border-radius: 20px;
+    border: 2px solid rgba(148, 148, 148, 1);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    color: #000;
+    width: 900px;
+    font-weight: 400;
+    padding: 50px;
+  }
+  
+  @media (max-width: 991px) {
+    .info-section {
+      max-width: 100%;
+      padding: 30px 20px;
+    }
+  }
+  
+  .section-title {
+    font: 36px Rubik, sans-serif;
+    margin-bottom: 35px;
+  }
+  .section-names {
+    font-family: 'Rubik', sans-serif; /* Font family */
+    font-size: 20px; /* Font size */
+    font-weight: normal; /* Regular font weight */
+  }
+  @media (max-width: 991px) {
+    .section-title {
+      max-width: 100%;
+    }
+  }
+  
+  .form-group input[type="profile-text"] {
+    width: 200%; 
+    max-width: 700px;
+    margin-bottom: 30px;
+  }
+
+  label {
+    font-family: Rubik, sans-serif;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input {
+    font-family: Rubik, sans-serif;
+    border-radius: 20px;
+    border: 1px solid rgba(148, 148, 148, 1);
+    background-color: #fff;
+    padding: 17px 23px;
+  }
+  
+  @media (max-width: 991px) {
+    input {
+      padding: 15px 20px;
+    }
+  }
+  
+  .gender-options {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    
+    justify-content: space-between;
+    max-width: 455px;
+  }
+  
+  @media (max-width: 991px) {
+    .gender-options {
+      flex-wrap: wrap;
+    }
+  }
+  
+.gender-option input[type="radio"] {
+  display: none;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 35px; 
+  margin-bottom: 12px;
+}
+
+.gender-option .custom-radio {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; 
+  height: 20px;
+  background-color: #fff; 
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.gender-option input[type="radio"]:checked + .custom-radio {
+  background-color: #007bff; 
+  border-color: #007bff;
+}
+
+.gender-option input[type="radio"]:checked + .custom-radio::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border-radius: 50%; 
+}
+
+.gender-font {
+  
+  font-family: 'Rubik', sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  margin: auto;
+}
+
+.contact-section{
+  margin-top: 10px;
+  align-items: start;
+  border-radius: 20px;
+  border: 2px solid rgba(148, 148, 148, 1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  color: #000;
+  width: 900px;
+  font-weight: 400;
+  padding: 50px;
+}
+.security-wrapper {
+  margin-top: 10px;
+  align-items: start;
+  border-radius: 20px;
+  border: 2px solid rgba(148, 148, 148, 1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  color: #000;
+  width: 900px;
+  font-weight: 400;
+  padding: 50px;
+}
+
+@media (max-width: 991px) {
+  .security-wrapper {
+    max-width: 100%;
+    padding: 30px 20px;
+  }
+}
+  
+.change-password-link {
+  color: #736767;
+  font: 18px Rubik, sans-serif;
+  cursor: pointer;
+  text-decoration: underline;
+}
+  
+.records-wrapper {
+  margin-top: 10px;
+  align-items: start;
+  border-radius: 20px;
+  border: 2px solid rgba(148, 148, 148, 1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  color: #000;
+  width: 900px;
+  font-weight: 400;
+  padding: 50px;
+}
+
+  @media (max-width: 991px) {
+    .records-wrapper {
+      max-width: 100%;
+      padding: 30px 20px;
+    }
+  }
+  
+  .records-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th {
+    color: #000;
+    font: 20px Rubik, sans-serif;
+    text-align: left;
+    padding-bottom: 18px;
+  }
+  
+  tr:not(:last-child) {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  td {
+    font: 15px Rubik, sans-serif;
+    color: #736767;
+    padding: 15px 0;
+  }
+  

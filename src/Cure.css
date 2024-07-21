@@ -11,7 +11,7 @@ body {
   color: inherit;
 }
   
-.background-image {
+.cure-background-image {
   position: fixed; 
   top: 0;
   right: 0; 
@@ -92,8 +92,9 @@ body {
     margin-left: 1%;
     border-radius: 10px;
     z-index: 1;
+    justify-content: center;
+    width: 100%;
   }
-  
   
   .search-form {
     display: flex;
@@ -128,7 +129,7 @@ body {
   .search-button {
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     object-fit: contain;
     background-color: #ffffff;
     background-image: url('https://cdn.builder.io/api/v1/image/assets/TEMP/11cf22dc84005320270c29d337aad99dab33d84b7fffd35fd519a4f7eb7a8ca4?apiKey=d22a939618da4e96809232126d1f951c&');
@@ -141,12 +142,17 @@ body {
     height: 75px;
     cursor: pointer;
 }
-
+  
+  .search-button:hover {
+    background-color: #8dd5e2;
+    transition: 0.3s;
+  }
+  
+  
 
   .cure-list {
-    margin-top: 20px;
-    margin-left: 90px;
-    width: 108.5%;
+    margin: auto 80px;
+    width: 91%;
     z-index: 1;
   }
   
@@ -154,7 +160,7 @@ body {
     border: 1px solid #ccc;
     padding: 20px;
     margin: 10px;
-    
+    margin-left: 20px;
     border-radius: 10px;
     background-color: #fff;
   }
@@ -199,7 +205,7 @@ body {
 .advanced-search-container.active {
   opacity: 1;
   visibility: visible;
-  max-height: 900px;
+  max-height: 950px;
   width: 88.05%;
   margin-top: 10px;
   margin-left: 6.5%;
@@ -256,6 +262,7 @@ body {
   color: #a3a3a3;
   font: 25px Rubik, sans-serif;
   border: none;
+  border-radius: 0px;;
   border-bottom: 1px solid #a3a3a3;
   padding: 10px 0px 5px 0px;
   margin-bottom: 40px;
@@ -341,6 +348,7 @@ body {
   justify-content: flex-end;
   gap: 20px;
   margin-top: 25px;
+  align-items: center;
 }
 
 .add-record {
@@ -356,10 +364,10 @@ body {
 .add-record-label {
   color: #333;
   font: 400 18px Rubik, sans-serif;
-  text-align: center; /* Center align the text */
   display: flex;
   align-items: center;
-  margin-left: -5px; 
+  text-align: center; /* Center align the text */
+  margin: auto 0px;
 }
 
 .add-record::after {
@@ -381,9 +389,7 @@ body {
 #add-record-checkbox {
   width: 20px;
   height: 20px;
-
-  margin-top: auto;
-  margin-bottom: auto;
+  align-items: center;
 }
 
 
