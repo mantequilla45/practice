@@ -200,6 +200,8 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [allCures, setAllCures] = useState([]);
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false); // State for advanced search toggle
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
     const fetchCures = async () => {
@@ -238,6 +240,7 @@ function App() {
     const result = fuse.search(searchTerm.toLowerCase());
 
     const filteredCures = result.map(cure => cure.item);
+    setNoResults(filteredCures.length === 0);
 
     setCures(filteredCures);
   };
@@ -276,6 +279,9 @@ function App() {
     console.log('Advanced Search Data:', { personalInfo, selectedSymptoms });
   
     const combinedsymptomsData = await getCombinedSymptoms();
+
+    //save the selected symptoms to highlight in results
+    setSelectedSymptoms(selectedSymptoms);
   
     // Normalize and sort the selected symptoms
     const normalizedSelectedSymptoms = selectedSymptoms.map(symptom => symptom.toLowerCase());
@@ -283,6 +289,9 @@ function App() {
     const filteredCures = combinedsymptomsData.filter(cure => {
       // Normalize the cure symptoms
       const cureSymptoms = cure.symptoms.toLowerCase().split(';').map(s => s.trim());
+      if (normalizedSelectedSymptoms.every(symptom => cureSymptoms.includes(symptom)) == null) {
+        noResults(true);
+      }
   
       // Check if all selected symptoms are present in the cure's symptoms
       return normalizedSelectedSymptoms.every(symptom => cureSymptoms.includes(symptom));
@@ -291,6 +300,7 @@ function App() {
     console.log('Filtered cures: ', filteredCures);
   
     setCures(filteredCures);
+    setNoResults(filteredCures.length === 0);
   };
   
 
@@ -360,15 +370,37 @@ function App() {
           )}
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <section className="cure-list">
-            {cures.map(cure => (
+            {/* {cures.map(cure => (
               <div key={cure.id} className="cure-item">
                 <h2> Possible Cures for {cure.diagnosis} </h2>
-                <p style={{ fontSize: '14px' }}> <b>Symptoms:</b> {cure.symptoms} </p>
+                <p 
+                  style={{ fontSize: '14px' }}> 
+                  <b>Symptoms: </b>
+                  <HighlightedText text={cure.symptoms} highlight={selectedSymptoms}/>  
+                </p>
                 {cure.description.split(';').map((desc, index) => (
                   <p key={index}>{desc.trim()}</p>
                 ))}
               </div>
-            ))}
+            ))} */}
+            {noResults ? (
+            <div className="cure-item">
+              <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
+            </div>
+            ) : (
+              cures.map(cure => (
+                <div key={cure.id} className="cure-item">
+                  <h2>Possible Cures for {cure.diagnosis}</h2>
+                  <p style={{ fontSize: '14px' }}>
+                    <b>Symptoms: </b>
+                    <HighlightedText text={cure.symptoms} highlight={selectedSymptoms} />
+                  </p>
+                  {cure.description.split(';').map((desc, index) => (
+                    <p key={index}>{desc.trim()}</p>
+                ))}
+                </div>
+             ))
+            )}
           </section>
         </section>
       </main>
