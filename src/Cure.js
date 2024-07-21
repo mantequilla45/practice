@@ -221,19 +221,62 @@ function App() {
     setAllCures(updatedCureList); // Refresh the cure list once added
   };
 
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  
+  //   // Split search terms by semicolon and normalize
+  //   const searchTerms = searchTerm.toLowerCase().split(',').map(term => term.trim());
+  //   console.log('Search Terms:', searchTerms);
+  
+  //   // Define Fuse.js options for fuzzy search with tokenization
+  //   const options = {
+  //     includeScore: true,
+  //     keys: ['symptoms'],
+  //     threshold: 0.5, // Adjust as needed for fuzziness
+  //     distance: 500,
+  //     tokenize: true,
+  //     matchAllTokens: true,
+  //   };
+  
+  //   // Initialize Fuse.js with all cures and the defined options
+  //   const fuse = new Fuse(allCures, options);
+  
+  //   // Combine search terms into one string to enable tokenization in Fuse.js
+  //   const combinedSearchTerm = searchTerms.join(' ');
+  //   console.log('Combined Search Term:', combinedSearchTerm);
+  
+  //   // Perform search using Fuse.js
+  //   const results = fuse.search(combinedSearchTerm);
+  
+  //   // Debugging: Log the Fuse.js results
+  //   console.log('Fuse.js Results:', results);
+  
+  //   // Extract the items (cures) from the search results
+  //   const filteredCures = results.map(result => result.item);
+  
+  //   setCures(filteredCures);
+  //   setNoResults(filteredCures.length === 0);
+  
+  //   // Debugging: Log the filtered cures
+  //   console.log('Filtered Cures:', filteredCures);
+
+  //   // used to highlight the symptoms in the results
+  //   setSelectedSymptoms(searchTerms);
+  // };
+
   const handleSearch = (e) => {
     e.preventDefault();
   
     // Split search terms by semicolon and normalize
-    const searchTerms = searchTerm.toLowerCase().split(',').map(term => term.trim());
+    const searchTerms = searchTerm.toLowerCase().split(';').map(term => term.trim());
     console.log('Search Terms:', searchTerms);
   
     // Define Fuse.js options for fuzzy search with tokenization
     const options = {
       includeScore: true,
       keys: ['symptoms'],
-      threshold: 0.5, // Adjust as needed for fuzziness
-      distance: 500,
+      threshold: 0.4, // Adjusted for better fuzziness
+      distance: 500,  // Adjusted for better relevance
       tokenize: true,
       matchAllTokens: true,
     };
@@ -241,28 +284,24 @@ function App() {
     // Initialize Fuse.js with all cures and the defined options
     const fuse = new Fuse(allCures, options);
   
-    // Combine search terms into one string to enable tokenization in Fuse.js
-    const combinedSearchTerm = searchTerms.join(' ');
-    console.log('Combined Search Term:', combinedSearchTerm);
+    // Perform the search for each term individually and collect unique results
+    const resultsSet = new Set();
+    searchTerms.forEach(term => {
+      const result = fuse.search(term);
+      result.forEach(item => resultsSet.add(item.item));
+    });
   
-    // Perform search using Fuse.js
-    const results = fuse.search(combinedSearchTerm);
-  
-    // Debugging: Log the Fuse.js results
-    console.log('Fuse.js Results:', results);
-  
-    // Extract the items (cures) from the search results
-    const filteredCures = results.map(result => result.item);
-  
+    const filteredCures = Array.from(resultsSet);
     setCures(filteredCures);
     setNoResults(filteredCures.length === 0);
   
     // Debugging: Log the filtered cures
     console.log('Filtered Cures:', filteredCures);
-
-    // used to highlight the symptoms in the results
+  
+    // Set the search terms for highlighting
     setSelectedSymptoms(searchTerms);
   };
+  
 
   const handleAdvancedSearch = async ({ personalInfo, selectedSymptoms }) => {
     console.log('Advanced Search Data:', { personalInfo, selectedSymptoms });

@@ -19,13 +19,6 @@ const Header = () => {
     return () => logout();
   }, []);
 
-  const navigate = useNavigate();
-
-  const handleUserClick = () => {
-    console.log('User clicked');
-    navigate('/profile'); // Navigate to /profile
-  };
-
   return (
     <header className="header">
       <a href="/about" className="no-underline"><span className="nav-link">About</span></a>
@@ -39,7 +32,7 @@ const Header = () => {
       <nav className="nav">
         <a href="/bookschedule" className="nav-sched-link">Schedule an appointment</a>
         {user ? (
-          <div onClick={handleUserClick} style={{ cursor: 'pointer' }}>
+          <div style={{ cursor: 'pointer' }}>
             <UserLoggedIn user={user} />
           </div>
         ) : (
