@@ -368,6 +368,7 @@ body {
   display: flex;
   align-items: center;
   margin-left: -5px; 
+  margin-bottom: 0px;
 }
 
 .add-record::after {
