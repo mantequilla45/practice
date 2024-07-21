@@ -223,57 +223,46 @@ function App() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-
+  
+    // Split search terms by semicolon and normalize
+    const searchTerms = searchTerm.toLowerCase().split(',').map(term => term.trim());
+    console.log('Search Terms:', searchTerms);
+  
+    // Define Fuse.js options for fuzzy search with tokenization
     const options = {
       includeScore: true,
       keys: ['symptoms'],
-      threshold: 0.3,
-      distance: 100,
+      threshold: 0.5, // Adjust as needed for fuzziness
+      distance: 500,
+      tokenize: true,
+      matchAllTokens: true,
     };
-
-    // Ensure case-insensitive search
-    const fuse = new Fuse(
-      allCures.map(cure => ({ ...cure, symptoms: cure.symptoms })),
-      options
-    );
-
-    const result = fuse.search(searchTerm.toLowerCase());
-
-    const filteredCures = result.map(cure => cure.item);
-    setNoResults(filteredCures.length === 0);
-
+  
+    // Initialize Fuse.js with all cures and the defined options
+    const fuse = new Fuse(allCures, options);
+  
+    // Combine search terms into one string to enable tokenization in Fuse.js
+    const combinedSearchTerm = searchTerms.join(' ');
+    console.log('Combined Search Term:', combinedSearchTerm);
+  
+    // Perform search using Fuse.js
+    const results = fuse.search(combinedSearchTerm);
+  
+    // Debugging: Log the Fuse.js results
+    console.log('Fuse.js Results:', results);
+  
+    // Extract the items (cures) from the search results
+    const filteredCures = results.map(result => result.item);
+  
     setCures(filteredCures);
+    setNoResults(filteredCures.length === 0);
+  
+    // Debugging: Log the filtered cures
+    console.log('Filtered Cures:', filteredCures);
+
+    // used to highlight the symptoms in the results
+    setSelectedSymptoms(searchTerms);
   };
-
-  // const handleAdvancedSearch = async ({ personalInfo, selectedSymptoms, selectedConditions }) => {
-  //   console.log('Advanced Search Data:', { personalInfo, selectedSymptoms });
-
-  //   const combinedsymptomsData = await getCombinedSymptoms();
-
-  //   const fuseOptions = {
-  //     includeScore: true,
-  //     keys: ['symptoms'],
-  //     threshold: 0.3,
-  //     distance: 100,
-  //   };
-
-  //   const fuse = new Fuse(combinedsymptomsData, fuseOptions);
-
-  //   const symptomsLower = selectedSymptoms.map(symptom => symptom.toLowerCase());
-  //   const searchQuery = symptomsLower.join('; ');
-  //   console.log('Search Query: ', searchQuery);
-
-  //   const result = fuse.search(searchQuery);
-  //   console.log('Fuse results: ', result);
-
-  //   const filteredCures = result.map(cure => cure.item)
-  //   .filter(cure => 
-  //     selectedSymptoms.every(symptom => cure.symptoms.toLowerCase().includes(symptom.toLowerCase()))
-  //   );
-  //   console.log('Filtered cures: ', filteredCures);
-
-  //   setCures(filteredCures);
-  // };
 
   const handleAdvancedSearch = async ({ personalInfo, selectedSymptoms }) => {
     console.log('Advanced Search Data:', { personalInfo, selectedSymptoms });
@@ -282,6 +271,12 @@ function App() {
 
     //save the selected symptoms to highlight in results
     setSelectedSymptoms(selectedSymptoms);
+
+    if (selectedSymptoms.length === 0) {
+      setCures([]);
+      setNoResults(true);
+      return;
+    }
   
     // Normalize and sort the selected symptoms
     const normalizedSelectedSymptoms = selectedSymptoms.map(symptom => symptom.toLowerCase());
@@ -370,19 +365,6 @@ function App() {
           )}
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <section className="cure-list">
-            {/* {cures.map(cure => (
-              <div key={cure.id} className="cure-item">
-                <h2> Possible Cures for {cure.diagnosis} </h2>
-                <p 
-                  style={{ fontSize: '14px' }}> 
-                  <b>Symptoms: </b>
-                  <HighlightedText text={cure.symptoms} highlight={selectedSymptoms}/>  
-                </p>
-                {cure.description.split(';').map((desc, index) => (
-                  <p key={index}>{desc.trim()}</p>
-                ))}
-              </div>
-            ))} */}
             {noResults ? (
             <div className="cure-item">
               <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
