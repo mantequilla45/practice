@@ -349,6 +349,7 @@ body {
   justify-content: flex-end;
   gap: 20px;
   margin-top: 25px;
+  align-items: center;
 }
 
 .add-record {
@@ -364,11 +365,10 @@ body {
 .add-record-label {
   color: #333;
   font: 400 18px Rubik, sans-serif;
-  text-align: center; /* Center align the text */
   display: flex;
   align-items: center;
-  margin-left: -5px; 
-  margin-bottom: 0px;
+  text-align: center; /* Center align the text */
+  margin: auto 0px;
 }
 
 .add-record::after {
@@ -390,9 +390,7 @@ body {
 #add-record-checkbox {
   width: 20px;
   height: 20px;
-
-  margin-top: auto;
-  margin-bottom: auto;
+  align-items: center;
 }
 
 
