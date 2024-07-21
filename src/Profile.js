@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Profile.css';
 import Header from './Header';
 
 const ProfilePage = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [firstName, setFirstName] = useState('Theo Ryan');
+  const [lastName, setLastName] = useState('Roz');
+  const [email, setEmail] = useState('botilyakelvinator45@gmail.com');
+  const [phone, setPhone] = useState('09689384951');
+  const [gender, setGender] = useState('male');
+
+  const toggleEditMode = () => {
+    setIsEditing(!isEditing);
+  };
+
   return (
+    <div>
+      <Header />
     <main className="page-wrapper">
       <img
         className="profile-background-image"
@@ -12,88 +25,161 @@ const ProfilePage = () => {
         alt="Background"
       />
       <div className="content-container">
-        <ProfileHeader />
+        <ProfileHeader toggleEditMode={toggleEditMode} isEditing={isEditing} />
         <section className="info-container">
-          <BasicInfo />
-          <ContactInfo />
-          <SecuritySection />
+          <BasicInfo
+            isEditing={isEditing}
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            gender={gender}
+            setGender={setGender}
+          />
+          <ContactInfo
+            isEditing={isEditing}
+            email={email}
+            setEmail={setEmail}
+            phone={phone}
+            setPhone={setPhone}
+          />
+          <SecuritySection isEditing={isEditing} />
           <RecordsSection />
         </section>
       </div>
     </main>
+
+    </div>
   );
 };
 
-const ProfileHeader = () => (
-  
+const ProfileHeader = ({ toggleEditMode, isEditing }) => (
   <header className="header-wrapper">
     <div className="profile-container">
       <div className="profile-image"></div>
       <h1 className="profile-name">Botilya45</h1>
     </div>
     <div className="button-container">
-      <button className="edit-profilebut">Edit Profile</button>
+      <button 
+        className={`edit-profilebut ${isEditing ? 'save-profilebut' : ''}`} 
+        onClick={toggleEditMode}
+      >
+        {isEditing ? 'Save' : 'Edit Profile'}
+      </button>
     </div>
-   </header>
+  </header>
 );
 
-const BasicInfo = () => (
+
+const BasicInfo = ({ isEditing, firstName, setFirstName, lastName, setLastName, gender, setGender }) => (
   <section className="info-section">
     <h2 className="section-title">Basic Info</h2>
     <div className="form-group">
       <h2 className="section-names">First Name</h2>
-      <input id="firstName" type="profile-text" value="Theo Ryan" readOnly />
+      <input
+        id="firstName"
+        type="profile-text"
+        value={firstName}
+        readOnly={!isEditing}
+        onChange={(e) => setFirstName(e.target.value)}
+      />
     </div>
     <div className="form-group">
       <h2 className="section-names">Last Name</h2>
-      <input id="lastName" type="profile-text" value="Roz" readOnly />
+      <input
+        id="lastName"
+        type="profile-text"
+        value={lastName}
+        readOnly={!isEditing}
+        onChange={(e) => setLastName(e.target.value)}
+      />
     </div>
     <div className="form-group">
-    <h2 className="section-names">Gender</h2>
+      <h2 className="section-names">Gender</h2>
       <div className="gender-options">
         <label className="gender-option" htmlFor="male">
-          <input type="radio" id="male" name="gender" value="male" />
+          <input
+            type="radio"
+            id="male"
+            name="gender"
+            value="male"
+            checked={gender === 'male'}
+            disabled={!isEditing}
+            onChange={() => setGender('male')}
+          />
           <span className="custom-radio"></span>
           <h2 className="gender-font">Male</h2>
         </label>
         <label className="gender-option" htmlFor="female">
-          <input type="radio" id="female" name="gender" value="female" defaultChecked />
+          <input
+            type="radio"
+            id="female"
+            name="gender"
+            value="female"
+            checked={gender === 'female'}
+            disabled={!isEditing}
+            onChange={() => setGender('female')}
+          />
           <span className="custom-radio"></span>
           <h2 className="gender-font">Female</h2>
         </label>
         <label className="gender-option" htmlFor="other">
-          <input type="radio" id="other" name="gender" value="other" />
+          <input
+            type="radio"
+            id="other"
+            name="gender"
+            value="other"
+            checked={gender === 'other'}
+            disabled={!isEditing}
+            onChange={() => setGender('other')}
+          />
           <span className="custom-radio"></span>
           <h2 className="gender-font">Prefer not to say</h2>
         </label>
       </div>
-
     </div>
   </section>
 );
 
-const ContactInfo = () => (
+const ContactInfo = ({ isEditing, email, setEmail, phone, setPhone }) => (
   <section className="contact-section">
     <h2 className="section-title">Contact Info</h2>
     <div className="form-group">
-    <h2 className="section-names">Email</h2>
-      <input id="email" type="profile-text" value="botilyakelvinator45@gmail.com" readOnly />
+      <h2 className="section-names">Email</h2>
+      <input
+        id="email"
+        type="profile-text"
+        value={email}
+        readOnly={!isEditing}
+        onChange={(e) => setEmail(e.target.value)}
+      />
     </div>
     <div className="form-group">
-    <h2 className="section-names">Contact Number</h2>
-      <input id="phone" type="profile-text" value="09689384951" readOnly />
+      <h2 className="section-names">Contact Number</h2>
+      <input
+        id="phone"
+        type="profile-text"
+        value={phone}
+        readOnly={!isEditing}
+        onChange={(e) => setPhone(e.target.value)}
+      />
     </div>
   </section>
 );
 
-const SecuritySection = () => (
+const SecuritySection = ({ isEditing }) => (
   <section className="security-wrapper">
     <h2 className="section-title">Security</h2>
     <div className="form-group">
-    <h2 className="section-names">Password</h2>
-      <input id="password" type="profile-text" value="********" readOnly />
+      <h2 className="section-names">Password</h2>
+      <input
+        id="password"
+        type="profile-text"
+        value="********"
+        readOnly={!isEditing}
+      />
     </div>
-    <a className="change-password-link">Change Password</a>
+    {<a className="change-password-link">Change Password</a>}
   </section>
 );
 
