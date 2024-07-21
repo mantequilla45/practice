@@ -1,33 +1,40 @@
 .button {
-    font-family: Rubik, sans-serif;
-    font-size: 15px;
-    color: #000;
-    font-weight: bold;
-    background-color: #fff;
-    border: 1px solid rgba(137, 137, 137, 1);
-    border-radius: 50px;
-    padding: 15px 30px;
-    cursor: pointer;
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .user-name {
-    font-family: Rubik, sans-serif;
-    font-size: 15px;
-    color: #333;
-  }
+  font-family: Rubik, sans-serif;
+  font-size: 15px;
+  color: #000;
+  font-weight: bold;
+  background-color: #fff;
+  border: 1px solid rgba(137, 137, 137, 1);
+  border-radius: 50px;
+  padding: 15px 30px;
+  cursor: pointer;
+}
 
-  .profile-picture {
-    width: 40px; /* Adjust size as needed */
-    height: 40px; /* Adjust size as needed */
-    border-radius: 50%;
-    border-color: #000;
-    margin-right: -7.5px; /* Adjust spacing as needed */
-    object-fit: cover; /* pic fills the border */
-    object-position: center; /* centers the user pic */
-  }
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-profile-container {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Adjust as needed */
+  cursor: pointer; /* Makes the entire container clickable */
+}
+
+.user-name {
+  font-family: Rubik, sans-serif;
+  font-size: 15px;
+  color: #333;
+}
+
+.profile-picture {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  border-radius: 50%;
+  border-color: #000;
+  margin-right: -7.5px; /* Adjust spacing as needed */
+  object-fit: cover;
+  object-position: center;
+}

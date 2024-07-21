@@ -2,8 +2,12 @@
   text-decoration: none;
 }
 body {
-  background-color: #f0f0f0; /* Replace with your desired color */
+  background-color: #f1f1f3;
 }
+.cure-body {
+  background-color: #f1f1f3;
+}
+
 .no-underline:hover,
 .no-underline:active,
 .no-underline:focus {
@@ -49,6 +53,7 @@ body {
     justify-content: center;
     width: 100vw; /* Adjust this value as needed */
     max-width: 1500px; /* Optional: Sets a maximum width */
+    background-color: #f1f1f3 ;
     
   }
   
@@ -77,6 +82,7 @@ body {
     color: #786d6d;
     margin-top: 20px;
     margin-left: 100px;
+    margin-bottom: 100px;
     font: 18px Rubik, sans-serif;
     z-index: 1;
   }

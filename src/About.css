@@ -1,9 +1,9 @@
-/* About.css */
-body {
+.about-body {
   background-color: #ffffff; /* Set background color to white */
   margin: 0; /* Remove default margin */
   font-family: Rubik, sans-serif; /* Set a default font family if desired */
 }
+
 .section-wrapper {
   align-items: center;
   display: flex;

@@ -73,9 +73,9 @@ const PersonalInfoForm = ({ personalInfo, setPersonalInfo }) => (
 
 const SymptomCheckList = ({ selectedSymptoms, setSelectedSymptoms }) => {
   const symptoms = [
-    'Headache', 'Fever', 'Cold', 'Cough with phlegm',
+    'Headache', 'Fever', 'Cold', 'Cold with phlegm',
     'Dry cough', 'Loss of appetite', 'Diarrhea', 'Constipation',
-    'Nausea', 'Vomiting', 'Fatigue', 'Muscle pain', 'Body pain', 'Abdominal pain'
+    'Nausea', 'Vomiting', 'Fatigue', 'Muscle pain', 'Abdominal pain'
   ];
 
   const handleSymptomChange = (symptom) => {
@@ -149,7 +149,7 @@ const AdvancedSearchForm = ({ handleAdvancedSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAdvancedSearch({ personalInfo, selectedSymptoms });
+    handleAdvancedSearch({ personalInfo, selectedSymptoms, selectedConditions });
   };
 
   return (
@@ -173,26 +173,6 @@ const AdvancedSearchForm = ({ handleAdvancedSearch }) => {
   );
 };
 
-
-const HighlightedText = ({ text, highlight }) => {
-  if (!highlight || highlight.length === 0) {
-    return <span>{text}</span>;
-  }
-
-  // Escape regex characters
-  const regexEscaped = highlight.map(symptom => symptom.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
-  const regex = new RegExp(`(${regexEscaped.join('|')})`, 'gi');
-
-  const parts = text.split(regex);
-  return (
-    <span>
-      {parts.map((part, index) =>
-        regex.test(part) ? <span key={index} className="highlight">{part}</span> : part
-      )}
-    </span>
-  );
-};
-
 function App() {
   const [cures, setCures] = useState([]);
   const [symptoms, setSymptom] = useState('');
@@ -200,8 +180,6 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [allCures, setAllCures] = useState([]);
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false); // State for advanced search toggle
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
-  const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
     const fetchCures = async () => {
@@ -221,122 +199,68 @@ function App() {
     setAllCures(updatedCureList); // Refresh the cure list once added
   };
 
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-  
-  //   // Split search terms by semicolon and normalize
-  //   const searchTerms = searchTerm.toLowerCase().split(',').map(term => term.trim());
-  //   console.log('Search Terms:', searchTerms);
-  
-  //   // Define Fuse.js options for fuzzy search with tokenization
-  //   const options = {
-  //     includeScore: true,
-  //     keys: ['symptoms'],
-  //     threshold: 0.5, // Adjust as needed for fuzziness
-  //     distance: 500,
-  //     tokenize: true,
-  //     matchAllTokens: true,
-  //   };
-  
-  //   // Initialize Fuse.js with all cures and the defined options
-  //   const fuse = new Fuse(allCures, options);
-  
-  //   // Combine search terms into one string to enable tokenization in Fuse.js
-  //   const combinedSearchTerm = searchTerms.join(' ');
-  //   console.log('Combined Search Term:', combinedSearchTerm);
-  
-  //   // Perform search using Fuse.js
-  //   const results = fuse.search(combinedSearchTerm);
-  
-  //   // Debugging: Log the Fuse.js results
-  //   console.log('Fuse.js Results:', results);
-  
-  //   // Extract the items (cures) from the search results
-  //   const filteredCures = results.map(result => result.item);
-  
-  //   setCures(filteredCures);
-  //   setNoResults(filteredCures.length === 0);
-  
-  //   // Debugging: Log the filtered cures
-  //   console.log('Filtered Cures:', filteredCures);
-
-  //   // used to highlight the symptoms in the results
-  //   setSelectedSymptoms(searchTerms);
-  // };
-
   const handleSearch = (e) => {
     e.preventDefault();
-  
-    // Split search terms by semicolon and normalize
-    const searchTerms = searchTerm.toLowerCase().split(';').map(term => term.trim());
-    console.log('Search Terms:', searchTerms);
-  
-    // Define Fuse.js options for fuzzy search with tokenization
+
     const options = {
       includeScore: true,
       keys: ['symptoms'],
-      threshold: 0.4, // Adjusted for better fuzziness
-      distance: 500,  // Adjusted for better relevance
-      tokenize: true,
-      matchAllTokens: true,
+      threshold: 0.3,
+      distance: 100,
     };
-  
-    // Initialize Fuse.js with all cures and the defined options
-    const fuse = new Fuse(allCures, options);
-  
-    // Perform the search for each term individually and collect unique results
-    const resultsSet = new Set();
-    searchTerms.forEach(term => {
-      const result = fuse.search(term);
-      result.forEach(item => resultsSet.add(item.item));
-    });
-  
-    const filteredCures = Array.from(resultsSet);
-    setCures(filteredCures);
-    setNoResults(filteredCures.length === 0);
-  
-    // Debugging: Log the filtered cures
-    console.log('Filtered Cures:', filteredCures);
-  
-    // Set the search terms for highlighting
-    setSelectedSymptoms(searchTerms);
-  };
-  
 
-  const handleAdvancedSearch = async ({ personalInfo, selectedSymptoms }) => {
-    console.log('Advanced Search Data:', { personalInfo, selectedSymptoms });
-  
+    // Ensure case-insensitive search
+    const fuse = new Fuse(
+      allCures.map(cure => ({ ...cure, symptoms: cure.symptoms })),
+      options
+    );
+
+    const result = fuse.search(searchTerm.toLowerCase());
+
+    const filteredCures = result.map(cure => cure.item);
+
+    setCures(filteredCures);
+  };
+
+  const handleAdvancedSearch = async ({ personalInfo, selectedSymptoms, selectedConditions }) => {
+    console.log('Advanced Search Data:', { personalInfo, selectedSymptoms, selectedConditions });
+
     const combinedsymptomsData = await getCombinedSymptoms();
 
-    //save the selected symptoms to highlight in results
-    setSelectedSymptoms(selectedSymptoms);
+    const fuseOptions = {
+      includeScore: true,
+      keys: ['symptoms'],
+      threshold: 0.3,
+      distance: 100,
+    };
 
-    if (selectedSymptoms.length === 0) {
-      setCures([]);
-      setNoResults(true);
-      return;
-    }
-  
-    // Normalize and sort the selected symptoms
-    const normalizedSelectedSymptoms = selectedSymptoms.map(symptom => symptom.toLowerCase());
-  
-    const filteredCures = combinedsymptomsData.filter(cure => {
-      // Normalize the cure symptoms
-      const cureSymptoms = cure.symptoms.toLowerCase().split(';').map(s => s.trim());
-      if (normalizedSelectedSymptoms.every(symptom => cureSymptoms.includes(symptom)) == null) {
-        noResults(true);
-      }
-  
-      // Check if all selected symptoms are present in the cure's symptoms
-      return normalizedSelectedSymptoms.every(symptom => cureSymptoms.includes(symptom));
-    });
-  
-    console.log('Filtered cures: ', filteredCures);
-  
+    // const fuse = new Fuse(combinedsymptomsData, fuseOptions);
+
+    // const searchTerm = selectedSymptoms.join(';'.toLowerCase());
+
+    // const symptomsSearch = selectedSymptoms.map(symptom => fuse.search(symptom.toLowerCase())).flat();
+    // const conditionsSearch = selectedConditions.map(condition => fuse.search(condition.toLowerCase())).flat();
+
+    // const allSearchResults = [...symptomsSearch, ...conditionsSearch];
+
+    // const results = fuse.search(searchTerm);
+    // const filteredResults = results.map(result => result.item);
+
+    // const uniqueResults = [...new Map(filteredResults.map(item => [item.id, item])).values()];
+
+    // setCures(uniqueResults);
+
+    const fuse = new Fuse(combinedsymptomsData, fuseOptions);
+
+    const symptomsLower = selectedSymptoms.map(symptom => symptom.toLowerCase());
+    const searchQuery = symptomsLower.join(', ');
+
+    const result = fuse.search(searchQuery);
+
+    const filteredCures = result.map(cure => cure.item);
+
     setCures(filteredCures);
-    setNoResults(filteredCures.length === 0);
   };
-  
 
   // Toggle button functionality
   const circleRef = useRef(null);
@@ -369,7 +293,7 @@ function App() {
   }, []); 
 
   return (
-    <div className={`cure-container ${isAdvancedSearch ? 'advanced-search-active' : ''}`}>
+    <body className={`cure-body ${isAdvancedSearch ? 'advanced-search-container' : ''}`}>
       <Header />
       <main className="main-content">
         <section className="hero-section">
@@ -404,29 +328,19 @@ function App() {
           )}
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <section className="cure-list">
-            {noResults ? (
-            <div className="cure-item">
-              <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
-            </div>
-            ) : (
-              cures.map(cure => (
-                <div key={cure.id} className="cure-item">
-                  <h2>Possible Cures for {cure.diagnosis}</h2>
-                  <p style={{ fontSize: '14px' }}>
-                    <b>Symptoms: </b>
-                    <HighlightedText text={cure.symptoms} highlight={selectedSymptoms} />
-                  </p>
-                  {cure.description.split(';').map((desc, index) => (
-                    <p key={index}>{desc.trim()}</p>
+            {cures.map(cure => (
+              <div key={cure.id} className="cure-item">
+                <h2> Possible Cures for {cure.symptoms} </h2>
+                {cure.description.split(';').map((desc, index) => (
+                  <p key={index}>{desc.trim()}</p>
                 ))}
-                </div>
-             ))
-            )}
+              </div>
+            ))}
           </section>
         </section>
       </main>
       <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe2f0a109be8118d3d4f82e0383523128dd7d2ba1fecff3c0d628cd098876def?apiKey=d22a939618da4e96809232126d1f951c&" alt="Background" className="cure-background-image" />
-    </div>
+    </body>
   );
 }
 

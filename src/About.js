@@ -92,6 +92,7 @@ const Footer = () => (
 );
 
 const App = () => (
+  <body class="about-body">
   <div>
     <div className="top-banner-container">
       <img 
@@ -108,6 +109,7 @@ const App = () => (
       <Footer />
     </div>
   </div>
+  </body>
 );
 
 export default App;
