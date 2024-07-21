@@ -21,3 +21,13 @@
     font-size: 15px;
     color: #333;
   }
+
+  .profile-picture {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    border-radius: 50%;
+    border-color: #000;
+    margin-right: -7.5px; /* Adjust spacing as needed */
+    object-fit: cover; /* pic fills the border */
+    object-position: center; /* centers the user pic */
+  }

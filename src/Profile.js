@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import './Profile.css';
 import Header from './Header';
+import { auth, data } from './firebase';
 
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [firstName, setFirstName] = useState('Theo Ryan');
-  const [lastName, setLastName] = useState('Roz');
-  const [email, setEmail] = useState('botilyakelvinator45@gmail.com');
-  const [phone, setPhone] = useState('09689384951');
-  const [gender, setGender] = useState('male');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [gender, setGender] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
+
+  const userId = ''; // Replace with the actual user ID
 
   const toggleEditMode = () => {
     setIsEditing(!isEditing);
@@ -57,7 +62,7 @@ const ProfileHeader = ({ toggleEditMode, isEditing }) => (
   <section className="profile-section">
     <div className="profile-container">
       <div className="profile-image"></div>
-      <h1 className="profile-name">Botilya45</h1>
+      <h1 className="profile-name">[name]</h1>
     </div>
     <div className="button-container">
       <button 
@@ -175,7 +180,7 @@ const SecuritySection = ({ isEditing }) => (
       <input
         id="password"
         type="profile-text"
-        value="********"
+        value=""
         readOnly={!isEditing}
       />
     </div>
