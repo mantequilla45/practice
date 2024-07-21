@@ -2,24 +2,7 @@ import React, { useEffect,useState } from 'react';
 import styled from 'styled-components';
 import Login from "./Login";
 import Signup from "./Signup";
-
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  padding: 20px 60px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 99.1%;
-  z-index: 1000;
-  transition: background-color 0.3s ease;
-  @media (max-width: 991px) {
-    padding: 20px;
-  }
-  &.scrolled {
-    background-color: #298194; 
-  }
-`;
+import Header from './Header';
 
 
 const Logo = styled.img`
@@ -29,22 +12,6 @@ const Logo = styled.img`
   transition: opacity 0.3s ease;
 `;
 
-const Nav = styled.nav`
-  display: flex;
-  margin-left: auto; /* This ensures the Nav is pushed to the right */
-  margin-right: 3px;
-  gap: 20px;
-`;
-
-const NavLink = styled.a`
-  font-family: Rubik, sans-serif;
-  font-size: 15px;
-  color: #000;
-  text-decoration: underline;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 const Button = styled.button`
   font-family: Rubik, sans-serif;
@@ -320,17 +287,8 @@ const App = () => {
     };
   }, []);
   return (
-    <>
-      <Header>
-        <Logo src={logoSrc} alt="BSDOC Logo" />
-        <Nav>
-          <NavLink href="/bookschedule">Schedule an appointment</NavLink>
-          <Login></Login>
-          <Signup></Signup>
-        </Nav>
-      </Header>
-
-      <main>
+    <div>
+      <Header isLandingPage={true} />
         <HeroSection>
           <HeroContent>
             <HeroTitle>Your Personal Guide to Self-Care for Common Ailments</HeroTitle>
@@ -339,7 +297,6 @@ const App = () => {
           </HeroContent>
           <HeroImage src="https://cdn.builder.io/api/v1/image/assets/TEMP/9468847953b0a85498a7e4923ce907b1b96635871ec8b8cb0ce26f0ea148ca47?apiKey=d22a939618da4e96809232126d1f951c&" alt="Self-care illustration" />
         </HeroSection>
-
         <ServicesSection>
           <SectionTitle>Our Services</SectionTitle>
           {services.map((service, index) => (
@@ -362,8 +319,6 @@ const App = () => {
           <AppointmentTitle>Not a common ailment?<br />Book a doctor's appointment!</AppointmentTitle>
           <a href="/bookschedule"><AppointmentButton>BOOK</AppointmentButton></a>
         </AppointmentSection>
-      </main>
-
       <Footer>
         <FooterLogo src="https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" />
         <SocialIcons>
@@ -374,7 +329,7 @@ const App = () => {
         </SocialIcons>
         <FooterText>Disclaimer: This service is for informational purposes only. Consult a doctor for persistent or worsening symptoms.</FooterText>
       </Footer>
-    </>
+    </div>
   );
 };
 

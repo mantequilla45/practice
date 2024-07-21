@@ -1,73 +1,92 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 80px;
-    background-color: #f1f1f3;
-    width: auto;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .logo-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .logo {
-    width: 151px;
-    height: auto;
-  }
-  
-  .nav {
-    margin-left: auto;
-    gap: 20px;
-  }
-  
-  .nav-link {
-    color: #333;
-    font-family: Rubik, sans-serif;
-    font-size: 15px;
-    text-decoration: none;
-    z-index: 4;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  background-color: #f1f1f3;
+  width: 100%;
+  position: relative;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
+}
+
+.landing-header {
+  background-color: transparent; 
+  position: fixed;
+}
+
+.landing-header .about-link {
+  color: #ffffff; 
+}
+
+.header.scrolled {
+  background-color: #298194;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-page-header {
+  background-color: transparent; /* Transparent background for About page */
+}
+
+.logo-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo {
+  width: 151px;
+  height: auto;
+  transition: width 1s ease; /* Optional: Smooth transition for logo size change */
+}
+
+.nav {
+  margin-left: auto;
+  gap: 20px;
+}
+
+.nav-link {
+  color: #333;
+  font-family: Rubik, sans-serif;
+  font-size: 15px;
+  text-decoration: none;
+  z-index: 4;
+}
+
+.nav-sched-link {
+  font-family: Rubik, sans-serif;
+  font-size: 15px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  text-decoration: underline;
+}
+
+.about-link {
+  color: #5a5a5a; /* Default color for About link */
+}
+
+.button {
+  font-family: Rubik, sans-serif;
+  font-size: 15px;
+  color: #000;
+  font-weight: bold;
+  background-color: #fff;
+  border: 1px solid rgba(137, 137, 137, 1);
+  border-radius: 50px;
+  padding: 15px 30px;
+  cursor: pointer;
+}
+
+@media (max-width: 991px) {
   .nav-sched-link {
-    font-family: Rubik, sans-serif;
-    font-size: 15px;
-    color: #000;
-    display: flex;
-    align-items: center;
-    text-decoration: underline;
+    visibility: hidden;
   }
-  
-  @media (max-width: 991px) {
-    .nav-sched-link {
-      visibility: hidden;
-      
-    }
+  .header {
+    padding: 20px;
+    flex-wrap: wrap;
   }
   .button {
-    font-family: Rubik, sans-serif;
-    font-size: 15px;
-    color: #000;
-    font-weight: bold;
-    background-color: #fff;
-    border: 1px solid rgba(137, 137, 137, 1);
-    border-radius: 50px;
-    padding: 15px 30px;
-    cursor: pointer;
+    padding: 15px 20px;
   }
-  
-  @media (max-width: 991px) {
-    .header {
-      padding: 20px;
-      flex-wrap: wrap;
-    }
-  
-    .button {
-      padding: 15px 20px;
-    }
-  }
-  
+}

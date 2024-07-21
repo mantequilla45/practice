@@ -1,5 +1,9 @@
 /* About.css */
-
+body {
+  background-color: #ffffff; /* Set background color to white */
+  margin: 0; /* Remove default margin */
+  font-family: Rubik, sans-serif; /* Set a default font family if desired */
+}
 .section-wrapper {
   align-items: center;
   display: flex;
@@ -7,6 +11,7 @@
   padding-top: 75px;
   flex-direction: column;
   padding: 80px;
+  z-index: 1;
 }
 
 @media (max-width: 991px) {
@@ -17,36 +22,12 @@
   }
 }
 
-.content-container {
-  padding-left: 60px;
-  display: flex;
-  width: 100%;
-  max-width: 1780px;
-  flex-direction: column;
-  justify-content: center;
-}
-
-@media (max-width: 991px) {
-  .content-container {
-    max-width: 100%;
-    padding: 0 20px;
-  }
-}
-
-.flex-container {
-  margin: 0 48px;
-}
-
-@media (max-width: 991px) {
-  .flex-container {
-    max-width: 100%;
-    margin-right: 10px;
-  }
-}
 
 .two-column-layout {
   gap: 20px;
   display: flex;
+  width: 80%;
+  z-index: 1;
 }
 
 @media (max-width: 991px) {
@@ -59,9 +40,13 @@
 
 .left-column {
   display: flex;
-  flex-direction: column;
   line-height: normal;
-  width: 60%;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  padding: 30px;
 }
 
 @media (max-width: 991px) {
@@ -72,10 +57,13 @@
 
 .right-column {
   display: flex;
-  flex-direction: column;
   line-height: normal;
-  width: 50%;
-  margin-left: 20px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  padding: 30px;
 }
 
 @media (max-width: 991px) {
@@ -87,7 +75,6 @@
 .about-content {
   display: flex;
   flex-grow: 1;
-  margin-left: 70px;
   flex-direction: column;
 }
 
@@ -98,7 +85,7 @@
   }
 }
 
-.section-title {
+.about-section-title {
   color: #0d3a90;
   font: 30px Rubik, sans-serif;
   margin-bottom: 0px;
@@ -128,7 +115,7 @@
 
 .main-title {
   color: #043caa;
-  font: 500 75px Rubik, sans-serif;
+  font: 600 75px Rubik, sans-serif;
 }
 
 @media (max-width: 991px) {
@@ -141,9 +128,10 @@
 .description {
   color: #575454;
   text-align: justify;
-  margin-top: 39px;
-  max-width: 90%;
-  font: italic 200 18px Rubik, sans-serif;
+  margin-top: 40px;
+  max-width: 100%;
+  font: italic 400 18px Rubik, sans-serif;
+  z-index: 1;
 }
 
 @media (max-width: 991px) {
@@ -153,11 +141,9 @@
 }
 
 .about-image {
-  object-fit: auto;
   object-position: center;
-  width: 90%;
-  max-width: 80%;
-  margin-left: 30px;
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (max-width: 991px) {
@@ -168,11 +154,10 @@
 }
 
 .illustration-image {
-  width: 90%;
-  max-width: 796px;
-  margin-left: 26px;
-  margin-top: -180px;
-  background-color: transparent;
+  
+  object-position: center;
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (max-width: 991px) {
@@ -187,6 +172,8 @@
   width: 80%;
   font: italic 200 18px Rubik, sans-serif;
   margin: 39px auto;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 991px) {
@@ -258,25 +245,31 @@
 }
 
 .content-wrapper {
-  position: relative;
   z-index: 1;
-  background-color: #f1f1f3;
+  background-color: #ffffff;
 }
 
-.app-container {
-  position: relative; /* Establish a stacking context */
-  width: auto;
-  height: auto;
+.top-banner-container {
+  position: absolute;   /* Use fixed positioning to keep it in place during scrolling */
+  top: 0;            /* Align it to the top of the viewport */
+  right: 0;          /* Align it to the right of the viewport */
+  width: 51%;        /* Adjust width as needed */
+  height: auto;      /* Maintain the aspect ratio of the image */
+  overflow: hidden;  /* Ensure no overflow from the image */
+  z-index: 0;     /* Ensure it appears above other content */
 }
 
-.styled-background {
-  position: absolute; 
-  top: 0; 
-  right: 0; 
-  background-image: url('https://cdn.builder.io/api/v1/image/assets/TEMP/edd13ab24828baf3f98ccfa3c20227a156a3a382d266c2869478fa87940be426?apiKey=d22a939618da4e96809232126d1f951c');
-  background-size: cover;
-  background-position: center;
-  width: auto; 
-  height: 1150px;
-  z-index: 2;
+.top-banner {
+  width: 100%;       /* Ensure the image spans the full width of the container */
+  height: auto;      /* Maintain the aspect ratio of the image */
+  display: block;    /* Prevents any default inline spacing */
+  margin: 0;         /* Removes default margin */
+  padding: 0;        /* Removes default padding */
+}
+
+/* Optional: Add media queries for responsive design */
+@media (max-width: 768px) {
+  .top-banner-container {
+    width: 100%;     /* Adjust to full width on smaller screens */
+  }
 }
