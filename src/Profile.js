@@ -54,7 +54,7 @@ const ProfilePage = () => {
 };
 
 const ProfileHeader = ({ toggleEditMode, isEditing }) => (
-  <header className="header-wrapper">
+  <section className="profile-section">
     <div className="profile-container">
       <div className="profile-image"></div>
       <h1 className="profile-name">Botilya45</h1>
@@ -67,7 +67,7 @@ const ProfileHeader = ({ toggleEditMode, isEditing }) => (
         {isEditing ? 'Save' : 'Edit Profile'}
       </button>
     </div>
-  </header>
+  </section>
 );
 
 
