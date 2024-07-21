@@ -116,7 +116,7 @@ const UserLoggedIn = ({ user }) => {
           alt="User Profile" 
           className="profile-picture" 
         />
-        <span className="user-name">{displayName || user.email}</span>
+        <span className="user-name" style={{fontWeight: 'bold'}} onClick={handleUserClick}>{displayName}</span>
       </div>
       <button className="button" onClick={handleLogOut}>Log Out</button>
     </div>
