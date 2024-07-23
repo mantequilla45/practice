@@ -157,9 +157,17 @@ body {
   
 
   .cure-list {
-    margin: auto 80px;
-    width: 91%;
+    width: 100%;
     z-index: 1;
+  }
+
+  .cure-list-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto 80px;
+    width: 90%;
+    z-index: 1;
+    margin-bottom: 200px;
   }
   
   .cure-item {
@@ -417,4 +425,14 @@ body {
 .highlight {
   background-color: cyan;
   font-weight: bold;
+}
+
+.search-result-title-container {
+  display: flex;
+  margin-left: 50px;
+}
+.search-result-title {
+  color: #333;
+  font: 30px Rubik, sans-serif;
+  z-index: 1;
 }

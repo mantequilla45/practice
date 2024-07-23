@@ -380,11 +380,17 @@ function App() {
             </section>
           )}
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
+          <div className="cure-list-container">
+          {noResults || cures.length > 0 ? (
+            <div className="search-result-title-container">
+              <h1 className="search-result-title">Search Results</h1>
+            </div>
+          ) : null}
           <section className="cure-list">
             {noResults ? (
-            <div className="cure-item">
-              <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
-            </div>
+              <div className="cure-item">
+                <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
+              </div>
             ) : (
               cures.map(cure => (
                 <div key={cure.id} className="cure-item">
@@ -400,6 +406,7 @@ function App() {
              ))
             )}
           </section>
+          </div>
         </section>
       </main>
       <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe2f0a109be8118d3d4f82e0383523128dd7d2ba1fecff3c0d628cd098876def?apiKey=d22a939618da4e96809232126d1f951c&" alt="Background" className="cure-background-image" />
