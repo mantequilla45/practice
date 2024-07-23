@@ -3,8 +3,8 @@ import './Profile.css';
 import Header from './Header';
 import { data, storage, auth } from './firebase';  // Updated import for Firestore, Storage, and Auth
 import { onAuthStateChanged } from 'firebase/auth';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -15,6 +15,7 @@ const ProfilePage = () => {
   const [gender, setGender] = useState('');
   const [profileImage, setProfileImage] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   useEffect(() => {
     //const user = auth.currentUser;
@@ -23,7 +24,7 @@ const ProfilePage = () => {
         // User is signed in
         // const userId = user.uid;
         setEmail(user.email);
-        fetchUserProfile(user.uid);
+        fetchUserProfile();
       } else {
         // User is signed out
         // Handle user not signed in case
@@ -70,7 +71,7 @@ const ProfilePage = () => {
           const imageUrl = await getDownloadURL(profileImageRef);
           await updateDoc(userDocRef, { profileImageUrl: imageUrl });
           setProfileImageUrl(imageUrl);
-        }
+        };
 
         //other info
         await updateDoc(userDocRef, {
@@ -78,7 +79,7 @@ const ProfilePage = () => {
           lastName,
           phone,
           gender
-        })
+        });
 
         setIsEditing(false);
       }
@@ -92,6 +93,74 @@ const ProfilePage = () => {
       setProfileImage(e.target.files[0]);
     }
   };
+
+  const handleProfileImageChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const storageRef = ref(storage, 'profileImages/' + auth.currentUser.uid);
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+      setProfileImageUrl(downloadURL);
+      await updateDoc(doc(data, 'users', auth.currentUser.uid), { profileImageUrl: downloadURL });
+    }
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      await updateDoc(doc(data, 'users', auth.currentUser.uid), {
+        firstName,
+        lastName,
+        phone,
+        gender,
+      });
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
+
+  const handleDeleteAccount = async ()=> {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        await deleteDoc(doc(data, 'users', user.uid));
+
+        const profileImageRef = ref(storage, 'profileImages/' + user.uid);
+        await deleteObject(profileImageRef).catch((error) => {
+          if (error.code !== 'storage/object-not-found') {
+            throw error;
+          }
+        });
+
+        await user.delete();
+        window.location.href = '/landing';
+      } catch (e) {
+        console.error('Error deleting account:', e);
+        alert('Failed to delete account. Please try again.');
+      }
+    }
+  }
+
+  const openDeleteConfirm = () => {
+    setIsDeleteConfirmOpen(true);
+  };
+  
+  const closeDeleteConfirm = () => {
+    setIsDeleteConfirmOpen(false);
+  };
+
+  const DeleteConfirmPopup = ({ onDeleteConfirm }) => {
+    <div className="delete-confirm-popup">
+    <div className="delete-confirm-content">
+      <h2>Are you sure you want to delete your account?</h2>
+      <p>This action cannot be undone.</p>
+      <div className="button-container">
+        <button className="confirm-delete" onClick={onDeleteConfirm}>Yes, Delete</button>
+        <button className="cancel-delete" >Cancel</button>
+      </div>
+    </div>
+  </div>
+  }
 
   return (
     <div>
@@ -108,7 +177,7 @@ const ProfilePage = () => {
             toggleEditMode={toggleEditMode}
             isEditing={isEditing}
             profileImageUrl={profileImageUrl}
-            handleImageChange={handleImageChange}
+            handleProfileImageChange={handleProfileImageChange}
           />
           <section className="info-container">
             <BasicInfo
@@ -127,7 +196,7 @@ const ProfilePage = () => {
               phone={phone}
               setPhone={setPhone}
             />
-            <SecuritySection isEditing={isEditing} />
+            <SecuritySection isEditing={isEditing} openDeleteConfirm={openDeleteConfirm} />
             <RecordsSection />
           </section>
           {isEditing && (
@@ -139,19 +208,29 @@ const ProfilePage = () => {
           )}
         </div>
       </main>
+      {isDeleteConfirmOpen && (
+      <DeleteConfirmPopup
+        onDeleteConfirm={handleDeleteAccount}
+        onClose={closeDeleteConfirm}
+      />
+    )}
     </div>
   );
 };
 
-const ProfileHeader = ({ toggleEditMode, isEditing, profileImageUrl, handleImageChange }) => (
+const ProfileHeader = ({ toggleEditMode, isEditing, profileImageUrl, handleImageChange, handleProfileImageChange }) => (
   <section className="profile-section">
     <div className="profile-container">
-      <div className="profile-image" style={{ backgroundImage: `url(${profileImageUrl})` }}>
+      <div className="profile-image">
+      <img src={profileImageUrl} alt="Profile" />
         {isEditing && (
-          <input type="file" onChange={handleImageChange} />
+          <input 
+            type="file" 
+            onChange={handleProfileImageChange} 
+          />
         )}
       </div>
-      <h1 className="profile-name">[name]</h1>
+      <h1 className="profile-name">[username]</h1>
     </div>
     <div className="button-container">
       <button
@@ -260,12 +339,17 @@ const ContactInfo = ({ isEditing, email, setEmail, phone, setPhone }) => (
   </section>
 );
 
-const SecuritySection = ({ isEditing }) => (
+const SecuritySection = ({ isEditing, openDeleteConfirm }) => (
   <section className="security-section">
     <h2 className="section-title">Security</h2>
     <div className="form-group">
       <h2 className="section-names">Password</h2>
-      <input id="password" type="password" value="test" readOnly={!isEditing} style={{color: 'gray'}} />
+      <input 
+      id="password" 
+      type="password" 
+      value="test" 
+      readOnly={!isEditing} 
+      style={{color: 'gray'}} />
     </div>
     <div className="form-group">
       <h2 className="section-names">Two-Factor Authentication</h2>
@@ -284,7 +368,7 @@ const SecuritySection = ({ isEditing }) => (
         </label>
       </div>
       <div className='button-deleteAccount'>
-        <button className='deleteAccount'>Delete Account</button>
+        <button className='deleteAccount' onClick={openDeleteConfirm}>Delete Account</button>
       </div>
     </div>
   </section>

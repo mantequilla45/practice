@@ -391,3 +391,42 @@
     padding: 15px 0;
   }
   
+  .delete-confirm-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .delete-confirm-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .delete-confirm-content h2 {
+    margin-bottom: 10px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .confirm-delete {
+    background-color: red;
+    color: white;
+  }
+  
+  .cancel-delete {
+    background-color: grey;
+    color: white;
+  }
+  

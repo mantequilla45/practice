@@ -120,6 +120,10 @@ const Divider = () => (
 const SignupForm = ({ handleSignupClose }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [gender, setGender] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -163,10 +167,19 @@ const SignupForm = ({ handleSignupClose }) => {
 
       // store user to database
 
+      // await setDoc(doc(data, 'users', user.uid), {
+      //   username: username,
+      //   email: email
+      // })
+
       await setDoc(doc(data, 'users', user.uid), {
         username: username,
-        email: email
-      })
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        gender: gender
+      });
 
       console.log('Signup successful:', user);
       handleSignupClose();
@@ -187,6 +200,14 @@ const SignupForm = ({ handleSignupClose }) => {
       <input type="text" id="username" className="signup-input" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
       <label htmlFor="email" className="visually-hidden">Email</label>
       <input type="email" id="email" className="signup-input" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <label htmlFor="firstName" className="visually-hidden">First Name</label>
+      <input type="text" id="firstName" className="signup-input" placeholder="first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+      <label htmlFor="lastName" className="visually-hidden">Last Name</label>
+      <input type="text" id="lastName" className="signup-input" placeholder="last name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+      <label htmlFor="phone" className="visually-hidden">Phone</label>
+      <input type="tel" id="phone" className="signup-input" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+      <label htmlFor="gender" className="visually-hidden">Gender</label>
+      <input type="text" id="username" className="signup-input" placeholder="gender" value={gender} onChange={(e) => setGender(e.target.value)} />
       <label htmlFor="password" className="visually-hidden">Password</label>
       <input type="password" id="password" className="signup-input" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       <label htmlFor="confirm-password" className="visually-hidden">Confirm Password</label>
