@@ -23,7 +23,7 @@ const UserLoggedIn = ({ user }) => {
         if (userDoc.exists()) {
           const userData = userDoc.data();
           nameToDisplay = userData.username || '';
-          profilePicUrl = userData.profilePicture || '';
+          profilePicUrl = userData.profileImageUrl || '';
         }
       }
 
@@ -37,6 +37,7 @@ const UserLoggedIn = ({ user }) => {
   const handleLogOut = async () => {
     try {
       await signOut(auth);
+      navigate('/cure');
       console.log('User logged out');
     } catch (e) {
       console.error('Error logging out: ', e);

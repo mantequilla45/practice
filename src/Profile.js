@@ -16,6 +16,7 @@ const ProfilePage = () => {
   const [profileImage, setProfileImage] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     //const user = auth.currentUser;
@@ -41,11 +42,19 @@ const ProfilePage = () => {
       const userDoc = await getDoc(userDocRef);
       if (userDoc.exists()) {
         const userData = userDoc.data();
+        setUsername(userData.username || '');
         setFirstName(userData.firstName || '');
         setLastName(userData.lastName || '');
         setPhone(userData.phone || '');
         setGender(userData.gender || '');
         setProfileImageUrl(userData.profileImageUrl || '');
+        if (userData.profileImageUrl) {
+          const profileImageRef = ref(storage, userData.profileImageUrl);
+          const profileImageUrl = await getDownloadURL(profileImageRef);
+          setProfileImageUrl(profileImageUrl);
+        } else {
+          console.log('No profile image found'); // Debug line
+        }
       }
     } catch (error) {
       console.error("Error fetching user profile:", error);
@@ -178,6 +187,9 @@ const ProfilePage = () => {
             isEditing={isEditing}
             profileImageUrl={profileImageUrl}
             handleProfileImageChange={handleProfileImageChange}
+            handleUpdateProfile={handleUpdateProfile}
+            handleSaveProfile={handleSaveProfile}
+            username={username}
           />
           <section className="info-container">
             <BasicInfo
@@ -199,47 +211,54 @@ const ProfilePage = () => {
             <SecuritySection isEditing={isEditing} openDeleteConfirm={openDeleteConfirm} />
             <RecordsSection />
           </section>
-          {isEditing && (
+          {/* {isEditing && (
             <div className="button-container">
               <button className="save-profilebut" onClick={handleSaveProfile}>
                 Save
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </main>
       {isDeleteConfirmOpen && (
       <DeleteConfirmPopup
         onDeleteConfirm={handleDeleteAccount}
-        onClose={closeDeleteConfirm}
+        //onClose={closeDeleteConfirm}
       />
     )}
     </div>
   );
 };
 
-const ProfileHeader = ({ toggleEditMode, isEditing, profileImageUrl, handleImageChange, handleProfileImageChange }) => (
+const ProfileHeader = ({ toggleEditMode, isEditing, profileImageUrl, handleProfileImageChange, username, handleSaveProfile }) => (
   <section className="profile-section">
-    <div className="profile-container">
+    <div className="profile-image-container">
       <div className="profile-image">
-      <img src={profileImageUrl} alt="Profile" />
+        <img src={profileImageUrl || 'default-image-url'} alt="Profile" className='profile-image' />
         {isEditing && (
           <input 
             type="file" 
+            className='profile-image-edit'
             onChange={handleProfileImageChange} 
           />
         )}
       </div>
-      <h1 className="profile-name">[username]</h1>
     </div>
+    <h1 className="profile-name" style={{color: 'black'}}>{username}</h1>
     <div className="button-container">
-      <button
-        className={`edit-profilebut ${isEditing ? 'save-profilebut' : ''}`}
-        onClick={toggleEditMode}
-      >
-        {isEditing ? 'Save' : 'Edit Profile'}
-      </button>
-    </div>
+          {isEditing ? (
+            <button className="save-profilebut" onClick={handleSaveProfile}>
+              Save
+            </button>
+          ) : (
+            <button
+              className="edit-profilebut"
+              onClick={toggleEditMode}
+            >
+              Edit Profile
+            </button>
+          )}
+        </div>
   </section>
 );
 
@@ -274,10 +293,10 @@ const BasicInfo = ({ isEditing, firstName, setFirstName, lastName, setLastName, 
             type="radio"
             id="male"
             name="gender"
-            value="male"
-            checked={gender === 'male'}
+            value="Male"
+            checked={gender === 'Male'}
             disabled={!isEditing}
-            onChange={() => setGender('male')}
+            onChange={() => setGender('Male')}
           />
           <span className="custom-radio"></span>
           <h2 className="gender-font">Male</h2>
@@ -287,10 +306,10 @@ const BasicInfo = ({ isEditing, firstName, setFirstName, lastName, setLastName, 
             type="radio"
             id="female"
             name="gender"
-            value="female"
-            checked={gender === 'female'}
+            value="Female"
+            checked={gender === 'Female'}
             disabled={!isEditing}
-            onChange={() => setGender('female')}
+            onChange={() => setGender('Female')}
           />
           <span className="custom-radio"></span>
           <h2 className="gender-font">Female</h2>
@@ -300,10 +319,10 @@ const BasicInfo = ({ isEditing, firstName, setFirstName, lastName, setLastName, 
             type="radio"
             id="other"
             name="gender"
-            value="other"
-            checked={gender === 'other'}
+            value="Other"
+            checked={gender === 'Other'}
             disabled={!isEditing}
-            onChange={() => setGender('other')}
+            onChange={() => setGender('Other')}
           />
           <span className="custom-radio"></span>
           <h2 className="gender-font">Prefer not to say</h2>
