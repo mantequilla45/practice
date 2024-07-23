@@ -11,7 +11,7 @@ const AboutSection = () => (
               <img className="divider" loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/e2071cbb069a47bfc8447d5d33ed3d6a6a4f8525ebc9c9899508d16965058755?apiKey=d22a939618da4e96809232126d1f951c&" alt="Divider" />
               <h3 className="sub-title">Where Your Health Meets</h3>
               <h1 className="main-title">Innovation</h1>
-              <p className="description">
+              <p className="description" style={{ fontStyle: 'normal'}}>
                 At BSDOC, our mission is to create innovative solutions that simplify and enhance personal health management. We aim to empower individuals with user-friendly tools to manage their health records and receive personalized suggestions for over-the-counter (OTC) medications. We envision a world where everyone has access to efficient, reliable, and easy-to-use health management platforms, leading to better self-care and improved communication with healthcare providers.
                 <br /><br />
                 Founded in 2024, VETT began with the development of the BSDOC project.
@@ -40,7 +40,7 @@ const WhatWeDoSection = () => (
       <div className="right-column">
         <div className="description">
           <h1 className="main-title">What We Do</h1>
-          <p className="description">
+          <p className="description" style={{ fontStyle: 'normal'}}>
             <ul>
               <li>Picture of Users Interacting with Technology: Show users engaging with your platform, such as using a mobile app or computer.</li><br />
               <li>Healthcare Tools: Display images of digital health tools or icons representing different features of your platform.</li><br />
@@ -55,8 +55,8 @@ const WhatWeDoSection = () => (
 
 const AcknowledgmentsSection = () => (
   <section className="section-wrapper">
-    <h1 className="main-title" style={{ textAlign: 'center' }}>Acknowledgments</h1>
-    <p className="acknowledgements">
+    <h1 className="main-title" style={{ textAlign: 'center'}}>Acknowledgments</h1>
+    <p className="acknowledgements" style={{ fontStyle: 'normal'}}>
       We extend our heartfelt gratitude to everyone who has contributed to the development and success of VETT.
       <br /><br />
       First and foremost, we thank our dedicated team whose relentless passion, creativity, and hard work have been the driving force behind our innovative health management solutions. Your commitment to excellence and user-centric design has been instrumental in bringing our vision to life.

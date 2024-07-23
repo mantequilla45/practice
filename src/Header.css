@@ -66,6 +66,10 @@
   color: #5a5a5a; /* Default color for About link */
 }
 
+.cure-link {
+  color: #5a5a5a;
+}
+
 .button {
   font-family: Rubik, sans-serif;
   font-size: 15px;

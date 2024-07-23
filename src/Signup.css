@@ -152,3 +152,9 @@
         margin-top: -15px; /* Adjust as needed */
     }
     
+    .user-profile-container {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Adjust as needed */
+        cursor: pointer; /* Makes the entire container clickable */
+      }

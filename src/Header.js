@@ -7,10 +7,16 @@ import Signup from './Signup';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import UserLoggedIn from './UserLoggedIn';
+import { Link } from 'react-router-dom';
 
 const Header = ({ isLandingPage, isAboutPage }) => {
   const [user, setUser] = useState(null);
   const [logoSrc, setLogoSrc] = useState('https://cdn.builder.io/api/v1/image/assets/TEMP/16d9e73da749028535b483d8ace7f27155660c5f575d746c967a83d4b5ac0d87?apiKey=d22a939618da4e96809232126d1f951c&'); // Default logo
+  const [atAbout, setAtAbout] = useState(false);
+
+  const toggleAtAbout = ()=> {
+    setAtAbout(atAbout => !atAbout);
+  }
 
   useEffect(() => {
     const logout = onAuthStateChanged(auth, (currentUser) => {
@@ -44,9 +50,18 @@ const Header = ({ isLandingPage, isAboutPage }) => {
 
   return (
     <header className={`header ${isLandingPage ? 'landing-header' : ''} ${isAboutPage ? 'about-page-header' : ''}`}>
-      <a href="/about" className="no-underline">
+      
+      {!atAbout ? (
+      <Link to="/about" onClick={toggleAtAbout} className="no-underline">
         <span className={`nav-link about-link`}>About</span>
-      </a>
+      </Link>
+      ) : (
+        <Link to='/cure' onClick={toggleAtAbout} className='no-underline'>
+          <span className={'nav-link cure-link'}>Home</span>
+        </Link>
+      )}
+        {/* <span className={`nav-link about-link`}>About</span> */}
+      
       <a href="/" className="logo-container">
         <img
           src={logoSrc}
