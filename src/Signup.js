@@ -178,7 +178,8 @@ const SignupForm = ({ handleSignupClose }) => {
         firstName: firstName,
         lastName: lastName,
         phone: phone,
-        gender: gender
+        gender: gender,
+        profileImageUrl: profileImageUrl
       });
 
       console.log('Signup successful:', user);
@@ -206,8 +207,24 @@ const SignupForm = ({ handleSignupClose }) => {
       <input type="text" id="lastName" className="signup-input" placeholder="last name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
       <label htmlFor="phone" className="visually-hidden">Phone</label>
       <input type="tel" id="phone" className="signup-input" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+
+      <h4 style={{marginBottom: '-5px'}}>Gender</h4>
       <label htmlFor="gender" className="visually-hidden">Gender</label>
-      <input type="text" id="username" className="signup-input" placeholder="gender" value={gender} onChange={(e) => setGender(e.target.value)} />
+      <div className="gender-options">
+        <label>
+          <input type="radio" value="Male" checked={gender === 'Male'} onChange={(e) => setGender(e.target.value)} />
+          Male
+        </label>
+        <label>
+          <input type="radio" value="Female" checked={gender === 'Female'} onChange={(e) => setGender(e.target.value)} />
+          Female
+        </label>
+        <label>
+          <input type="radio" value="Other" checked={gender === 'Other'} onChange={(e) => setGender(e.target.value)} />
+          Prefer not to say
+        </label>
+      </div>
+
       <label htmlFor="password" className="visually-hidden">Password</label>
       <input type="password" id="password" className="signup-input" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       <label htmlFor="confirm-password" className="visually-hidden">Confirm Password</label>
