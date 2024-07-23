@@ -99,7 +99,7 @@ const SymptomCheckList = ({ selectedSymptoms, setSelectedSymptoms }) => {
               checked={selectedSymptoms.includes(symptom)}
               onChange={() => handleSymptomChange(symptom)}
             />
-            <label className="advanced-search-checkbox-label" htmlFor={`symptom-${index}`}>{symptom}</label>
+            <h1 className="advanced-search-checkbox-label" htmlFor={`symptom-${index}`}>{symptom}</h1>
           </div>
         ))}
       </div>
@@ -142,36 +142,7 @@ const HealthConditionsList = ({ selectedConditions, setSelectedConditions }) => 
   );
 };
 
-const AdvancedSearchForm = ({ handleAdvancedSearch }) => {
-  const [personalInfo, setPersonalInfo] = useState({ name: '', age: '', gender: '', weight: '' });
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
-  const [selectedConditions, setSelectedConditions] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleAdvancedSearch({ selectedSymptoms });
-  };
-
-  return (
-    <form className="advanced-search-container.active" onSubmit={handleSubmit}>
-      <AdvancedSearchHeader />
-      <div className="advanced-search-form-content">
-        <div className="advanced-search-symptom-section">
-          <PersonalInfoForm personalInfo={personalInfo} setPersonalInfo={setPersonalInfo} />
-        </div>
-        <div className="advanced-search-conditions-section">
-          <SymptomCheckList selectedSymptoms={selectedSymptoms} setSelectedSymptoms={setSelectedSymptoms} />
-          <HealthConditionsList selectedConditions={selectedConditions} setSelectedConditions={setSelectedConditions} />
-          <div className="advanced-search-button-container">
-            <input type="checkbox" id="add-record-checkbox" />
-            <label className="add-record-label">Add record</label>
-            <button className="advanced-search-assess-button" type="submit">Assess</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  );
-};
 
 const HighlightedText = ({ text, highlight }) => {
   if (!highlight || highlight.length === 0) {
@@ -192,13 +163,44 @@ const HighlightedText = ({ text, highlight }) => {
   );
 };
 
+const AdvancedSearchForm = ({ handleAdvancedSearch }) => {
+  const [personalInfo, setPersonalInfo] = useState({ name: '', age: '', gender: '', weight: '' });
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  const [selectedConditions, setSelectedConditions] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleAdvancedSearch({ selectedSymptoms });
+  };
+
+  return (
+    <form className="advanced-search-container" onSubmit={handleSubmit}>
+      <AdvancedSearchHeader />
+      <div className="advanced-search-form-content">
+        <div className="advanced-search-symptom-section">
+          <PersonalInfoForm personalInfo={personalInfo} setPersonalInfo={setPersonalInfo} />
+        </div>
+        <div className="advanced-search-conditions-section">
+          <SymptomCheckList selectedSymptoms={selectedSymptoms} setSelectedSymptoms={setSelectedSymptoms} />
+          <HealthConditionsList selectedConditions={selectedConditions} setSelectedConditions={setSelectedConditions} />
+        </div>
+      </div>
+      <div className="advanced-search-button-container">
+        <input type="checkbox" id="add-record-checkbox" />
+        <label className="add-record-label" htmlFor="add-record-checkbox">Add record</label>
+        <button className="advanced-search-assess-button" type="submit">Assess</button>
+      </div>
+    </form>
+  );
+};
+
 function App() {
   const [cures, setCures] = useState([]);
   const [symptoms, setSymptom] = useState('');
   const [description, setDescription] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [allCures, setAllCures] = useState([]);
-  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false); // State for advanced search toggle
+  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false); 
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [noResults, setNoResults] = useState(false);
 
@@ -315,51 +317,55 @@ function App() {
     setNoResults(filteredCures.length === 0);
   };
 
-  // Toggle button functionality
   const circleRef = useRef(null);
   const checkboxRef = useRef(null);
 
   const handleToggle = () => {
-    if (checkboxRef.current) {
-      circleRef.current.style.left = checkboxRef.current.checked ? '24px' : '0px';
-      setIsAdvancedSearch(checkboxRef.current.checked);
+    if (checkboxRef.current && circleRef.current) {
       
-      const mainContent = document.querySelector('.main-content');
-      if (mainContent) {
-        mainContent.style.marginTop = checkboxRef.current.checked ? '-120px' : '0';
+      if (checkboxRef.current.checked) {
+        circleRef.current.style.left = '24px';
+        setIsAdvancedSearch(true);
+        document.querySelector('.main-content').style.marginTop = '-120px';
+      } else {
+        circleRef.current.style.left = '0px';
+        setIsAdvancedSearch(false);
+        document.querySelector('.main-content').style.marginTop = '0';
       }
-
-      setIsAdvancedSearch(checkboxRef.current.checked);
     }
   };
 
   useEffect(() => {
+    circleRef.current.style.left = '0px';
     if (checkboxRef.current) {
-      checkboxRef.current.addEventListener('click', handleToggle);
+      checkboxRef.current.addEventListener('change', handleToggle);
     }
 
     return () => {
       if (checkboxRef.current) {
-        checkboxRef.current.removeEventListener('click', handleToggle); 
+        checkboxRef.current.removeEventListener('change', handleToggle);
       }
     };
-  }, []); 
+  }, []);
 
   return (
-    <body className={`cure-body ${isAdvancedSearch ? 'advanced-search-container' : ''}`}>
+    <div className={`cure-body ${isAdvancedSearch ? 'advanced-search-active' : ''}`}>
       <Header />
       <main className="main-content">
         <section className="hero-section">
-          <h1 className="hero-title">Welcome to BSDOC</h1>
-          <div className="background_box">Advanced Search
-            <label className="toggle_box">
-              <input type="checkbox" id="uniqueCheckbox" ref={checkboxRef} />
-              <div className="circle" ref={circleRef}></div>
-            </label>
+          <div className="hero-header">
+            <h1 className="hero-title">Welcome to BSDOC</h1>
+            <div className="toggle_background_box">
+              Advanced Search
+              <label className="toggle_box">
+                <input type="checkbox" id="cure-checkbox" ref={checkboxRef} />
+                <div className="circle" ref={circleRef}></div>
+              </label>
+            </div>
           </div>
 
           {isAdvancedSearch ? (
-            <div className="advanced-search-container active">
+            <div className="advanced-search-body active">
               <AdvancedSearchForm handleAdvancedSearch={handleAdvancedSearch} />
             </div>
           ) : (
@@ -374,44 +380,46 @@ function App() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button type="submit" aria-label="Search" className="search-button">
-                </button>
+                <button type="submit" aria-label="Search" className="search-button"></button>
               </form>
             </section>
           )}
+
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <div className="cure-list-container">
-          {noResults || cures.length > 0 ? (
-            <div className="search-result-title-container">
-              <h1 className="search-result-title">Search Results</h1>
-            </div>
-          ) : null}
-          <section className="cure-list">
-            {noResults ? (
-              <div className="cure-item">
-                <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
+            {noResults || cures.length > 0 ? (
+              <div className="search-result-title-container">
+                <h1 className="search-result-title">Search Results</h1>
               </div>
-            ) : (
-              cures.map(cure => (
-                <div key={cure.id} className="cure-item">
-                  <h2>Possible Cures for {cure.diagnosis}</h2>
-                  <p style={{ fontSize: '14px' }}>
-                    <b>Symptoms: </b>
-                    <HighlightedText text={cure.symptoms} highlight={selectedSymptoms} />
-                  </p>
-                  {cure.description.split(';').map((desc, index) => (
-                    <p key={index}>{desc.trim()}</p>
-                ))}
+            ) : null}
+            <section className="cure-list">
+              {noResults ? (
+                <div className="cure-item-container">
+                  <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
                 </div>
-             ))
-            )}
-          </section>
+              ) : (
+                cures.map(cure => (
+                  <div key={cure.id} className="cure-item-container">
+                    <h1 className="cure-item-header">Possible Cures for {cure.diagnosis}</h1>
+                    <p className="cure-item-symptoms">
+                    <b >Symptoms: </b>
+                      <HighlightedText text={cure.symptoms} highlight={selectedSymptoms} />
+                    </p>
+                    <ul  className="cure-cures">
+                      {cure.description.split(';').map((desc, index) => (
+                        <p className="cure-items" key={index}>{desc.trim()}</p>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              )}
+            </section>
           </div>
         </section>
       </main>
       <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe2f0a109be8118d3d4f82e0383523128dd7d2ba1fecff3c0d628cd098876def?apiKey=d22a939618da4e96809232126d1f951c&" alt="Background" className="cure-background-image" />
-    </body>
+    </div>
   );
-}
+};
 
 export default App;

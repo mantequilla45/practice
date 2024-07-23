@@ -82,7 +82,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1300px) {
   .nav-sched-link {
     visibility: hidden;
   }
