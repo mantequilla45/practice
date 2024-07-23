@@ -99,7 +99,7 @@ const SymptomCheckList = ({ selectedSymptoms, setSelectedSymptoms }) => {
               checked={selectedSymptoms.includes(symptom)}
               onChange={() => handleSymptomChange(symptom)}
             />
-            <label className="advanced-search-checkbox-label" htmlFor={`symptom-${index}`}>{symptom}</label>
+            <h1 className="advanced-search-checkbox-label" htmlFor={`symptom-${index}`}>{symptom}</h1>
           </div>
         ))}
       </div>
@@ -153,7 +153,7 @@ const AdvancedSearchForm = ({ handleAdvancedSearch }) => {
   };
 
   return (
-    <form className="advanced-search-container.active" onSubmit={handleSubmit}>
+    <div className="advanced-search-container" onSubmit={handleSubmit}>
       <AdvancedSearchHeader />
       <div className="advanced-search-form-content">
         <div className="advanced-search-symptom-section">
@@ -162,14 +162,14 @@ const AdvancedSearchForm = ({ handleAdvancedSearch }) => {
         <div className="advanced-search-conditions-section">
           <SymptomCheckList selectedSymptoms={selectedSymptoms} setSelectedSymptoms={setSelectedSymptoms} />
           <HealthConditionsList selectedConditions={selectedConditions} setSelectedConditions={setSelectedConditions} />
-          <div className="advanced-search-button-container">
-            <input type="checkbox" id="add-record-checkbox" />
-            <label className="add-record-label">Add record</label>
-            <button className="advanced-search-assess-button" type="submit">Assess</button>
-          </div>
         </div>
       </div>
-    </form>
+      <div className="advanced-search-button-container">
+        <input type="checkbox" id="add-record-checkbox" />
+        <label className="add-record-label">Add record</label>
+        <button className="advanced-search-assess-button" type="submit">Assess</button>
+      </div>
+    </div>
   );
 };
 
@@ -346,20 +346,22 @@ function App() {
   }, []); 
 
   return (
-    <body className={`cure-body ${isAdvancedSearch ? 'advanced-search-container' : ''}`}>
+    <body className={`cure-body ${isAdvancedSearch ? '' : ''}`}>
       <Header />
       <main className="main-content">
         <section className="hero-section">
-          <h1 className="hero-title">Welcome to BSDOC</h1>
-          <div className="background_box">Advanced Search
-            <label className="toggle_box">
-              <input type="checkbox" id="uniqueCheckbox" ref={checkboxRef} />
-              <div className="circle" ref={circleRef}></div>
-            </label>
+          <div className="hero-header">
+            <h1 className="hero-title">Welcome to BSDOC</h1>
+            <div className="toggle_background_box">Advanced Search
+              <label className="toggle_box">
+                <input type="checkbox" id="uniqueCheckbox" ref={checkboxRef} />
+                <div className="circle" ref={circleRef}></div>
+              </label>
+            </div>
           </div>
 
           {isAdvancedSearch ? (
-            <div className="advanced-search-container active">
+            <div className="advanced-search-body active">
               <AdvancedSearchForm handleAdvancedSearch={handleAdvancedSearch} />
             </div>
           ) : (
@@ -381,31 +383,31 @@ function App() {
           )}
           <p className="hero-description">Introducing a new way to diagnose your sickness.</p>
           <div className="cure-list-container">
-          {noResults || cures.length > 0 ? (
-            <div className="search-result-title-container">
-              <h1 className="search-result-title">Search Results</h1>
-            </div>
-          ) : null}
-          <section className="cure-list">
-            {noResults ? (
-              <div className="cure-item">
-                <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
+            {noResults || cures.length > 0 ? (
+              <div className="search-result-title-container">
+                <h1 className="search-result-title">Search Results</h1>
               </div>
-            ) : (
-              cures.map(cure => (
-                <div key={cure.id} className="cure-item">
-                  <h2>Possible Cures for {cure.diagnosis}</h2>
-                  <p style={{ fontSize: '14px' }}>
-                    <b>Symptoms: </b>
-                    <HighlightedText text={cure.symptoms} highlight={selectedSymptoms} />
-                  </p>
-                  {cure.description.split(';').map((desc, index) => (
-                    <p key={index}>{desc.trim()}</p>
-                ))}
+             ) : null}
+            <section className="cure-list">
+              {noResults ? (
+                <div className="cure-item">
+                  <h4>No cure can be found in the data. Please try again or report to the developers.</h4>
                 </div>
-             ))
-            )}
-          </section>
+              ) : (
+                cures.map(cure => (
+                  <div key={cure.id} className="cure-item">
+                    <h2>Possible Cures for {cure.diagnosis}</h2>
+                    <p style={{ fontSize: '14px' }}>
+                      <b>Symptoms: </b>
+                      <HighlightedText text={cure.symptoms} highlight={selectedSymptoms} />
+                    </p>
+                    {cure.description.split(';').map((desc, index) => (
+                      <p key={index}>{desc.trim()}</p>
+                    ))}
+                  </div>
+                ))
+              )}
+            </section>
           </div>
         </section>
       </main>

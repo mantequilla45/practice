@@ -4,22 +4,22 @@
 }
 
 .page-wrapper {
-    background: linear-gradient(107deg, #2bc7f8 0%, #1d2e69 99.19%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 37px 60px 80px;
+  background: linear-gradient(107deg, #2bc7f8 0%, #1d2e69 99.19%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 37px 60px 80px;
+}
+@media (max-width: 991px) {
+  .page-wrapper {
+    padding: 0 20px;
   }
-  @media (max-width: 991px) {
-    .page-wrapper {
-      padding: 0 20px;
-    }
-  }
-  
-  .profile-container {
-    text-align: center; /* Center align text within the container */
-    margin-top: 20px; /* Space at the top */
-  }
+}
+
+.profile-container {
+  text-align: center; /* Center align text within the container */
+  margin-top: 20px; /* Space at the top */
+}
 
 
 
@@ -42,17 +42,6 @@
   width: 100%;
   padding: 10px; /* Add padding if needed */
   box-sizing: border-box; /* Ensure padding is included in the height/width */
-}
-
-.deleteAccount {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  margin: 0;
-  border-radius: 10px;
 }
 
 .edit-profilebut,
@@ -218,13 +207,13 @@
     margin-bottom: 30px;
   }
 
-  label {
+  .profile-label {
     font-family: Rubik, sans-serif;
     display: block;
     margin-bottom: 10px;
   }
   
-  input {
+  .profile-input {
     font-family: Rubik, sans-serif;
     border-radius: 20px;
     border: 1px solid rgba(148, 148, 148, 1);
@@ -389,44 +378,5 @@
     font: 15px Rubik, sans-serif;
     color: #736767;
     padding: 15px 0;
-  }
-  
-  .delete-confirm-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .delete-confirm-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  .delete-confirm-content h2 {
-    margin-bottom: 10px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-  }
-  
-  .confirm-delete {
-    background-color: red;
-    color: white;
-  }
-  
-  .cancel-delete {
-    background-color: grey;
-    color: white;
   }
   
