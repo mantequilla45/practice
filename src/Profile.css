@@ -207,25 +207,26 @@
     margin-bottom: 30px;
   }
 
-  .profile-label {
+  .profile-container label {
     font-family: Rubik, sans-serif;
     display: block;
     margin-bottom: 10px;
   }
-  
-  .profile-input {
+
+  .profile-container input {
     font-family: Rubik, sans-serif;
     border-radius: 20px;
     border: 1px solid rgba(148, 148, 148, 1);
     background-color: #fff;
     padding: 17px 23px;
   }
-  
+
   @media (max-width: 991px) {
-    input {
+    .profile-container input {
       padding: 15px 20px;
     }
   }
+
   
   .gender-options {
     display: flex;
