@@ -4,22 +4,22 @@
 }
 
 .page-wrapper {
-  background: linear-gradient(107deg, #2bc7f8 0%, #1d2e69 99.19%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 37px 60px 80px;
-}
-@media (max-width: 991px) {
-  .page-wrapper {
-    padding: 0 20px;
+    background: linear-gradient(107deg, #2bc7f8 0%, #1d2e69 99.19%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 37px 60px 80px;
   }
-}
-
-.profile-container {
-  text-align: center; /* Center align text within the container */
-  margin-top: 20px; /* Space at the top */
-}
+  @media (max-width: 991px) {
+    .page-wrapper {
+      padding: 0 20px;
+    }
+  }
+  
+  .profile-container {
+    text-align: center; /* Center align text within the container */
+    margin-top: 20px; /* Space at the top */
+  }
 
 
 
@@ -42,6 +42,17 @@
   width: 100%;
   padding: 10px; /* Add padding if needed */
   box-sizing: border-box; /* Ensure padding is included in the height/width */
+}
+
+.deleteAccount {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  border-radius: 10px;
 }
 
 .edit-profilebut,
@@ -239,26 +250,25 @@
     margin-bottom: 30px;
   }
 
-  .profile-container label {
+  label {
     font-family: Rubik, sans-serif;
     display: block;
     margin-bottom: 10px;
   }
-
-  .profile-container input {
+  
+  input {
     font-family: Rubik, sans-serif;
     border-radius: 20px;
     border: 1px solid rgba(148, 148, 148, 1);
     background-color: #fff;
     padding: 17px 23px;
   }
-
+  
   @media (max-width: 991px) {
-    .profile-container input {
+    input {
       padding: 15px 20px;
     }
   }
-
   
   .gender-options {
     display: flex;
