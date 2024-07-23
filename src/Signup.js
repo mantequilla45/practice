@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import {Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Signup.css';
-import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
-import { auth, data } from './firebase';
+import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, updateProfile } from 'firebase/auth';
+import { auth, data, storage } from './firebase';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import StyledLoginPage from './Login';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const Button = styled.button`
   font-family: Rubik, sans-serif;
@@ -122,6 +123,7 @@ const SignupForm = ({ handleSignupClose }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
 
   const handleSignup = async (event) => {
     event.preventDefault();
@@ -137,13 +139,6 @@ const SignupForm = ({ handleSignupClose }) => {
     }
     setError('');
     try {
-      // const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-
-      // if (signInMethods.length > 0) {
-      //   setError('Username is already in use.');
-      //   return;
-      // }
-
       const q = query(collection(data, 'users'), where('username', '==', username));
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
@@ -154,12 +149,24 @@ const SignupForm = ({ handleSignupClose }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      let profileImageUrl = '';
+      if (profileImage) {
+        const storageRef = ref(storage, 'profileImages/'+ user.uid);
+        await uploadBytes(storageRef, profileImage);
+        profileImageUrl = await getDownloadURL(storageRef);
+      }
+
+      await updateProfile(user, {
+        displayName: username,
+        photoURL: profileImageUrl,
+      });
+
       // store user to database
 
       await setDoc(doc(data, 'users', user.uid), {
         username: username,
         email: email
-      });
+      })
 
       console.log('Signup successful:', user);
       handleSignupClose();
@@ -184,6 +191,9 @@ const SignupForm = ({ handleSignupClose }) => {
       <input type="password" id="password" className="signup-input" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       <label htmlFor="confirm-password" className="visually-hidden">Confirm Password</label>
       <input type="password" id="confirm-password" className="signup-input" placeholder="reenter password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+      <p style={{ fontSize: '20px', fontFamily: 'inherit', marginBottom: '-5px'}}>Profile Picture</p>
+      <label htmlFor="profileImage" className="visually-hidden">Profile Picture</label>
+      <input type="file" id="profileImage" className="signup-input" onChange={(e) => setProfileImage(e.target.files[0])} />
       {error && <p className="error-text">{error}</p>}
       <button type="submit" className="signup-button">Sign Up</button>
     </form>

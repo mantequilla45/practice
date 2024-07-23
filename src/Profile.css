@@ -44,6 +44,17 @@
   box-sizing: border-box; /* Ensure padding is included in the height/width */
 }
 
+.deleteAccount {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  border-radius: 10px;
+}
+
 .edit-profilebut,
 .save-profilebut {
   background-color: #0fc7ff; /* Button background color */
