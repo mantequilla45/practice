@@ -85,7 +85,7 @@ const Signup = ({ className, handleHide }) => {
             <Divider />
           
           <SignupForm handleSignupClose={handleSignupClose}/>
-          <LoginPrompt handle/>
+          {/* <LoginPrompt handle/> */}
         </Modal.Body>
       </Modal>
     </>

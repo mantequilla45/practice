@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const BookSchedule = ()=> {
     return (
         <>
-        Imo mama, schedule.
+        Imo mama, report.
 
         </>
     );
