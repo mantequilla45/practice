@@ -316,8 +316,8 @@ const App = () => {
         </ServicesSection>
 
         <AppointmentSection>
-          <AppointmentTitle>Not a common ailment?<br />Book a doctor's appointment!</AppointmentTitle>
-          <a href="/bookschedule"><AppointmentButton>BOOK</AppointmentButton></a>
+          <AppointmentTitle>Found a bug?<br />Report it to the developers!</AppointmentTitle>
+          <a href="/bookschedule"><AppointmentButton>REPORT</AppointmentButton></a>
         </AppointmentSection>
       <Footer>
         <FooterLogo src="https://cdn.builder.io/api/v1/image/assets/TEMP/e8a7c30444b5d585ef1ed03ec70f8b1de851d84fd4eeca6b699c6be680ced422?apiKey=d22a939618da4e96809232126d1f951c&" alt="BSDOC Logo" />
