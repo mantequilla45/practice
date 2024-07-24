@@ -44,6 +44,17 @@
   box-sizing: border-box; /* Ensure padding is included in the height/width */
 }
 
+.change-password {
+  background-color: #e0e0e0;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  border-radius: 10px;
+}
+
 .deleteAccount {
   background-color: red;
   color: white;
@@ -52,6 +63,7 @@
   font-size: 16px;
   font-weight: 500;
   margin: 0;
+  margin-top: 10px;
   border-radius: 10px;
 }
 

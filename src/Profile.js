@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import Header from './Header';
 import { data, storage, auth } from './firebase';  // Updated import for Firestore, Storage, and Auth
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, updatePassword } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { Button, Modal } from 'react-bootstrap';
 
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -17,6 +18,11 @@ const ProfilePage = () => {
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [username, setUsername] = useState('');
+  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [changePasswordError, setChangePasswordError] = useState(null);
 
   useEffect(() => {
     //const user = auth.currentUser;
@@ -150,6 +156,19 @@ const ProfilePage = () => {
     }
   }
 
+  const openChangePassword = () => {
+    setIsChangePasswordOpen(true);
+    setChangePasswordError(null);
+  }
+
+  const closeChangePassword = () => {
+    setIsChangePasswordOpen(false);
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setChangePasswordError(null);
+  };
+
   const openDeleteConfirm = () => {
     setIsDeleteConfirmOpen(true);
   };
@@ -158,18 +177,116 @@ const ProfilePage = () => {
     setIsDeleteConfirmOpen(false);
   };
 
-  const DeleteConfirmPopup = ({ onDeleteConfirm }) => {
-    <div className="delete-confirm-popup">
-    <div className="delete-confirm-content">
-      <h2>Are you sure you want to delete your account?</h2>
-      <p>This action cannot be undone.</p>
-      <div className="button-container">
-        <button className="confirm-delete" onClick={onDeleteConfirm}>Yes, Delete</button>
-        <button className="cancel-delete" >Cancel</button>
-      </div>
-    </div>
-  </div>
+  const handleChangePassword = async ()=> {
+    if (newPassword !== confirmPassword) {
+      alert('New password and confirm password do not match.');
+      return;
+    }
+
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        await updatePassword(user, newPassword);
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        setChangePasswordError(null);
+        alert('Password updated successfully.');
+        setIsChangePasswordOpen(false);
+      }
+    } catch (e) {
+      console.error('Error updating password: ', e);
+      alert('Failed to update password. Please try again.')
+    }
   }
+
+  const DeleteConfirmPopup = ({ show, onClose, onDeleteConfirm }) => {
+  <div>
+    <Modal 
+      show={isDeleteConfirmOpen} 
+      onHide={onClose}>
+      <Modal.Header closeButton style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+        <Modal.Title>Confirm Delete Account</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        Are you sure you want to delete your account? This action cannot be undone.
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button variant="danger" onClick={onDeleteConfirm}>
+          Delete Account
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  </div>
+};
+
+  const ChangePasswordModal = ({
+    currentPassword,
+    setCurrentPassword,
+    newPassword,
+    setNewPassword,
+    confirmPassword,
+    setConfirmPassword,
+    handleChangePassword,
+    error,
+    onClose, // Added onClose prop
+  }) => (
+    <div className="change-password-modal">
+        <Modal 
+          show={true} 
+          onHide={onClose}
+          backdrop='static'
+          keyboard={false}
+          centered
+          scrollable
+          >
+        <Modal.Header closeButton style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+          <Modal.Title>Change Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group">
+            <label htmlFor="currentPassword">Current Password</label>
+            <input
+              type="password"
+              id="currentPassword"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="newPassword">New Password</label>
+            <input
+              type="password"
+              id="newPassword"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          {error && <p className="error-message">{error}</p>}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleChangePassword}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
 
   return (
     <div>
@@ -208,7 +325,7 @@ const ProfilePage = () => {
               phone={phone}
               setPhone={setPhone}
             />
-            <SecuritySection isEditing={isEditing} openDeleteConfirm={openDeleteConfirm} />
+            <SecuritySection isEditing={isEditing} openDeleteConfirm={openDeleteConfirm} openChangePassword={openChangePassword}  />
             <RecordsSection />
           </section>
           {/* {isEditing && (
@@ -223,18 +340,33 @@ const ProfilePage = () => {
       {isDeleteConfirmOpen && (
       <DeleteConfirmPopup
         onDeleteConfirm={handleDeleteAccount}
-        //onClose={closeDeleteConfirm}
+        onClose={closeDeleteConfirm}
       />
-    )}
+      )}
+      {isChangePasswordOpen && (
+        <ChangePasswordModal
+          currentPassword={currentPassword}
+          setCurrentPassword={setCurrentPassword}
+          newPassword={newPassword}
+          setNewPassword={setNewPassword}
+          confirmPassword={confirmPassword}
+          setConfirmPassword={setConfirmPassword}
+          handleChangePassword={handleChangePassword}
+          error={changePasswordError}
+          onClose={closeChangePassword}
+        />
+      )}
     </div>
   );
 };
+
+const placeholderImageUrl = 'https://clipground.com/images/user-icon-vector-png-6.png';
 
 const ProfileHeader = ({ toggleEditMode, isEditing, profileImageUrl, handleProfileImageChange, username, handleSaveProfile }) => (
   <section className="profile-section">
     <div className="profile-image-container">
       <div className="profile-image">
-        <img src={profileImageUrl || 'default-image-url'} alt="Profile" className='profile-image' />
+        <img src={profileImageUrl || placeholderImageUrl ||'default-image-url'} alt="Profile" className='profile-image' />
         {isEditing && (
           <input 
             type="file" 
@@ -358,10 +490,10 @@ const ContactInfo = ({ isEditing, email, setEmail, phone, setPhone }) => (
   </section>
 );
 
-const SecuritySection = ({ isEditing, openDeleteConfirm }) => (
-  <section className="security-section">
+const SecuritySection = ({ isEditing, openDeleteConfirm, openChangePassword }) => (
+  <section className="security-wrapper">
     <h2 className="section-title">Security</h2>
-    <div className="form-group">
+    {/* <div className="form-group">
       <h2 className="section-names">Password</h2>
       <input 
       id="password" 
@@ -369,9 +501,9 @@ const SecuritySection = ({ isEditing, openDeleteConfirm }) => (
       value="test" 
       readOnly={!isEditing} 
       style={{color: 'gray'}} />
-    </div>
+    </div> */}
     <div className="form-group">
-      <h2 className="section-names">Two-Factor Authentication</h2>
+      {/* <h2 className="section-names">Two-Factor Authentication</h2>
       <div className="toggle-switch">
         <input
           type="checkbox"
@@ -385,7 +517,8 @@ const SecuritySection = ({ isEditing, openDeleteConfirm }) => (
           <span className="toggle-switch-inner"></span>
           <span className="toggle-switch-switch"></span>
         </label>
-      </div>
+      </div> */}
+      <button className='change-password' onClick={openChangePassword}>Change Password</button>
       <div className='button-deleteAccount'>
         <button className='deleteAccount' onClick={openDeleteConfirm}>Delete Account</button>
       </div>
@@ -394,7 +527,7 @@ const SecuritySection = ({ isEditing, openDeleteConfirm }) => (
 );
 
 const RecordsSection = () => (
-  <section className="records-section">
+  <section className="records-wrapper">
     <h2 className="section-title">Records</h2>
     <div className="record-item">
       <h2 className="record-date">June 26, 2023</h2>

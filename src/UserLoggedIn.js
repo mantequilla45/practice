@@ -37,7 +37,7 @@ const UserLoggedIn = ({ user }) => {
   const handleLogOut = async () => {
     try {
       await signOut(auth);
-      navigate('/cure');
+      navigate('/landing');
       console.log('User logged out');
     } catch (e) {
       console.error('Error logging out: ', e);
