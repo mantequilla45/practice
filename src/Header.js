@@ -70,7 +70,7 @@ const Header = ({ isLandingPage, isAboutPage }) => {
         />
       </a>
       <nav className="nav">
-        <a href="/report" className="nav-sched-link">Schedule an appointment</a>
+        <a href="/report" className="nav-sched-link">Report</a>
         {user ? (
           <div style={{ cursor: 'pointer' }}>
             <UserLoggedIn user={user} />
