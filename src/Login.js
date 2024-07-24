@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth, googleProvider, signInWithPopup, signInWithEmailAndPassword, data } from './firebase'; // Ensure this path is correct
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import Signup from './Signup';
 
 const Buttonn = styled.button`
@@ -88,7 +88,28 @@ const SocialLoginOptions = ({ handleClose }) => {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      // Handle successful login (e.g., store user info, redirect, etc.)
+      const user = result.user;
+
+      let [firstName, middle, lastName] = user.displayName.split(' ');
+
+      if (!lastName) {
+        lastName = '';
+      };
+
+      if (middle) {
+        middle = '';
+      };
+
+      await setDoc(doc(data, 'users', user.uid), {
+        username: user.displayName,
+        email: user.email,
+        firstName: firstName || '',
+        lastName: lastName || '',
+        phone: user.phoneNumber || '',
+        gender: user.gender || '',
+        photoImageUrl: user.photoURL
+      });
+
       console.log('Google login successful:', result.user);
       handleClose();
     } catch (error) {
@@ -122,7 +143,6 @@ const Divider = () => (
 );
 
 const LoginForm = ({ handleClose }) => {
-  // const [email, setEmail] = useState('');
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -174,7 +194,7 @@ const LoginForm = ({ handleClose }) => {
       <label htmlFor="usernameOrEmail" className="visually-hidden">Username or Email</label>
       <input type="text" id="usernameOrEmail" className="login-input" placeholder="username or email" value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} required />
       <label htmlFor="password" className="visually-hidden">Password</label>
-      <input type="password" id="password" className="login-input" placeholder="password" vale={password} onChange={(e) => setPassword(e.target.value)} required />
+      <input type="password" id="password" className="login-input" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       {error && <p className='error-text'>{error}</p>}
       <button type="submit" className="login-button">Login</button>
     </form>

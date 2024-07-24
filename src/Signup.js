@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import {Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Signup.css';
-import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, updateProfile } from 'firebase/auth';
-import { auth, data, storage } from './firebase';
+import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, updateProfile, signInWithPopup } from 'firebase/auth';
+import { auth, data, googleProvider, storage } from './firebase';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import StyledLoginPage from './Login';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -81,7 +81,7 @@ const Signup = ({ className, handleHide }) => {
         </Modal.Header>
         <Modal.Body style={{padding: '0px 60px', overflowY: 'auto' }}>
             <p className="social-text">Sign up with</p>
-            <SocialSignupOptions />
+            <SocialSignupOptions handleSignupClose={handleSignupClose}/>
             <Divider />
           
           <SignupForm handleSignupClose={handleSignupClose}/>
@@ -92,16 +92,47 @@ const Signup = ({ className, handleHide }) => {
   );
 };
 
-const SocialSignupOptions = () => {
+const SocialSignupOptions = ({ handleSignupClose }) => {
+  const handleGoogleSignup = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      let [firstName, middle, lastName] = user.displayName.split(' ');
+      if (!lastName) {
+        lastName = '';
+      }
+      if (middle) {
+        middle = '';
+      }
+
+      await setDoc(doc(data, 'users', user.uid), {
+        username: user.displayName,
+        email: user.email,
+        firstName: firstName,
+        lastName: lastName,
+        phone: user.phoneNumber || '',
+        gender: '',
+        profileImageUrl: user.photoURL
+      });
+
+      console.log('Google signup successful:', user);
+      handleSignupClose();
+    }
+    catch (e) {
+      console.error('Error during Google signup:', e);
+    }
+  }
+
   const socialOptions = [
-    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/03d894b07dcfd1cb03e468a3f61e659330e220a5c3b711c0c8ac7d0125d3c97f?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Social Sign Up Option 1" },
-    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/b13ae373b38e6c864bc633586a29f085659e6a73c8f4bb0742d5a64a2d0996f1?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Social Sign Up Option 2" },
+    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/03d894b07dcfd1cb03e468a3f61e659330e220a5c3b711c0c8ac7d0125d3c97f?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Google Sign Up", onClick: handleGoogleSignup},
+    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/b13ae373b38e6c864bc633586a29f085659e6a73c8f4bb0742d5a64a2d0996f1?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Facebook Sign Up" },
   ];
 
   return (
     <div className="social-signup-options">
         {socialOptions.map((option, index) => (
-        <button key={index} className="social-signup-button">
+        <button key={index} className="social-signup-button" onClick={option.onClick}>
           <img loading="lazy" src={option.src} alt={option.alt} />
         </button>
       ))}
@@ -164,13 +195,6 @@ const SignupForm = ({ handleSignupClose }) => {
         displayName: username,
         photoURL: profileImageUrl,
       });
-
-      // store user to database
-
-      // await setDoc(doc(data, 'users', user.uid), {
-      //   username: username,
-      //   email: email
-      // })
 
       await setDoc(doc(data, 'users', user.uid), {
         username: username,
