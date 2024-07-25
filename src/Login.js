@@ -77,7 +77,7 @@ const Login = ({ className, handleSignupHide }) => {
           <SocialLoginOptions handleClose={handleClose}/>
           <Divider />
           <LoginForm handleClose={handleClose} />
-          <SignupPrompt handleHide={handleHide} />
+          {/* <SignupPrompt handleHide={handleHide} /> */}
         </Modal.Body>
       </Modal>
     </>
@@ -120,7 +120,7 @@ const SocialLoginOptions = ({ handleClose }) => {
 
   const socialOptions = [
     { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/93acce7c007ce7b98cb4a5b8d1e1625bb33c91bc26117f850de213e6e46d258b?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Google Login", onClick: handleGoogleLogin },
-    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/e239ff8292f58f9257cb678422e0cc58bf9166003ba475d96e3ce355b1ddab70?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Facebook Login" },
+    // { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/e239ff8292f58f9257cb678422e0cc58bf9166003ba475d96e3ce355b1ddab70?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Facebook Login" },
   ];
 
   return (
