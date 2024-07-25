@@ -6,42 +6,43 @@
         }
     }
     
-    /* Modal Styles */
-    .modal-content {
+    .signup-modal .modal-content {
         border-radius: 10px;
         background-color: #fff;
         max-width: 600px; /* Adjust this value as needed */
         width: 100%;
-        padding: 30px; /* Increase padding to give more space */
+        padding: 50px; /* Increase padding to give more space */
         display: flex;
         flex-direction: column;
         align-items: center;
         margin: 0 auto;
       }
-    
-    @media (max-width: 991px) {
-        .modal-content {
-            max-width: 100%; /* Ensure it takes full width on smaller screens */
-            padding: 25px 20px 30px;
-          }
-    }
-    
-    .modal-header {
+      
+      @media (max-width: 991px) {
+        .signup-modal .modal-content {
+          max-width: 100%; /* Ensure it takes full width on smaller screens */
+          padding: 25px 20px 30px;
+        }
+      }
+      
+      .signup-modal .modal-header {
         width: 100%;
         display: flex;
         flex-direction: column;
         text-align: center;
-    }
-    
-    .modal-title {
+      }
+      
+      .signup-modal .modal-title {
         color: #4b4b4b;
         font: 400 25px Rubik, sans-serif;
-    }
-    .modal-description {
+      }
+      
+      .signup-modal .modal-description {
         color: #4b4b4b;
         font: 400 16px Rubik, sans-serif;
         margin-top: 5px;
-    }
+      }
+      
     .social-signup-options {
         display: flex;
         justify-content: center;

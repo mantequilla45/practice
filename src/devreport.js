@@ -1,57 +1,31 @@
 import React from 'react';
-import { Modal as BootstrapModal, Button as BootstrapButton } from 'react-bootstrap';
+import { Modal as BootstrapModal } from 'react-bootstrap';
 import styled from 'styled-components';
 import './devreport.css';
 
-// Styled components for the form
-const FormContainer = styled.main`
-  justify-content: center;
-  border-radius: 10px;
-  background-color: #caf5ff;
+// Styled components for custom modal
+const CustomModalBody = styled(BootstrapModal.Body)`
+  padding: 0; /* Remove default padding */
+`;
+
+const CustomModalHeader = styled(BootstrapModal.Header)`
+  border-bottom: none; /* Remove default border */
   display: flex;
-  max-width: 802px;
   flex-direction: column;
-  padding: 50px;
-  border: 1px solid #a6a6a6;
-  @media (max-width: 991px) {
-    padding: 0 20px;
-  }
-`;
-
-const Header = styled.header`
-  display: flex;
   align-items: center;
-  gap: 20px;
-  @media (max-width: 991px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
 `;
 
-const LogoWrapper = styled.div`
-  width: 15%;
-  @media (max-width: 991px) {
-    width: 100%;
-  }
-`;
-
-const Logo = styled.img`
-  aspect-ratio: 1;
-  object-fit: contain;
-  width: 105px;
-  max-width: 100%;
-`;
-
-const Title = styled.h1`
+const CustomModalTitle = styled.h1`
   color: #000;
-  font: 400 40px Rubik, sans-serif;
-  margin: 0;
-  @media (max-width: 991px) {
-    font-size: 32px;
-  }
+  font: 400 25px Rubik, sans-serif;
 `;
 
+const CustomModalLogo = styled.img`
+  width: 100px; /* Adjust size as needed */
+  margin-bottom: 10px;
+`;
+
+// Rest of your styled components
 const FileUploadSection = styled.div`
   margin-top: 25px;
 `;
@@ -162,17 +136,23 @@ function FormButton({ children, onClick }) {
 // Bug report form component
 function BugReportForm() {
   return (
-    <div className = "dev-rep-form-container">
-      <div className = "dev-rep-header" closeButton>
-        <LogoWrapper>
-          <Logo
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3ade4f1c2aa58c9d8b1bf86693b7788d8778e008517d33acfec44ba834bfa83?apiKey=0cd5b3eb85e74a83a268d41d07a9c27f&&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f"
-            alt="Bug Report Logo"
-          />
-        </LogoWrapper>
-        <Title>Report Bug</Title>
-      </div>
+    <div className="dev-rep-form-container">
+        
+        <div className = "dev-rep-header">
+            <div className = 'dev-rep-title-logo'><div className = "dev-rep-logo-wrapper">
+                <img className = "dev-rep-logo"
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3ade4f1c2aa58c9d8b1bf86693b7788d8778e008517d33acfec44ba834bfa83?apiKey=0cd5b3eb85e74a83a268d41d07a9c27f&&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f"
+                    alt="Bug Report Logo"
+                />
+                </div>
+                <h1 className = "dev-rep-title">Report Bug</h1>
+            </div>
+            
+            <div className = "closebutton-container">
+            <BootstrapModal.Header className="custom-modal-header" closeButton></BootstrapModal.Header>
+        </div>
+        </div>
       <form>
         <FormInput label="Your email address" id="email" type="email" />
         <FormTextArea label="Bug description" id="description" />
@@ -191,17 +171,9 @@ function BugReportForm() {
 const DevreportModal = ({ show, handleClose }) => {
   return (
     <BootstrapModal show={show} onHide={handleClose} size="lg">
-      <BootstrapModal.Header closeButton>
-        <BootstrapModal.Title>Report Bug</BootstrapModal.Title>
-      </BootstrapModal.Header>
-      <BootstrapModal.Body>
+      <CustomModalBody>
         <BugReportForm />
-      </BootstrapModal.Body>
-      <BootstrapModal.Footer>
-        <BootstrapButton variant="secondary" onClick={handleClose}>
-          Close
-        </BootstrapButton>
-      </BootstrapModal.Footer>
+      </CustomModalBody>
     </BootstrapModal>
   );
 };

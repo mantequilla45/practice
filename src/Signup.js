@@ -32,17 +32,16 @@ const Signup = ({ className, handleHide }) => {
   const handleShow = () => {
     setShow(true);
     document.body.style.overflowY = 'auto';
-    
   };
 
-  const handleShowSignUp = ()=> {
+  const handleShowSignUp = () => {
     setShowSignup(true);
     handleHide();
-  }
+  };
 
-  const handleCloseSignUp = ()=> {
+  const handleCloseSignUp = () => {
     setShowSignup(false);
-  }
+  };
 
   const handleSignupHide = () => {
     setShow(false);
@@ -64,7 +63,7 @@ const Signup = ({ className, handleHide }) => {
   }, []);
 
   return (
-    <>
+    <div className="signup-container">
       <Button onClick={handleShow || handleShowSignUp}>Sign Up</Button>
       <Modal
         show={show}
@@ -73,24 +72,24 @@ const Signup = ({ className, handleHide }) => {
         keyboard={false}
         centered
         scrollable
-        className={className}
+        className={`signup-modal ${className}`} // Add `signup-modal` class here
       >
         <Modal.Header closeButton style={{ borderBottom: 'none', display: 'flex', flexDirection: 'column-reverse' }}>
           <p className="modal-description">Cure your sickness today!</p>
           <Modal.Title>Create your account</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{padding: '0px 60px', overflowY: 'auto' }}>
-            <p className="social-text">Sign up with</p>
-            <SocialSignupOptions handleSignupClose={handleSignupClose}/>
-            <Divider />
-          
-          <SignupForm handleSignupClose={handleSignupClose}/>
+        <Modal.Body style={{ padding: '0px 60px', overflowY: 'auto' }}>
+          <p className="social-text">Sign up with</p>
+          <SocialSignupOptions handleSignupClose={handleSignupClose} />
+          <Divider />
+          <SignupForm handleSignupClose={handleSignupClose} />
           {/* <LoginPrompt handle/> */}
         </Modal.Body>
       </Modal>
-    </>
+    </div>
   );
 };
+
 
 const SocialSignupOptions = ({ handleSignupClose }) => {
   const handleGoogleSignup = async () => {

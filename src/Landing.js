@@ -2,6 +2,7 @@ import React, { useEffect,useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import './Landing.css';
+import DevreportModal from './devreport';
 
 const HeroSection = () => {
   return (
@@ -95,12 +96,18 @@ const ServicesSection = () => {
 }
 
 const DevReport = () => {
+  
+  const [devreportshow, setdevreportShow] = useState(false);
+  const handleOpendevrep = () => setdevreportShow(true);
+  const handleClosedevrep = () => setdevreportShow(false);
   return (
     <div className = "dev-report">
       <h1 className ="dev-report-title ">Found a bug?<br />Report it to the developers!</h1>
         <div className = "dev-report-button-box">
-          <a href="/report" className="dev-report-button">REPORT</a>
+          <a className="dev-report-button" onClick={handleOpendevrep} role="button">REPORT</a>
         </div>
+        
+        <DevreportModal show={devreportshow} handleClose={handleClosedevrep} />
     </div>
     );
 }
