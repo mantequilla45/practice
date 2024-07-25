@@ -9,9 +9,9 @@
     .signup-modal .modal-content {
         border-radius: 10px;
         background-color: #fff;
-        max-width: 600px; /* Adjust this value as needed */
+        max-width: 800px; /* Adjust this value as needed */
         width: 100%;
-        padding: 50px; /* Increase padding to give more space */
+        padding: 0 25px; /* Increase padding to give more space */
         display: flex;
         flex-direction: column;
         align-items: center;

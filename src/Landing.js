@@ -152,7 +152,7 @@ const App = () => {
         <HeroSection />
         <div className = "blue-bar"/>
         <ServicesSection />
-        <DevReport />
+        {/* <DevReport /> */}
       <Footer />
     </div>
   );
