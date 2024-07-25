@@ -57,7 +57,7 @@ const Header = ({ isLandingPage, isAboutPage }) => {
       
       {!atAbout ? (
       <Link to="/about" onClick={toggleAtAbout} className="no-underline">
-        <span className={`nav-link about-link`}>About</span>
+        <span className={`nav-link about-link`} >About</span>
       </Link>
       ) : (
         <Link to='/cure' onClick={toggleAtAbout} className='no-underline'>
@@ -74,7 +74,7 @@ const Header = ({ isLandingPage, isAboutPage }) => {
         />
       </a>
       <nav className="nav">
-        <a className="nav-sched-link" onClick={handleOpendevrep} role="button">Report</a>
+        {/* <a className="nav-sched-link" onClick={handleOpendevrep} role="button">Report</a> */}
 
         {user ? (
           <div style={{ cursor: 'pointer' }}>

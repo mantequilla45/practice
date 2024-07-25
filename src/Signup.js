@@ -125,7 +125,7 @@ const SocialSignupOptions = ({ handleSignupClose }) => {
 
   const socialOptions = [
     { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/03d894b07dcfd1cb03e468a3f61e659330e220a5c3b711c0c8ac7d0125d3c97f?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Google Sign Up", onClick: handleGoogleSignup},
-    { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/b13ae373b38e6c864bc633586a29f085659e6a73c8f4bb0742d5a64a2d0996f1?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Facebook Sign Up" },
+    // { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/b13ae373b38e6c864bc633586a29f085659e6a73c8f4bb0742d5a64a2d0996f1?apiKey=d22a939618da4e96809232126d1f951c&", alt: "Facebook Sign Up" },
   ];
 
   return (
