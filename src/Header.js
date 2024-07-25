@@ -8,6 +8,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import UserLoggedIn from './UserLoggedIn';
 import { Link } from 'react-router-dom';
+import DevreportModal from './devreport';
 
 const Header = ({ isLandingPage, isAboutPage }) => {
   const [user, setUser] = useState(null);
@@ -48,6 +49,9 @@ const Header = ({ isLandingPage, isAboutPage }) => {
     };
   }, [isLandingPage]);
 
+  const [devreportshow, setdevreportShow] = useState(false);
+  const handleOpendevrep = () => setdevreportShow(true);
+  const handleClosedevrep = () => setdevreportShow(false);
   return (
     <header className={`header ${isLandingPage ? 'landing-header' : ''} ${isAboutPage ? 'about-page-header' : ''}`}>
       
@@ -70,7 +74,8 @@ const Header = ({ isLandingPage, isAboutPage }) => {
         />
       </a>
       <nav className="nav">
-        <a href="/report" className="nav-sched-link">Report</a>
+        <a className="nav-sched-link" onClick={handleOpendevrep} role="button">Report</a>
+
         {user ? (
           <div style={{ cursor: 'pointer' }}>
             <UserLoggedIn user={user} />
@@ -81,6 +86,7 @@ const Header = ({ isLandingPage, isAboutPage }) => {
             <Signup />
           </>
         )}
+        <DevreportModal show={devreportshow} handleClose={handleClosedevrep} />
       </nav>
     </header>
   );
