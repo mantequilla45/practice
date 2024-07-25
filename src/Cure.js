@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import './Cure.css';
-import { addCure, getCombinedSymptoms, getCures } from "./cureService";
+import { addCure, getCombinedSymptoms, getCures, saveSearchRecord } from "./cureService";
 import Header from './Header';
 import Fuse from "fuse.js";
+import { getAuth } from "firebase/auth";
+import { Timestamp } from "firebase/firestore";
 
 // Advanced Search Components
 const AdvancedSearchHeader = () => (
@@ -40,23 +42,34 @@ const PersonalInfoForm = ({ personalInfo, setPersonalInfo }) => (
         <input
           className="advanced-search-radio-input"
           type="radio"
-          id="female"
+          id="Female"
           name="gender"
-          checked={personalInfo.gender === 'female'}
-          onChange={() => setPersonalInfo({ ...personalInfo, gender: 'female' })}
+          checked={personalInfo.gender === 'Female'}
+          onChange={() => setPersonalInfo({ ...personalInfo, gender: 'Female' })}
         />
-        <label className="advanced-search-radio-label" htmlFor="female">Female</label>
+        <label className="advanced-search-radio-label" htmlFor="Female">Female</label>
       </div>
       <div className="advanced-search-radio-option">
         <input
           className="advanced-search-radio-input"
           type="radio"
-          id="male"
+          id="Male"
           name="gender"
-          checked={personalInfo.gender === 'male'}
-          onChange={() => setPersonalInfo({ ...personalInfo, gender: 'male' })}
+          checked={personalInfo.gender === 'Male'}
+          onChange={() => setPersonalInfo({ ...personalInfo, gender: 'Male' })}
         />
-        <label className="advanced-search-radio-label" htmlFor="male">Male</label>
+        <label className="advanced-search-radio-label" htmlFor="Male">Male</label>
+      </div>
+      <div className="advanced-search-radio-option">
+        <input
+          className="advanced-search-radio-input"
+          type="radio"
+          id="Other"
+          name="gender"
+          checked={personalInfo.gender === 'Other'}
+          onChange={() => setPersonalInfo({ ...personalInfo, gender: 'Other' })}
+        />
+        <label className="advanced-search-radio-label" htmlFor="Other">Other</label>
       </div>
     </div>
     <label className="advanced-search-form-label" htmlFor="weight">Weight</label>
@@ -64,7 +77,7 @@ const PersonalInfoForm = ({ personalInfo, setPersonalInfo }) => (
       className="advanced-search-form-input"
       id="weight"
       type="number"
-      placeholder="Your answer"
+      placeholder="Your answer in kg"
       value={personalInfo.weight}
       onChange={(e) => setPersonalInfo({ ...personalInfo, weight: e.target.value })}
     />
@@ -167,10 +180,11 @@ const AdvancedSearchForm = ({ handleAdvancedSearch }) => {
   const [personalInfo, setPersonalInfo] = useState({ name: '', age: '', gender: '', weight: '' });
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [selectedConditions, setSelectedConditions] = useState([]);
+  const [addRecord, setAddRecord] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAdvancedSearch({ selectedSymptoms });
+    handleAdvancedSearch({ selectedSymptoms, addRecord, personalInfo, selectedConditions });
   };
 
   return (
@@ -186,7 +200,12 @@ const AdvancedSearchForm = ({ handleAdvancedSearch }) => {
         </div>
       </div>
       <div className="advanced-search-button-container">
-        <input type="checkbox" id="add-record-checkbox" />
+        <input 
+          type="checkbox" 
+          id="add-record-checkbox"
+          checked={addRecord}
+          onChange={(e)=> setAddRecord(e.target.checked)}
+        />
         <label className="add-record-label" htmlFor="add-record-checkbox">Add record</label>
         <button className="advanced-search-assess-button" type="submit">Assess</button>
       </div>
@@ -260,7 +279,7 @@ function App() {
     setSelectedSymptoms(searchTerms);
   };
 
-  const handleAdvancedSearch = async ({ selectedSymptoms }) => {
+  const handleAdvancedSearch = async ({ selectedSymptoms, addRecord, personalInfo, selectedConditions }) => {
     console.log('Advanced Search Data:', { selectedSymptoms });
 
     const combinedsymptomsData = await getCombinedSymptoms();
@@ -315,6 +334,21 @@ function App() {
 
     setCures(filteredCures);
     setNoResults(filteredCures.length === 0);
+    
+
+    if (addRecord) {
+      const currentUser = getAuth().currentUser;
+      const searchRecord = {
+        userId: currentUser.uid,
+        personalInfo,
+        selectedSymptoms,
+        selectedConditions,
+        addRecord,
+        timestamp: Timestamp.now()
+      };
+
+      await saveSearchRecord(searchRecord, currentUser.uid);
+    }
   };
 
   const circleRef = useRef(null);

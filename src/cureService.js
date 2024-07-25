@@ -54,3 +54,14 @@ export const getCombinedSymptoms = async ()=> {
         return [];
     }
 };
+
+export const saveSearchRecord = async (record) => {
+    try {
+        const recordRef = collection(data, 'searchRecords');
+        await addDoc(recordRef, record);
+        console.log('Record saved successfully.');
+    }
+    catch (e) {
+        console.error('Error saving record: ', e);
+    }
+};

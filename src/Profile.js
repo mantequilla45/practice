@@ -4,7 +4,7 @@ import Header from './Header';
 import { data, storage, auth } from './firebase';  // Updated import for Firestore, Storage, and Auth
 import { EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import ChangePassword from './ChangePassword';
 import DeleteAccount from './DeleteAccount';
 
@@ -29,6 +29,8 @@ const ProfilePage = () => {
   const handleCloseDeleteAccount = () => setShowDeleteAccount(false);
   const handleShowDeleteAccount = () => setShowDeleteAccount(true);
 
+  const [searchRecords, setSearchRecords] = useState([]);
+
   useEffect(() => {
     //const user = auth.currentUser;
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -37,6 +39,7 @@ const ProfilePage = () => {
         // const userId = user.uid;
         setEmail(user.email);
         fetchUserProfile();
+        fetchSearchRecords(user);
       } else {
         // User is signed out
         // Handle user not signed in case
@@ -45,6 +48,35 @@ const ProfilePage = () => {
 
     return () => unsubscribe();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchSearchRecords = async () => {
+  //     const user = user.currentUser;
+  //     if (user) {
+  //       const searchRecordsRef = collection(data, 'searchRecords');
+  //       const q = query(searchRecords, where('userId', '==', user.uid));
+  //       const querySnapshot = await getDocs(q);
+  //       const records = querySnapshot.docs.map(doc => doc.data());
+  //       setSearchRecords(records);
+  //     }
+  //   };
+
+  //   fetchSearchRecords();
+  // }, [])
+
+  const fetchSearchRecords = async (user) => {
+    if (!user) return 
+    try {
+      const searchRecordsRef = collection(data, 'searchRecords');
+      const q = query(searchRecordsRef, where('userId', '==', user.uid));
+      const querySnapshot = await getDocs(q);
+      const records = querySnapshot.docs.map(doc => doc.data());
+      setSearchRecords(records);
+    }
+    catch (e) {
+      console.error('Error fetching records: ', e);
+    }
+  };
 
   const fetchUserProfile = async () => {
     const user = auth.currentUser;
@@ -190,7 +222,7 @@ const ProfilePage = () => {
               setPhone={setPhone}
             />
             <SecuritySection isEditing={isEditing} openDeleteConfirm={handleShowDeleteAccount} openChangePassword={openChangePassword}  />
-            <RecordsSection />
+            <RecordsSection searchRecords={searchRecords}/>
           </section>
           {/* {isEditing && (
             <div className="button-container">
@@ -349,22 +381,37 @@ const SecuritySection = ({ isEditing, openDeleteConfirm, openChangePassword }) =
   </section>
 );
 
-const RecordsSection = () => (
-  <section className="records-wrapper">
-    <h2 className="section-title">Records</h2>
-    <div className="record-item">
-      <h2 className="record-date">June 26, 2023</h2>
-      <p className="record-description">You changed your email address</p>
+const RecordsSection = ({ searchRecords }) => {
+  const sortedRecords = [...searchRecords].sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
+
+  return (  
+    <section className="records-wrapper">
+      <div className="form-group" style={{width: '100%'}}>
+      <h2>Records</h2>
+      <ul style={{ width: '100%' }}>
+        {sortedRecords.length > 0 ? (
+          sortedRecords.map((record, index) => (
+            <li key={index} className='form-group' style={{ width: '100%' }}>
+              <span style={{fontWeight: 'bold'}}>{record.timestamp.toDate().toLocaleString()}: {record.query}</span>
+              {record.personalInfo && (
+                  <div style={{ marginLeft: '2.5%' }}>
+                    <p><strong>Name:</strong> {record.personalInfo.name} <br></br>
+                    <strong>Age:</strong> {record.personalInfo.age}<br></br>
+                    <strong>Gender:</strong> {record.personalInfo.gender}<br></br>
+                    <strong>Weight:</strong> {record.personalInfo.weight} kg</p>
+                  </div>
+                )}
+              <div style={{marginLeft: '2.5%'}}><strong>Symptoms:</strong> {record.selectedSymptoms.join(', ')}</div>
+              <div style={{marginLeft: '2.5%'}}><strong>Conditions:</strong> {record.selectedConditions.join(', ')}</div>
+            </li>
+          ))
+        ) : (
+          <li style={{ width: '100%' }}>No search records found</li>
+        )}
+      </ul>
     </div>
-    <div className="record-item">
-      <h2 className="record-date">June 20, 2023</h2>
-      <p className="record-description">You enabled two-factor authentication</p>
-    </div>
-    <div className="record-item">
-      <h2 className="record-date">June 15, 2023</h2>
-      <p className="record-description">You updated your profile picture</p>
-    </div>
-  </section>
-);
+    </section>
+  );
+}
 
 export default ProfilePage;

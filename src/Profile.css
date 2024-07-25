@@ -258,6 +258,7 @@
   
   .form-group input[type="profile-text"] {
     width: 200%; 
+    width: 100%;
     max-width: 700px;
     margin-bottom: 30px;
   }
@@ -401,9 +402,10 @@
   flex-direction: column;
   font-size: 20px;
   color: #000;
-  width: 900px;
+  width: 100%;
   font-weight: 400;
   padding: 50px;
+  box-sizing: border-box;
 }
 
   @media (max-width: 991px) {
