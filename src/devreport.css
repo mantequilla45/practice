@@ -1,7 +1,7 @@
 .dev-rep-form-container {
     justify-content: center;
     border-radius: 10px;
-    background-color: #caf5ff;
+    background-color: #D8F8FF;
     display: flex;
     max-width: 802px;
     flex-direction: column;
@@ -14,11 +14,56 @@
 
 .dev-rep-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
+    justify-content: space-between;
     @media (max-width: 991px) {
       flex-direction: column;
       align-items: flex-start;
       gap: 15px;
     }
+}
+.custom-modal-header {
+    display: flex;
+    justify-content: center;
+    border-bottom: none; 
+    width: 32px;
+    height: 32px;
+}
+.closebutton-container {
+    display: flex;
+    justify-content: flex-end;
+}
+.custom-modal-header .btn-close {
+    margin: 0; /* Remove the margin */
+}
+.dev-rep-logo-wrapper {
+    @media (max-width: 991px) {
+      width: 100%;
+    }
+}
+
+.dev-rep-logo {
+  aspect-ratio: 1;
+  object-fit: contain;
+  width: 105px;
+  max-width: 100%;
+}
+
+.dev-rep-title {
+  color: #000;
+  font-family: Rubik, sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+
+  margin: 0;
+  @media (max-width: 991px) {
+    font-size: 32px;
+  }
+}
+
+.dev-rep-title-logo {
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
