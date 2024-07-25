@@ -99,7 +99,7 @@ const DevReport = () => {
     <div className = "dev-report">
       <h1 className ="dev-report-title ">Found a bug?<br />Report it to the developers!</h1>
         <div className = "dev-report-button-box">
-          <a href="/bookschedule" className="dev-report-button">REPORT</a>
+          <a href="/report" className="dev-report-button">REPORT</a>
         </div>
     </div>
     );
