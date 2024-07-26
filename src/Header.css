@@ -40,11 +40,16 @@
   transition: width 1s ease; /* Optional: Smooth transition for logo size change */
 }
 
+.no-underline {
+  color: #333;
+}
 .nav {
   margin-left: auto;
   gap: 20px;
 }
-
+.a {
+  color: #333;
+}
 .nav-link {
   color: #333;
   font-family: Rubik, sans-serif;
