@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# BSDoc: Basic Symptom Drug Obtaining Code
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+BSDoc is a web-based application designed to empower users to manage minor health issues effectively and independently. By combining expert guidance with user-friendly technology, BSDoc aims to reduce unnecessary doctor visits and alleviate strain on healthcare systems.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- [Introduction](#introduction)
+- [Purpose](#purpose)
+- [Scope](#scope)
+- [Features](#features)
+- [Technical Details](#technical-details)
+  - [Usability](#usability)
+  - [Reliability and Availability](#reliability-and-availability)
+  - [Performance](#performance)
+  - [Security](#security)
+  - [Design Constraints](#design-constraints)
+  - [Interfaces](#interfaces)
+- [References](#references)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Introduction
 
-### `npm test`
+The BSDoc system provides users with tools to:
+- Check symptoms for common ailments.
+- Receive tailored over-the-counter (OTC) medication recommendations.
+- Access guidance for managing symptoms at home.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This project ensures compliance with healthcare regulations and emphasizes user data security and privacy.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Purpose
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This repository serves as the central documentation and development hub for BSDoc. The project aims to:
+- Define system requirements for developers and stakeholders.
+- Provide a comprehensive overview of the software’s parameters and objectives.
+- Guide the development lifecycle with detailed technical and functional specifications.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Scope
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+BSDoc focuses on:
+- Addressing common symptoms like headaches, allergies, and upset stomachs.
+- Offering intuitive, personalized symptom analysis.
+- Providing detailed OTC medication recommendations, including dosage and side effects.
+- Enhancing user confidence in managing minor health concerns independently.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Features
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Functionality
+- **Symptom Input**: Users can input symptoms and receive possible minor ailment diagnoses.
+- **OTC Medication Recommendations**: Reliable suggestions for OTC medications with dosage and usage details.
+- **User Guidance**: Tips for managing symptoms at home and a disclaimer for severe or persistent symptoms.
+- **User Profile**: Personalized symptom history and tailored recommendations.
 
-## Learn More
+### Usability
+- Simple and intuitive web-based user interface.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Reliability and Availability
+- 99.99% system uptime.
+- Secure data storage with regular backups.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Performance
+- Fast loading times (<3 seconds).
+- Scalability to handle 10,000+ simultaneous users.
 
-### Code Splitting
+### Security
+- Secure Sockets Layer (SSL) for data transactions.
+- Encryption of sensitive user data.
+- Compliance with healthcare data protection regulations.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Design Constraints
+- Horizontal scalability for increasing traffic and data storage needs.
+- Compliance with healthcare and data privacy standards.
 
-### Analyzing the Bundle Size
+### Interfaces
+- Integration with medical databases for symptom analysis and medication recommendations.
+- Support for external APIs for premium features and financial transactions (PCI DSS compliant).
+- Customer support through email and live chat.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Technical Details
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### References
+- Government health websites.
+- National Institutes of Health (NIH) resources.
+- Professional medical association guidelines.
+- Pharmaceutical textbooks.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contributing
 
-### Deployment
+We welcome contributions from the community. Please follow our contribution guidelines to ensure smooth collaboration.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+For more information or support, please contact our team via email or open an issue in this repository.
